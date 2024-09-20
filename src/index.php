@@ -16,7 +16,8 @@
             <br>Adventure</span>
         <!-- btns -->
         <div class="space-x-20 text-white font-kavoon text-5xl">
-            <a href="" class="bg-[#0E3532]  outline-[#C78B36] outline  outline-8 rounded-[50px] px-20 py-4">PLAY</a>
+            <a href="category.php"
+                class="bg-[#0E3532]  outline-[#C78B36] outline  outline-8 rounded-[50px] px-20 py-4">PLAY</a>
             <a href="" class="bg-[#0E3532]  outline-[#C78B36] outline  outline-8 rounded-[50px] px-20 py-4">EXIT</a>
         </div>
     </div>
