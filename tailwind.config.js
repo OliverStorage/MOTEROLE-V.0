@@ -5,6 +5,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 kavoon: ["Kavoon", "serif"],
+                titan: ["Titan One", "serif"],
             },
         },
     },

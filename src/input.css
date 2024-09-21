@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Kavoon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -10,5 +11,8 @@
     }
     .font-outline-4 {
         -webkit-text-stroke: 4px black;
+    }
+    .font-outline-6 {
+        -webkit-text-stroke: 6px black;
     }
 }
