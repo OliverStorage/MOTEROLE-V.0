@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moterole</title>
-    <link href="output.css" rel="stylesheet">
+    <link href="../output.css" rel="stylesheet">
 </head>
 
 <body>
@@ -45,7 +45,7 @@
                 </button>
             </div>
             <div>
-                <a href="index.php">
+                <a href="levelselect.php">
                     <button
                         class="lg:h-24 lg:w-24 h-12 w-12 bg-white rounded-full p-1 outline outline-[6px] lg:outline-8 outline-black">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -58,20 +58,57 @@
                 </a>
             </div>
         </div>
-
-        <div class="flex flex-col items-center justify-center col-span-3 space-y-[50px] ">
-            <span class="text-7xl text-white  lg:-mt-[100px] font-kavoon text-center font-outline-4">Category</span>
-            <div class="space-y-7 lg:space-y-10 flex flex-col text-white font-kavoon text-3xl lg:text-5xl">
-                <a href="levelselect.php"
-                    class="bg-[#B6C826]  outline-[#0E3532] outline  outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-4 font-outline-2 text-center font-bold">Line</a>
-                <a href="levelselect.php"
-                    class="bg-[#B6C826]  outline-[#0E3532] outline  outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-4 font-outline-2 text-center font-bold">Shape</a>
-                <a href="levelselect.php"
-                    class="bg-[#B6C826]  outline-[#0E3532] outline  outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-4 font-outline-2 text-center font-bold">Alphabet</a>
+        <div class="flex flex-col items-center justify-center col-span-3 space-y-10 lg:space-y-20 ">
+            <span class="text-7xl text-white  lg:-mt-[100px] font-kavoon text-center font-outline-4">Exercises</span>
+            <div class="grid grid-cols-3 text-white font-kavoon text-3xl lg:text-5xl gap-10 lg:gap-y-24 lg:gap-x-24">
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        1</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        2</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        3</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        4</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        5</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        6</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        7</span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        8 </span>
+                </a>
+                <a href="ingame.php">
+                    <span
+                        class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-2xl px-7 py-2 lg:px-10 lg:py-5 font-outline-1 text-center font-bold">
+                        9</span>
+                </a>
             </div>
         </div>
         <div class="col-span-1">1</div>
-
     </div>
 
 

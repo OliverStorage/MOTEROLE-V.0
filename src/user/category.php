@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moterole</title>
-    <link href="output.css" rel="stylesheet">
+    <link href="../output.css" rel="stylesheet">
 </head>
 
 <body>
-
+    <!-- title -->
     <div class="bg-[url('./images/mainbg.png')] bg-cover bg-center h-screen w-screen grid grid-cols-5 p-5">
+
         <!-- 1st column -->
         <div class="col-span-1 flex flex-col justify-between">
             <div class="flex flex-col lg:space-y-6 space-y-4">
@@ -43,26 +44,33 @@
                     </svg>
                 </button>
             </div>
-        </div>
-
-        <!-- 2nd column -->
-        <div class="flex flex-col items-center justify-center col-span-3 space-y-[70px] lg:space-y-[100px] ">
-            <!-- title -->
-            <spane
-                class="lg:text-[120px] text-7xl text-white font-kavoon text-center font-outline-2 font-bold -mt-[50px] lg:-mt-[100px]">
-                MOTEROLE
-            </spane>
-            <!-- btns -->
-            <div class="font-titan text-5xl space-x-10 text-[#F1D33E]">
-                <a href="category.php"
-                    class="bg-[#0E3532]  outline-[#C78B36] outline  outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-6 text-4xl lg:text-6xl">PLAY</a>
-                <a href=""
-                    class="bg-[#0E3532]  outline-[#C78B36] outline  outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-6 text-4xl lg:text-6xl">EXIT</a>
+            <div>
+                <a href="index.php">
+                    <button
+                        class="lg:h-24 lg:w-24 h-12 w-12 bg-white rounded-full p-1 outline outline-[6px] lg:outline-8 outline-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-full h-full p-1">
+                            <path fill-rule="evenodd"
+                                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </a>
             </div>
         </div>
-        <!-- 3rd column -->
-        <div class="col-span-1">3</div>
 
+        <div class="flex flex-col items-center justify-center col-span-3 space-y-8">
+            <span class="text-7xl text-white  lg:-mt-[100px] font-kavoon text-center font-outline-4">Category</span>
+            <div class="space-y-5 lg:space-y-10 flex flex-col text-white font-kavoon text-3xl lg:text-5xl">
+                <a href="exercise.php"
+                    class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-4 font-outline-1 text-center font-bold">Line</a>
+                <a href="exercise.php"
+                    class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-4 font-outline-1 text-center font-bold">Shape</a>
+                <a href="exercise.php"
+                    class="bg-[#B6C826]  outline-[#0E3532] outline  outline-[5px] lg:outline-8 rounded-[50px] px-10 py-2 lg:px-20 lg:py-4 font-outline-1 text-center font-bold">Alphabet</a>
+            </div>
+        </div>
+        <div class="col-span-1">1</div>
 
     </div>
 
