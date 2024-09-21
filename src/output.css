@@ -578,6 +578,10 @@ video {
   grid-column: span 3 / span 3;
 }
 
+.float-right{
+  float: right;
+}
+
 .-mt-\[50px\]{
   margin-top: -50px;
 }
@@ -631,8 +635,16 @@ video {
   flex-direction: column;
 }
 
+.items-end{
+  align-items: flex-end;
+}
+
 .items-center{
   align-items: center;
+}
+
+.justify-start{
+  justify-content: flex-start;
 }
 
 .justify-end{
