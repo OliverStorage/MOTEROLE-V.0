@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracing Game</title>
+    <script defer src="tracing.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-200">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4">Trace the Shape</h1>
+        <canvas id="tracingCanvas" class="border border-gray-300" width="400" height="400"></canvas>
+        <div class="mt-4 flex space-x-4">
+            <button id="startButton" class="bg-blue-500 text-white px-4 py-2 rounded">Start Game</button>
+            <button id="resetButton" class="bg-red-500 text-white px-4 py-2 rounded">Reset Game</button>
+        </div>
+        <p id="gameStatus" class="mt-4 text-xl"></p>
+        <p id="accuracyDisplay" class="text-lg text-gray-700"></p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('tracingCanvas');
+        const ctx = canvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const resetButton = document.getElementById('resetButton');
+        const gameStatus = document.getElementById('gameStatus');
+        const accuracyDisplay = document.getElementById('accuracyDisplay');
+
+        let isTracing = false;
+        let lastPoint = null;
+        let traceDistance = 0; // Total distance traced by the user
+        let correctDistance = 0; // Distance traced on the correct path
+
+        // Increase tracing line width and shape stroke width
+        const tracingLineWidth = 6; // Adjust for larger tracing line
+
+        // Draw the shape to be traced (a square in this case)
+        function drawShape() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas before redrawing
+            ctx.beginPath();
+            ctx.moveTo(100, 100);
+            ctx.lineTo(300, 100);
+            ctx.lineTo(300, 300);
+            ctx.lineTo(100, 300);
+            ctx.closePath();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 10; // Adjust shape line width for better visibility
+            ctx.stroke();
+        }
+
+        // Function to calculate distance between two points
+        function calculateDistance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        }
+
+        // Start the tracing game
+        startButton.addEventListener('click', () => {
+            isTracing = true;
+            gameStatus.textContent = 'Tracing started! Follow the shape.';
+            accuracyDisplay.textContent = '';
+            lastPoint = null;
+            traceDistance = 0;
+            correctDistance = 0;
+            drawShape();
+        });
+
+        // Reset the game
+        resetButton.addEventListener('click', () => {
+            isTracing = false;
+            gameStatus.textContent = '';
+            accuracyDisplay.textContent = '';
+            lastPoint = null;
+            traceDistance = 0;
+            correctDistance = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawShape();
+        });
+
+        // Function to handle tracing with mousemove
+        canvas.addEventListener('mousemove', (event) => {
+            if (!isTracing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            // Calculate distance from the last point (if applicable)
+            if (lastPoint) {
+                const distance = calculateDistance(lastPoint.x, lastPoint.y, mouseX, mouseY);
+                traceDistance += distance;
+            }
+
+            // Check if the user is near the shape's lines
+            if (ctx.isPointInStroke(mouseX, mouseY)) {
+                if (lastPoint) {
+                    const distance = calculateDistance(lastPoint.x, lastPoint.y, mouseX, mouseY);
+                    correctDistance += distance;
+                }
+                ctx.lineTo(mouseX, mouseY);
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = tracingLineWidth;
+                ctx.stroke();
+                lastPoint = { x: mouseX, y: mouseY };
+            } else {
+                if (lastPoint) {
+                    gameStatus.textContent = 'You went off the path! Try again.';
+                    isTracing = false;
+                }
+            }
+
+            // Check if the user completed the tracing
+            if (lastPoint && isTracing && mouseX > 290 && mouseY > 290) {
+                const accuracy = ((correctDistance / traceDistance) * 100).toFixed(2);
+                gameStatus.textContent = 'Congrats! You traced the shape successfully!';
+                accuracyDisplay.textContent = `Accuracy: ${accuracy}%`;
+                isTracing = false;
+            }
+        });
+
+        // Initial call to draw the shape
+        window.onload = drawShape;
+
+    </script>
+</body>
+
+</html>
