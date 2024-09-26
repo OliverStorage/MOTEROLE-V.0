@@ -10,22 +10,40 @@
 </head>
 
 
-<body class="bg-[url('./assets/hill2.png')] bg-bottom bg-cover h-screen w-screen relative px-5 overflow-hidden">
-
-    <div class="flex flex-col items-center p-10 space-y-10">
-        <h1 class="font-rubikbubbles text-white text-9xl">MoTeRole</h1>
-        <div class="py-10 px-20 w-3/5 flex flex-col items-center space-y-6 text-white font-rubikbubbles">
-            <a href="Category.html"><span
-                    class="bg-[#8ac24a] w-96 justify-center flex rounded-2xl border-b-8 border-r-4 border-black border-opacity-30  py-4 text-4xl">Laro</span></a>
-            <a href="Shape.html"><span
-                    class="bg-[#FF4B4B] w-96 justify-center flex rounded-2xl border-b-8 border-r-4 border-black border-opacity-30  py-4 text-4xl">Gabay</span></a>
-            <a href=""><span
-                    class="bg-[#007DD7] w-96 justify-center flex rounded-2xl border-b-8 border-r-4 border-black border-opacity-30  py-4 text-4xl">Settings</span></a>
-        </div>
-
-
+<body class="bg-[url('./assets/hill2.png')] bg-bottom bg-cover h-screen w-screen relative p-5">
+    <div class="absolute">
+        <a href="Mainmenu.html"><button
+                class="bg-[#F40000] rounded-lg border border-b-8  border-r-4 border-red-700"><svg
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-16 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg></button>
+        </a>
     </div>
-
+    <div class="flex flex-col items-center p-10 space-y-10">
+        <h1 class="font-rubikbubbles text-white text-9xl">Mga Kategorya</h1>
+        <div
+            class="bg-white outline-4 outline-[#4FC3F7] outline rounded-2xl py-10 px-20 font-rubikspray space-y-6 w-3/5 relative  h-[350px]">
+            <div class="bg-[#FFD568] w-full h-full rounded-2xl shadow-inner p-8 flex justify-around">
+                <a href="Line.html"
+                    class="bg-[#FFEDBE] outline-[6px] outline rounded-xl outline-[#005981] p-5 flex flex-col items-center text-white">
+                    <div>pic</div>
+                    <div class="">Linya</div>
+                </a>
+                <a href="Shape.html"
+                    class="bg-[#FFEDBE] outline-[6px] outline rounded-xl outline-[#AB47BC] p-5 flex flex-col items-center text-white ">
+                    <div>pic</div>
+                    <div>Linya</div>
+                </a>
+                <a href=""
+                    class="bg-[#FFEDBE] outline-[6px] outline rounded-xl outline-[#CD0045] p-5 flex flex-col items-center text-white ">
+                    <div>pic</div>
+                    <div>Linya</div>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div class="float-end flex space-x-4">
         <a href=""
@@ -47,6 +65,8 @@
 
         </a>
     </div>
+
+
 
 
     <script type="module" src="/main.js"></script>

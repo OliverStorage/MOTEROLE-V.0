@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         rubikbubbles: ["Rubik Bubbles","serif"],
         rubikspray: ["Rubik Spray Paint","system-ui"],
+        nunito: ["Nunito","san-serif"],
       }
     },
   },
