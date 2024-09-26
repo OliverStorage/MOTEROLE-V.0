@@ -1,13 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-    content: ["./src/**/**/*.{html,js,php}"],
-    theme: {
-        extend: {
-            fontFamily: {
-                kavoon: ["Kavoon", "serif"],
-                titan: ["Titan One", "serif"],
-            },
-        },
+export default {
+  content: ["./*.{html,js}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        rubikbubbles: ["Rubik Bubbles","serif"],
+        rubikspray: ["Rubik Spray Paint","system-ui"],
+      }
     },
-    plugins: [],
-};
+  },
+  plugins: [],
+}
+
