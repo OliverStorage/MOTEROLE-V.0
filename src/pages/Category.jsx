@@ -10,10 +10,10 @@ const Category = () => {
         <>
             <Background />
             <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-6">
-                <span className="-mt-20 font-bubbles text-7xl text-white">
+                <span className="-mt-20 font-bubbles text-7xl text-white drop-shadow-[5px_5px_0px_#000000]">
                     Mga Kategorya
                 </span>
-                <div className="relative flex h-[60%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#4FC3F7] bg-white px-6 py-8 shadow-2xl shadow-black">
+                <div className="relative flex h-[60%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#4FC3F7] bg-white px-6 py-8 drop-shadow-[15px_10px_5px_#000000]">
                     <div className="flex h-full w-full items-center justify-evenly gap-10 rounded-xl bg-[#FFD568] p-10 font-nunito shadow-inner-lg">
                         <Link
                             to="/line"

@@ -14,7 +14,7 @@ const Alphabet = () => {
             <Background />
             <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-6">
                 {/* Main container for the alphabet cards */}
-                <div className="relative mt-4 flex h-[60%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#CD0045] bg-white px-6 py-8 shadow-2xl shadow-black">
+                <div className="relative mt-4 flex h-[60%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#CD0045] bg-white px-6 py-8 drop-shadow-[15px_10px_5px_#000000]">
                     {/* Back button */}
                     <Link
                         to="/category"
@@ -24,7 +24,7 @@ const Alphabet = () => {
                     </Link>
 
                     {/* Title */}
-                    <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#CD0045] bg-white font-nunito text-2xl font-black">
+                    <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#CD0045] bg-white font-nunito text-2xl font-black drop-shadow-[5px_5px_0px_#000000]">
                         Letra
                     </span>
 
