@@ -26,7 +26,7 @@ const Menu = () => {
                         Gabay
                     </Link>
                     <Link
-                        to="/category"
+                        to="/settings"
                         class="flex h-16 w-full cursor-pointer select-none items-center justify-center rounded-lg bg-[#007DD7] text-center transition-all duration-150 [box-shadow:0_10px_0_0_#01528c,0_15px_0_0_#1b70f841] active:translate-y-2 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
                     >
                         Settings
