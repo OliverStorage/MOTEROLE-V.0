@@ -18,14 +18,14 @@ const Achievement = () => {
                 {/* Achievement Cards Container */}
                 <div className="relative flex h-[60%] w-[60%] flex-col items-center space-y-4 overflow-y-auto rounded-xl bg-black bg-opacity-50 px-4 py-5">
                     {/* Achievement Cards */}
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-full flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
                 </div>
 
                 {/* Back Button */}

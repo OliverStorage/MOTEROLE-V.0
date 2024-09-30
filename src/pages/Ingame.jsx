@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Ingame = () => {
+constIngame = () => {
     return <div>Ingame</div>
 }
 

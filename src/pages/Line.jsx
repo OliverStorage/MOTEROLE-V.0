@@ -17,12 +17,12 @@ const Line = () => {
                     >
                         <LuArrowBigLeft className="size-14 p-1" />
                     </Link>
-                    <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#005981] bg-white font-nunito text-2xl font-black">
+                    <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#005981] bg-white font-nunito text-2xl font-black drop-shadow-[5px_5px_0px_#000000]">
                         Linya
                     </span>
                     <div className="flex h-full w-full items-center justify-evenly gap-10 rounded-xl bg-[#FFD568] p-10 font-nunito shadow-inner-lg">
                         <Link
-                            to="/ingame"
+                            to="/leveldifficulty"
                             className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] px-2 py-4 transition-all active:scale-90"
                         >
                             <div>1</div>
@@ -31,7 +31,7 @@ const Line = () => {
                             </div>
                         </Link>
                         <Link
-                            to="/ingame"
+                            to="/leveldifficulty"
                             className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] px-2 py-4 transition-all active:scale-90"
                         >
                             <div>1</div>
@@ -40,7 +40,7 @@ const Line = () => {
                             </div>
                         </Link>
                         <Link
-                            to="/ingame"
+                            to="/leveldifficulty"
                             className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] px-2 py-4 transition-all active:scale-90"
                         >
                             <div>1</div>

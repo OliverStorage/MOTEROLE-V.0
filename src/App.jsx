@@ -14,12 +14,12 @@ import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import Tutorial from './pages/Tutorial'
 import Achievement from './pages/Achievement'
-
+    
 const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<SignUp />} />
+                <Route index element={<Menu />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/menu" element={<Menu />} />

@@ -34,7 +34,7 @@ const Alphabet = () => {
                         {alphabet.map((letter, index) => (
                             <Link
                                 key={index}
-                                to="/ingame"
+                                to="/leveldifficulty"
                                 className="flex h-[75%] flex-shrink-0 flex-col items-center justify-center rounded-2xl border-[6px] border-[#CD0045] bg-[#FFEDBE] p-4 transition-transform active:scale-95"
                             >
                                 <div className="w-auto object-contain font-nunito text-8xl font-black">
