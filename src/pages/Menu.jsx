@@ -9,7 +9,7 @@ const Menu = () => {
         <>
             <Background />
             <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-10">
-                <span className="-mt-16 font-bubbles text-8xl lg:text-9xl text-white drop-shadow-[5px_5px_0px_#000000]">
+                <span className="-mt-16 font-bubbles text-8xl lg:text-9xl text-white drop-shadow-[5px_5px_0px_#000000] ">
                     MoTeRole
                 </span>
                 <div className="flex w-[25%] flex-col items-center gap-5 lg:gap-8 font-bubbles text-3xl lg:text-4xl text-white">
