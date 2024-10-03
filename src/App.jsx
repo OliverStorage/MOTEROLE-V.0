@@ -14,7 +14,7 @@ import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import Tutorial from './pages/Tutorial'
 import Achievement from './pages/Achievement'
-    
+
 const App = () => {
     return (
         <BrowserRouter>

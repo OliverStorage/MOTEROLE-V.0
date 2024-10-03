@@ -2,21 +2,25 @@ import React from 'react'
 import Background from '../components/Background'
 import { Link } from 'react-router-dom'
 import { LuArrowBigLeft } from 'react-icons/lu'
+import { useEffect } from 'react'
 
 const Profile = () => {
+    useEffect(() => {
+        document.title = 'Profile'
+    })
     return (
         <>
             <Background />
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
+            <div className="select-none relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
                 {/* Title */}
-                <span className="lg:-mt-20 font-bubbles text-4xl lg:text-7xl text-white drop-shadow-[5px_5px_0px_#000000]">
+                <span className="font-bubbles text-4xl text-white drop-shadow-[5px_5px_0px_#000000] lg:-mt-20 lg:text-7xl">
                     Personal na Impormasyon
                 </span>
 
-                <div className="relative flex h-[70%] lg:h-[60%] w-[80%] flex-col space-y-4 rounded-xl">
+                <div className="relative flex h-[70%] w-[80%] flex-col space-y-4 rounded-xl lg:h-[60%]">
                     <div className="flex space-x-4">
-                        <div className="size-28 lg:size-36 rounded-2xl border-4 border-[#8BC34A] bg-white"></div>
-                        <div className="flex flex-col justify-center space-y-4 font-bubbles text-2xl lg:text-4xl text-white drop-shadow-[5px_5px_0px_#000000]">
+                        <div className="size-28 rounded-2xl border-4 border-[#8BC34A] bg-white lg:size-36"></div>
+                        <div className="flex flex-col justify-center space-y-4 font-bubbles text-2xl text-white drop-shadow-[5px_5px_0px_#000000] lg:text-4xl">
                             <div>Pangalan: Juan Delacruz</div>
                             <div>Email: jdelacruz@gmail.com</div>
                         </div>

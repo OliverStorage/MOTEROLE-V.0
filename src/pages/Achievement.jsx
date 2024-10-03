@@ -2,15 +2,19 @@ import React from 'react'
 import Background from '../components/Background'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Achievement = () => {
-        const navigate = useNavigate()
+    useEffect(() => {
+        document.title = 'Achievements'
+    })
+    const navigate = useNavigate()
     return (
         <>
             <Background />
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
+            <div className="relative flex h-screen w-screen select-none flex-col items-center justify-center space-y-4 lg:space-y-6">
                 {/* Title */}
-                <span className=" font-bubbles text-6xl text-white drop-shadow-[5px_5px_0px_#000000] lg:text-9xl">
+                <span className="font-bubbles text-6xl text-white drop-shadow-[5px_5px_0px_#000000] lg:text-9xl">
                     Mga Tagumpay
                 </span>
 
