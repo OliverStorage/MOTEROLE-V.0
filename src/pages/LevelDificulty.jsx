@@ -23,7 +23,7 @@ const LevelDificulty = () => {
                     <div className="flex h-full w-full items-center justify-evenly gap-4 rounded-xl bg-[#FFD568] p-5 font-nunito shadow-inner-lg lg:gap-10 lg:p-10">
                         <Link
                             to="/ingame"
-                            className="drop-shadow-[5px_5px_0px_#000000]ku flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#B0BEC5] bg-[#FFEDBE] px-1 py-2 transition-all active:scale-90 lg:px-2 lg:py-4"
+                            className="drop-shadow-[5px_5px_0px_#000000] flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#B0BEC5] bg-[#FFEDBE] px-1 py-2 transition-all active:scale-90 lg:px-2 lg:py-4"
                         >
                             <div>1</div>
                             <div className="text-2xl font-[1000] text-black">
@@ -32,7 +32,7 @@ const LevelDificulty = () => {
                         </Link>
                         <Link
                             to="/ingame"
-                            className="drop-shadow-[5px_5px_0px_#000000]ku flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#B0BEC5] bg-[#FFEDBE] px-1 py-2 transition-all active:scale-90 lg:px-2 lg:py-4"
+                            className="drop-shadow-[5px_5px_0px_#000000] flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#B0BEC5] bg-[#FFEDBE] px-1 py-2 transition-all active:scale-90 lg:px-2 lg:py-4"
                         >
                             <div>1</div>
                             <div className="text-2xl font-[1000] text-black">
@@ -41,7 +41,7 @@ const LevelDificulty = () => {
                         </Link>
                         <Link
                             to="/ingame"
-                            className="drop-shadow-[5px_5px_0px_#000000]ku flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#B0BEC5] bg-[#FFEDBE] px-1 py-2 transition-all active:scale-90 lg:px-2 lg:py-4"
+                            className="drop-shadow-[5px_5px_0px_#000000] flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#B0BEC5] bg-[#FFEDBE] px-1 py-2 transition-all active:scale-90 lg:px-2 lg:py-4"
                         >
                             <div>1</div>
                             <div className="text-2xl font-[1000] text-black">
