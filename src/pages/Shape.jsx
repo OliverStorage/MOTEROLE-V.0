@@ -13,7 +13,7 @@ const Shape = () => {
     return (
         <>
             <Background />
-            <div className="select-none relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
+            <div className="relative flex h-screen w-screen select-none flex-col items-center justify-center space-y-4 lg:space-y-6">
                 <div className="relative flex h-[75%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#AB47BC] bg-white p-5 drop-shadow-[5px_5px_0px_#000000] lg:mt-4 lg:h-[60%] lg:px-6 lg:py-8 lg:drop-shadow-[15px_10px_5px_#000000]">
                     <span className="absolute -top-9 flex w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#AB47BC] bg-white font-nunito text-2xl font-black drop-shadow-[5px_5px_0px_#000000] lg:h-14">
                         Shape

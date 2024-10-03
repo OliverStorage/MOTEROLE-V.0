@@ -12,7 +12,7 @@ const Menu = () => {
     return (
         <>
             <Background />
-            <div className="select-none relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-10 select-none">
+            <div className="relative flex h-screen w-screen select-none flex-col items-center justify-center space-y-4 lg:space-y-10">
                 <span className="-mt-16 font-bubbles text-7xl text-white drop-shadow-[5px_5px_0px_#000000] lg:text-9xl">
                     MoTeRole
                 </span>

@@ -16,7 +16,7 @@ const Category = () => {
     return (
         <>
             <Background />
-            <div className="select-none relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
+            <div className="relative flex h-screen w-screen select-none flex-col items-center justify-center space-y-4 lg:space-y-6">
                 <span className="font-bubbles text-6xl text-white drop-shadow-[5px_5px_0px_#000000] lg:-mt-24 lg:text-8xl">
                     Mga Kategorya
                 </span>
