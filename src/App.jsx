@@ -7,7 +7,7 @@ import Category from './pages/Category'
 import Line from './pages/Line'
 import Shape from './pages/Shape'
 import Alphabet from './pages/Alphabet'
-import LevelDificulty from './pages/LevelDificulty'
+import LevelDifficulty from './pages/LevelDifficulty'
 import Error from './pages/Error'
 import Ingame from './pages/Ingame'
 import Settings from './pages/Settings'
@@ -27,7 +27,7 @@ const App = () => {
                 <Route path="/line" element={<Line />} />
                 <Route path="/shape" element={<Shape />} />
                 <Route path="/alphabet" element={<Alphabet />} />
-                <Route path="/leveldifficulty" element={<LevelDificulty />} />
+                <Route path="/leveldifficulty" element={<LevelDifficulty />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/achievement" element={<Achievement />} />
                 <Route path="/tutorial" element={<Tutorial />} />
