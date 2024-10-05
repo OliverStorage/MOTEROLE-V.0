@@ -36,7 +36,7 @@ const alphabet = [
     'Z',
 ]
 
-const letterSounds = {
+const letterName = {
     A: 'Aso',
     B: 'Bola',
     C: 'Carrot',
@@ -107,12 +107,12 @@ const Alphabet = () => {
                         {alphabet.map((letter, index) => {
                             const imageSrc = useLetterImage(letter)
                             const isNG = letter === 'NG'
-                            const sound = letterSounds[letter]
+                            const sound = letterName[letter]
                             return (
                                 <Link
                                     key={index}
                                     to="/leveldifficulty"
-                                    className={`relative flex h-[75%] flex-col justify-between pb-2 px-1 lg:p-2 ${
+                                    className={`relative flex h-[75%] flex-col justify-between px-1 pb-2 lg:p-2 ${
                                         isNG ? 'w-auto' : 'w-32 lg:w-56'
                                     } flex-shrink-0 flex-col rounded-2xl border-[6px] border-[#CD0045] bg-[#FFEDBE] drop-shadow-[5px_5px_0px_#000000] transition-transform active:scale-95`}
                                 >
