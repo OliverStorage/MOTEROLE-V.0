@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import Menu from './pages/Menu'
@@ -17,7 +17,7 @@ import Achievement from './pages/Achievement'
 
 const App = () => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route index element={<Menu />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -36,7 +36,7 @@ const App = () => {
 
                 <Route path="*" element={<Error />} />
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
