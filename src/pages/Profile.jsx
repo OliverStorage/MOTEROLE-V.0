@@ -3,6 +3,7 @@ import Background from '../components/Background'
 import { Link } from 'react-router-dom'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { useEffect } from 'react'
+import FullScreen from '../components/FullScreen'
 
 const Profile = () => {
     useEffect(() => {
@@ -11,7 +12,10 @@ const Profile = () => {
     return (
         <>
             <Background />
-            <div className="relative flex h-screen w-screen select-none flex-col items-center justify-center space-y-4 lg:space-y-6">
+            <div className="absolute bottom-5 left-5">
+                <FullScreen />
+            </div>
+            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
                 {/* Title */}
                 <span className="font-bubbles text-4xl text-white drop-shadow-[5px_5px_0px_#000000] lg:-mt-20 lg:text-7xl">
                     Personal na Impormasyon
@@ -31,7 +35,7 @@ const Profile = () => {
                 {/* Back Button */}
                 <Link
                     to="/menu"
-                    className="absolute left-5 top-0 flex cursor-pointer select-none items-center justify-center rounded-xl bg-[#F40000] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#ab0000,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
+                    className="absolute left-5 top-0 flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#ab0000,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
                 >
                     <LuArrowBigLeft className="size-10 p-1 lg:size-14" />
                 </Link>
