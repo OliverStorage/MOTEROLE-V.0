@@ -1,70 +1,88 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Background from '../components/Background'
 import { Link } from 'react-router-dom'
 import { GrTrophy } from 'react-icons/gr'
 import { PiGearSix } from 'react-icons/pi'
 import { LuArrowBigLeft } from 'react-icons/lu'
-import { useEffect } from 'react'
 import FullScreen from '../components/FullScreen'
+
+// Image loader function for lines
+const useLineImage = (lineType) => {
+    const [imageSrc, setImageSrc] = useState(null)
+
+    useEffect(() => {
+        const loadImage = async () => {
+            try {
+                const image = await import(`../assets/lines/${lineType}.png`)
+                setImageSrc(image.default)
+            } catch (err) {
+                console.error(`Error loading image for ${lineType}:`, err)
+                setImageSrc(null)
+            }
+        }
+        loadImage()
+    }, [lineType])
+
+    return imageSrc
+}
 
 const Line = () => {
     useEffect(() => {
         document.title = 'Line'
     })
+
+    const lineTypes = ['Patayo', 'Pahilis', 'Pakurba']
+
     return (
         <>
             <Background />
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
-                <div className="relative flex h-[75%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#005981] bg-white p-5 drop-shadow-[5px_5px_0px_#000000] lg:mt-4 lg:h-[60%] lg:px-6 lg:py-8 lg:drop-shadow-[15px_10px_5px_#000000]">
-                    <span className="absolute -top-9 flex w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#005981] bg-white font-nunito text-2xl font-black drop-shadow-[5px_5px_0px_#000000] lg:h-14">
+            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 xl:space-y-6">
+                <div className="relative flex h-[75%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#005981] bg-white p-5 drop-shadow-[5px_5px_0px_#000000] xl:mt-4 xl:h-[60%] xl:px-6 xl:py-8 xl:drop-shadow-[15px_10px_5px_#000000]">
+                    <span className="absolute -top-9 flex w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#005981] bg-white font-nunito text-2xl font-black drop-shadow-[5px_5px_0px_#000000] xl:h-14">
                         Linya
                     </span>
-                    {/* Overflow functionality added here */}
-                    <div className="flex h-full w-full items-center justify-evenly gap-4 overflow-x-auto rounded-xl bg-[#FFD568] px-4 py-6 font-nunito shadow-inner-lg lg:gap-10 lg:p-10">
-                        <Link
-                            to="/leveldifficulty"
-                            className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] px-1 py-2 drop-shadow-[5px_5px_0px_#000000] transition-all active:scale-90 lg:px-2 lg:py-4"
-                        >
-                            <div>1</div>
-                            <div className="text-2xl font-[1000] text-black">
-                                Patayo
-                            </div>
-                        </Link>
-                        <Link
-                            to="/leveldifficulty"
-                            className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] px-1 py-2 drop-shadow-[5px_5px_0px_#000000] transition-all active:scale-90 lg:px-2 lg:py-4"
-                        >
-                            <div>1</div>
-                            <div className="text-2xl font-[1000] text-black">
-                                Pahilis
-                            </div>
-                        </Link>
-                        <Link
-                            to="/leveldifficulty"
-                            className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] px-1 py-2 drop-shadow-[5px_5px_0px_#000000] transition-all active:scale-90 lg:px-2 lg:py-4"
-                        >
-                            <div>1</div>
-                            <div className="text-2xl font-[1000] text-black">
-                                Pakurba
-                            </div>
-                        </Link>
+                    {/* Overflow functionality with line images as background */}
+                    <div className="flex h-full w-full items-center justify-evenly gap-4 overflow-x-auto rounded-xl bg-[#FFD568] px-4 py-6 font-nunito shadow-inner-lg xl:gap-10 xl:p-10">
+                        {lineTypes.map((lineType, index) => {
+                            const imageSrc = useLineImage(lineType)
+                            return (
+                                <Link
+                                    key={index}
+                                    to="/leveldifficulty"
+                                    className="flex h-full w-full flex-col items-center justify-end rounded-2xl border-[6px] border-[#005981] bg-[#FFEDBE] p-2 drop-shadow-[5px_5px_0px_#000000] transition-all active:scale-90"
+                                    style={{
+                                        backgroundImage: imageSrc
+                                            ? `url(${imageSrc})`
+                                            : 'none',
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                    }}
+                                >
+                                    <div className="flex w-full flex-col items-center justify-center">
+                                        <div className="text-2xl font-[1000] text-black">
+                                            {lineType}
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="absolute bottom-7 flex w-full justify-between px-5">
                     <FullScreen />
-                    <div className="flex space-x-2 lg:space-x-4">
+                    <div className="flex space-x-2 xl:space-x-4">
                         <Link
                             to="/achievement"
                             className="flex cursor-pointer items-center justify-center rounded-xl bg-[#FFD700] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#bfa100,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
                         >
-                            <GrTrophy className="size-10 p-2 lg:size-14 lg:p-2.5" />
+                            <GrTrophy className="size-10 p-2 xl:size-14 xl:p-2.5" />
                         </Link>
 
                         <Link
                             to="/settings"
                             className="flex cursor-pointer items-center justify-center rounded-xl bg-[#8D8686] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#5e5a5a,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
                         >
-                            <PiGearSix className="size-10 p-1 lg:size-14" />
+                            <PiGearSix className="size-10 p-1 xl:size-14" />
                         </Link>
                     </div>
                 </div>
@@ -72,7 +90,7 @@ const Line = () => {
                     to="/category"
                     className="absolute left-5 top-0 flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#ab0000,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
                 >
-                    <LuArrowBigLeft className="size-10 p-1 lg:size-14" />
+                    <LuArrowBigLeft className="size-10 p-1 xl:size-14" />
                 </Link>
             </div>
         </>

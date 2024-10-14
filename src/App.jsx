@@ -14,6 +14,7 @@ import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import Tutorial from './pages/Tutorial'
 import Achievement from './pages/Achievement'
+// import Try from './pages/Try'
 
 const App = () => {
     return (
@@ -33,6 +34,7 @@ const App = () => {
                 <Route path="/tutorial" element={<Tutorial />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/ingame" element={<Ingame />} />
+                {/* <Route path="/try" element={<Try />} /> */}
 
                 <Route path="*" element={<Error />} />
             </Routes>

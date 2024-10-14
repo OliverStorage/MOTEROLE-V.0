@@ -14,9 +14,9 @@ const Achievement = () => {
         <>
             <Background />
 
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 lg:space-y-6">
+            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 xl:space-y-6">
                 {/* Title */}
-                <span className="font-bubbles text-6xl text-white drop-shadow-[5px_5px_0px_#000000] lg:text-9xl">
+                <span className="font-bubbles text-6xl text-white drop-shadow-[5px_5px_0px_#000000] xl:text-9xl">
                     Mga Tagumpay
                 </span>
 
@@ -38,7 +38,7 @@ const Achievement = () => {
                     onClick={() => navigate(-1)}
                     className="absolute left-5 top-0 flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#ab0000,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
                 >
-                    <LuArrowBigLeft className="size-10 p-1 lg:size-14" />
+                    <LuArrowBigLeft className="size-10 p-1 xl:size-14" />
                 </button>
             </div>
         </>
