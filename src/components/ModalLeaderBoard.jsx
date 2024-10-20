@@ -1,12 +1,12 @@
 import React from 'react'
-import Ribbon from '../assets/ribbon.png'
-import Stars from '../assets/stars.png'
-import Gold from '../assets/Gold.png'
-import Silver from '../assets/Silver.png'
-import Bronze from '../assets/Bronze.png'
-import Top1 from '../assets/top1.png'
-import Top2 from '../assets/top2.png'
-import Top3 from '../assets/top3.png'
+import Ribbon from '../assets/leaderboard/ribbon.png'
+import Stars from '../assets/leaderboard/stars.png'
+import Gold from '../assets/leaderboard/Gold.png'
+import Silver from '../assets/leaderboard/Silver.png'
+import Bronze from '../assets/leaderboard/Bronze.png'
+import Top1 from '../assets/leaderboard/top1.png'
+import Top2 from '../assets/leaderboard/top2.png'
+import Top3 from '../assets/leaderboard/top3.png'
 import { LuArrowBigLeft } from 'react-icons/lu'
 
 const ModalLeaderBoard = ({ onClose }) => {
@@ -18,9 +18,12 @@ const ModalLeaderBoard = ({ onClose }) => {
                         style={{ backgroundImage: `url(${Ribbon})` }}
                         className="absolute inset-x-0 -top-7 flex h-28 w-full flex-col items-center bg-cover bg-center text-center mobile:-top-9"
                     >
-                        <div className="absolute -right-6" onClick={onClose}>
+                        <div className="absolute -right-6 z-50 ipad:-right-7 mobile:top-3 mobile:-right-5">
                             <button className="action-btn flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white">
-                                <LuArrowBigLeft className="size-12 mobile:size-10 ipad:size-14" />
+                                <LuArrowBigLeft
+                                    onClick={onClose}
+                                    className="size-12 mobile:size-10 ipad:size-14"
+                                />
                             </button>
                         </div>
                     </div>

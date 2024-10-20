@@ -6,9 +6,7 @@ import Profile from '../assets/menubutton/profile.png'
 import Settings from '../assets/menubutton/settings.png'
 import { Link } from 'react-router-dom'
 import FullScreen from '../components/FullScreen'
-import Actionbtn from '../components/Actionbtn'
-import { LuArrowBigLeft } from 'react-icons/lu'
-import Leader from '../assets/leader.png'
+import Leader from '../assets/leaderboard/leader.png'
 import ModalLeaderBoard from '../components/ModalLeaderBoard'
 
 const Menu = () => {
@@ -82,7 +80,7 @@ const Menu = () => {
                     {/* Action button acting as a "Back" button */}
                     <button
                         onClick={() => setShowModal(true)}
-                        className="flex cursor-pointer items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1"
+                        className="flex cursor-pointer mobile:-translate-y-1 items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1"
                     >
                         <img
                             src={Leader}
