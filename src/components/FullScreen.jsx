@@ -71,12 +71,12 @@ const FullScreen = () => {
             {/* Fullscreen button */}
             <button
                 onClick={toggleFullscreen}
-                className="flex cursor-pointer items-center justify-center rounded-xl bg-[#8D8686] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#5e5a5a,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
+                className="action-btn flex cursor-pointer items-center justify-center rounded-xl bg-stone text-center text-white"
             >
                 {isFullscreen ? (
-                    <MdFullscreenExit className="size-10 xl:size-14" />
+                    <MdFullscreenExit className="size-12 mobile:size-10 ipad:size-14" />
                 ) : (
-                    <MdFullscreen className="size-10 xl:size-14" />
+                    <MdFullscreen className="size-12 mobile:size-10 ipad:size-14" />
                 )}
             </button>
         </>

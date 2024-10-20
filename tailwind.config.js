@@ -3,15 +3,41 @@ export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         extend: {
-            boxShadow: {
-                'inner-lg': 'inset 0px 0px 15px 2px rgba(0, 0, 0, 0.6)', // stronger inner shadow
-                'inner-xl': 'inset 0 10px 15px rgba(0, 0, 0, 0.7)', // even stronger shadow
+            screens: {
+                mobile: { max: '892px' },
+                ipad: { min: '893px', max: '1024px' },
             },
             fontFamily: {
                 spraypaint: ['Rubik Spray Paint', 'system-ui'],
                 bubbles: ['Rubik Bubbles', 'system-ui'],
                 nunito: ['Nunito', 'system-ui'],
                 abz: ['ABeeZee', 'sans-serif'],
+            },
+            colors: {
+                sunshine: '#FFEB3B',
+                bluesky: '#4FC3F7',
+                applegreen: '#8BC34A',
+                tangerine: '#FF9800',
+                pinkgum: '#FF80AB',
+                grape: '#AB47BC',
+                softgray: '#B0BEC5',
+                butter: '#FFEDBE',
+                cheese: '#FFD568',
+                stone: '#8D8686',
+                lava: '#CD0045',
+                limblue: '#005981',
+                darkgreen: '#2B4D39',
+                wood: '#D68E5E',
+                lineblue: '#4A90E2',
+                linered: '#FF5A5F',
+                modalblue: '#A9DEFF',
+                modalbrown: '#E2B868',
+                peach: '#FFBD95',
+                greytext: '#9da4b0',
+                poop: '#7C4B3A',
+                darkpeach: '#FD8C70',
+                modalbrownlight: '#E8CBA0',
+                modalbrowndark: '#986300',
             },
         },
     },

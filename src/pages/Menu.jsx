@@ -1,94 +1,103 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Background from '../components/Background'
-import { Link } from 'react-router-dom'
-import { GrTrophy } from 'react-icons/gr'
-import { MdPersonOutline } from 'react-icons/md'
 import Play from '../assets/menubutton/play.png'
 import Achievement from '../assets/menubutton/achievement.png'
-
+import Profile from '../assets/menubutton/profile.png'
+import Settings from '../assets/menubutton/settings.png'
+import { Link } from 'react-router-dom'
 import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import Leader from '../assets/leader.png'
+import ModalLeaderBoard from '../components/ModalLeaderBoard'
 
 const Menu = () => {
+    const [showModal, setShowModal] = useState(false)
     useEffect(() => {
         document.title = 'Menu'
     })
-
     return (
         <>
             <Background />
-
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 xl:space-y-10">
-                <span className="-mt-16 font-bubbles text-7xl text-white drop-shadow-[5px_5px_0px_#000000] xl:-mt-24 xl:text-9xl">
-                    MoTeRole
-                </span>
-                <div className="flex w-[70%] justify-center gap-5 font-bubbles text-xl text-white xl:w-[80%] xl:gap-8 xl:text-4xl">
-                    <Link
-                        to="/category"
-                        className="flex flex-col items-center justify-center space-y-2 rounded-xl bg-[#8BC34A] p-3 text-center text-white duration-100 [box-shadow:0_5px_0_#6b9839,0_10px_0_#67676789] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#67676789,0_0px_0_0_#67676789] xl:space-y-4 xl:p-4"
-                    >
-                        <img
-                            src={Play}
-                            alt="play.png"
-                            className="size-28 rounded-lg bg-[#ffedbf] xl:size-44"
-                        />
-                        <span>Laro</span>
-                    </Link>
-                    <Link
-                        to="/achievement"
-                        className="flex flex-col items-center justify-center space-y-2 rounded-xl bg-[#F8BC35] p-3 text-center text-white duration-100 [box-shadow:0_5px_0_#b08726,0_10px_0_#67676789] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#67676789,0_0px_0_0_#67676789] xl:space-y-4 xl:p-4"
-                    >
-                        <img
-                            src={Achievement}
-                            alt="play.png"
-                            className="size-28 rounded-lg bg-[#ffedbf] xl:size-44"
-                        />
-                        <span>Tagumpay</span>
-                    </Link>
-                    <Link
-                        to="/profile"
-                        className="flex flex-col items-center justify-center space-y-2 rounded-xl bg-[#4FC3F7] p-3 text-center text-white duration-100 [box-shadow:0_5px_0_#3785a9,0_10px_0_#67676789] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#67676789,0_0px_0_0_#67676789] xl:space-y-4 xl:p-4"
-                    >
-                        <img
-                            src={Play}
-                            alt="play.png"
-                            className="size-28 rounded-lg bg-[#ffedbf] xl:size-44"
-                        />
-                        <span>Profile</span>
-                    </Link>
-                    <Link
-                        to="/settings"
-                        className="flex flex-col items-center justify-center space-y-2 rounded-xl bg-[#6F42C1] p-3 text-center text-white duration-100 [box-shadow:0_5px_0_#52318f,0_10px_0_#67676789] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#67676789,0_0px_0_0_#67676789] xl:space-y-4 xl:p-4"
-                    >
-                        <img
-                            src={Play}
-                            alt="play.png"
-                            className="size-28 rounded-lg bg-[#ffedbf] xl:size-44"
-                        />
-                        <span>Settings</span>
-                    </Link>
+            <div className="flex h-screen justify-between p-5">
+                {/* left column */}
+                <div className="flex flex-col justify-end">
+                    {/* No need to pass onClick if using the default navigate(-1) */}
+                    <FullScreen />
                 </div>
-                <div className="absolute bottom-7 flex w-full">
-                    <div className="flex w-full justify-between space-x-2 px-5 xl:space-x-4">
-                        <FullScreen />
-
-                        <div className="flex space-x-2 xl:space-x-4">
-                            {/* <Link
-                                to="/achievement"
-                                className="flex cursor-pointer items-center justify-center rounded-xl bg-[#FFD700] text-center text-white duration-100 [box-shadow:0_4px_0_0_#bfa100,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
-                            >
-                                <GrTrophy className="size-10 p-2  xl:size-14  xl:p-2.5" />
-                            </Link>
-
-                            <Link
-                                to="/profile"
-                                className="flex cursor-pointer items-center justify-center rounded-xl bg-[#4FC3F7] text-center text-white duration-100 [box-shadow:0_4px_0_0_#3789ad,0_8px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
-                            >
-                                <MdPersonOutline className="size-10 p-1  xl:size-14" />
-                            </Link> */}
-                        </div>
+                {/* center */}
+                <div className="-mt-20 flex w-[80%] flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-10">
+                    <div className="text-shadow text-9xl mobile:text-7xl">
+                        MoTeRole
+                    </div>
+                    <div className="flex space-x-4 text-4xl mobile:text-xl ipad:text-2xl">
+                        <Link
+                            to="/category"
+                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-applegreen p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
+                        >
+                            <img
+                                src={Play}
+                                alt="play.png"
+                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
+                            />
+                            <span>Laro</span>
+                        </Link>
+                        <Link
+                            to="/achievement"
+                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-tangerine p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
+                        >
+                            <img
+                                src={Achievement}
+                                alt="achievement.png"
+                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
+                            />
+                            <span>Tagumpay</span>
+                        </Link>
+                        <Link
+                            to="/profile"
+                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-bluesky p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
+                        >
+                            <img
+                                src={Profile}
+                                alt="profile.png"
+                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
+                            />
+                            <span>Profile</span>
+                        </Link>
+                        <Link
+                            to="/settings"
+                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-grape p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
+                        >
+                            <img
+                                src={Settings}
+                                alt="settings.png"
+                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
+                            />
+                            <span>Settings</span>
+                        </Link>
                     </div>
                 </div>
+                {/* right column */}
+                <div className="w-1/10 flex select-none flex-col justify-between opacity-100">
+                    {/* Action button acting as a "Back" button */}
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className="flex cursor-pointer items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1"
+                    >
+                        <img
+                            src={Leader}
+                            alt=""
+                            className="size-12 mobile:size-10 ipad:size-14"
+                        />
+                    </button>
+                </div>
             </div>
+            {/* Modal */}
+            {showModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                    <ModalLeaderBoard onClose={() => setShowModal(false)} />
+                </div>
+            )}
         </>
     )
 }

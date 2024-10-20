@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Background from '../components/Background'
-import { Link } from 'react-router-dom'
-import { GrTrophy } from 'react-icons/gr'
-import { PiGearSix } from 'react-icons/pi'
-import { LuArrowBigLeft } from 'react-icons/lu'
 import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
 
 const alphabet = [
     'A',
@@ -68,10 +69,15 @@ const letterName = {
     Z: 'Zebra',
 }
 
+// Memoized Actionbtn to prevent unnecessary re-renders
+const MemoizedActionbtn = React.memo(({ text, to, bgColor, icon }) => (
+    <Actionbtn text={text} to={to} bgColor={bgColor} icon={icon} />
+))
+
 const Alphabet = () => {
     useEffect(() => {
         document.title = 'Alphabet'
-    }, [])
+    })
 
     const useLetterImage = (letter) => {
         const [imageSrc, setImageSrc] = useState(null)
@@ -80,7 +86,7 @@ const Alphabet = () => {
             const loadImage = async () => {
                 try {
                     const image = await import(
-                        `../assets/letterImages/${letter}.png`
+                        `../assets/alphabetbtn/${letter}.png`
                     )
                     setImageSrc(image.default)
                 } catch (err) {
@@ -94,18 +100,27 @@ const Alphabet = () => {
 
         return imageSrc
     }
-
     return (
         <>
             <Background />
+            <div className="relative flex h-screen w-screen items-center justify-between p-5">
+                {/* left column */}
+                <div className="w-1/10 flex h-full flex-col justify-between">
+                    {/* Action button acting as a "Back" button */}
+                    <MemoizedActionbtn
+                        text=""
+                        to="/category"
+                        bgColor="#F40000"
+                        icon={LuArrowBigLeft}
+                    />
+                    <FullScreen />
+                </div>
 
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 xl:space-y-6">
-                <div className="relative flex h-[75%] w-[60%] flex-col items-center rounded-3xl border-[6px] border-[#CD0045] bg-white p-5 drop-shadow-[5px_5px_0px_#000000] xl:mt-4 xl:h-[60%] xl:px-6 xl:py-8 xl:drop-shadow-[15px_10px_5px_#000000]">
-                    <span className="absolute -top-9 flex w-1/3 items-center justify-center rounded-2xl border-[6px] border-[#CD0045] bg-white font-nunito text-2xl font-black drop-shadow-[5px_5px_0px_#000000] xl:h-14">
+                <div className="just text-shadow relative flex h-[70%] w-[75%] flex-col items-center rounded-3xl border-8 border-lava bg-white p-8 mobile:h-[85%] mobile:w-[72%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:w-[71%] ipad:p-6">
+                    <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 border-lava bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
                         Letra
                     </span>
-
-                    <div className="flex h-full w-full items-center gap-6 overflow-x-auto overflow-y-hidden rounded-xl bg-[#FFD568] px-6 py-4 font-nunito shadow-inner-lg">
+                    <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
                         {alphabet.map((letter, index) => {
                             const imageSrc = useLetterImage(letter)
                             const isNG = letter === 'NG'
@@ -114,13 +129,13 @@ const Alphabet = () => {
                                 <Link
                                     key={index}
                                     to="/leveldifficulty"
-                                    className={`relative flex h-[75%] flex-col justify-between px-1 py-2 xl:py-2 ${
+                                    className={`text-shadow relative flex h-[80%] flex-shrink-0 flex-col justify-between rounded-2xl border-8 border-lava bg-[#FFEDBE] px-2 py-1 font-nunito font-black transition-transform active:scale-95 mobile:h-[90%] mobile:border-4 ${
                                         isNG
-                                            ? 'w-auto md:w-72 xl:w-56'
-                                            : 'w-48 md:w-72 xl:w-56'
-                                    } flex-shrink-0 flex-col rounded-2xl border-[6px] border-[#CD0045] bg-[#FFEDBE] drop-shadow-[5px_5px_0px_#000000] transition-transform active:scale-95`}
+                                            ? 'w-auto ipad:w-1/3'
+                                            : 'w-48 ipad:w-1/3'
+                                    } `}
                                 >
-                                    <div className="flex justify-start font-nunito text-4xl font-black lg:text-7xl xl:text-6xl">
+                                    <div className="flex justify-start text-5xl mobile:text-4xl">
                                         {isNG
                                             ? 'NG ng'
                                             : `${letter}${letter.toLowerCase()}`}
@@ -140,7 +155,7 @@ const Alphabet = () => {
                                             <span>Image not found</span>
                                         )}
                                     </div>
-                                    <div className="flex justify-end font-nunito text-xl font-black lg:text-6xl xl:text-4xl">
+                                    <div className="flex justify-end text-3xl mobile:text-2xl">
                                         {sound || 'No sound available'}{' '}
                                     </div>
                                 </Link>
@@ -149,31 +164,21 @@ const Alphabet = () => {
                     </div>
                 </div>
 
-                <div className="absolute bottom-7 flex w-full justify-between px-5">
-                    <FullScreen />
-                    <div className="flex space-x-2 xl:space-x-4">
-                        <Link
-                            to="/achievement"
-                            className="flex cursor-pointer items-center justify-center rounded-xl bg-[#FFD700] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#bfa100,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
-                        >
-                            <GrTrophy className="size-10 p-2 xl:size-14 xl:p-2.5" />
-                        </Link>
-
-                        <Link
-                            to="/settings"
-                            className="flex cursor-pointer items-center justify-center rounded-xl bg-[#8D8686] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#5e5a5a,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
-                        >
-                            <PiGearSix className="size-10 p-1 xl:size-14" />
-                        </Link>
-                    </div>
+                {/* right column */}
+                <div className="w-1/10 flex h-full select-none flex-col space-y-4 mobile:space-y-3">
+                    <MemoizedActionbtn
+                        text=""
+                        to="/settings"
+                        bgColor="#AB47BC"
+                        icon={PiGearSixBold}
+                    />
+                    <MemoizedActionbtn
+                        text=""
+                        to="/achievement"
+                        bgColor="#8BC34A"
+                        icon={IoBulbOutline}
+                    />
                 </div>
-
-                <Link
-                    to="/category"
-                    className="absolute left-5 top-0 flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#ab0000,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
-                >
-                    <LuArrowBigLeft className="size-10 p-1 xl:size-14" />
-                </Link>
             </div>
         </>
     )

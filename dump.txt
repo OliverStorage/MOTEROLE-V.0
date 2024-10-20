@@ -1,0 +1,306 @@
+import React, { useEffect, useState } from 'react'
+import Background from '../components/Background'
+import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+
+// Dynamically import all background and line images with import.meta.glob
+const bgImports = import.meta.glob('../assets/lineCategory/bg/*.png')
+const imgImports = import.meta.glob('../assets/lineCategory/img/*.png')
+
+const lineTypes = ['Patayo', 'Pahilis', 'Pahiga', 'Pakurba', 'Pazigzag'] // Add more as needed
+
+const Line = () => {
+    const [lineImages, setLineImages] = useState({})
+
+    useEffect(() => {
+        document.title = 'Line'
+
+        const loadImages = async () => {
+            const imagesMap = {}
+            for (const lineType of lineTypes) {
+                const lineTypeLower = lineType.toLowerCase()
+                const bg =
+                    await bgImports[
+                        `../assets/lineCategory/bg/bg${lineTypeLower}.png`
+                    ]()
+                const img =
+                    await imgImports[
+                        `../assets/lineCategory/img/${lineTypeLower}.png`
+                    ]()
+                imagesMap[lineType] = { bg: bg.default, img: img.default }
+            }
+            setLineImages(imagesMap)
+        }
+
+        loadImages()
+    }, [])
+
+    return (
+        <>
+            <Background />
+            <div className="flex h-screen justify-between p-5">
+                {/* left column */}
+                <div className="w-1/10 flex flex-col justify-between">
+                    <Actionbtn
+                        text=""
+                        to="/category"
+                        bgColor="#F40000"
+                        icon={LuArrowBigLeft}
+                    />
+                    <FullScreen />
+                </div>
+
+                {/* center */}
+                <div className="flex w-full flex-col items-center justify-center font-bubbles text-white ipad:overflow-hidden">
+                    <div className="text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 border-limblue bg-white p-8 mobile:h-[85%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
+                        <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 border-limblue bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
+                            Linya
+                        </span>
+                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-x-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 mobile:overflow-x-auto mobile:rounded-xl ipad:overflow-x-auto">
+                            {lineTypes.map((lineType, index) => {
+                                const images = lineImages[lineType]
+                                if (!images) return null // Handle case where images are still loading
+
+                                return (
+                                    <Link
+                                        key={index}
+                                        to="/leveldifficulty"
+                                        className="text-shadow just flex h-[80%] w-1/4 flex-shrink-0 flex-col justify-center rounded-2xl border-8 border-limblue bg-butter bg-cover bg-center p-5 font-nunito text-4xl font-black text-black mobile:h-[90%] mobile:w-1/3 mobile:border-4 mobile:p-2 mobile:text-2xl ipad:w-60 ipad:p-3 ipad:text-3xl"
+                                        style={{
+                                            backgroundImage: `url(${images.bg})`,
+                                        }}
+                                    >
+                                        <img
+                                            src={images.img}
+                                            alt={lineType}
+                                            className="h-full w-full object-cover"
+                                        />
+                                        <div className="text-center">
+                                            {lineType}
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+
+                {/* right column */}
+                <div className="w-1/10 flex select-none flex-col space-y-4 mobile:space-y-3">
+                    <Actionbtn
+                        text=""
+                        to="/settings"
+                        bgColor="#AB47BC"
+                        icon={PiGearSixBold}
+                    />
+                    <Actionbtn
+                        text=""
+                        to="/achievement"
+                        bgColor="#8BC34A"
+                        icon={IoBulbOutline}
+                    />
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Line
+
+
+
+
+
+
+//alphabet-v.1
+import React, { useEffect, useState, useCallback } from 'react'
+import Background from '../components/Background'
+import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+
+const alphabet = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'Ñ',
+    'NG',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+]
+
+const letterName = {
+    A: 'Aso',
+    B: 'Bola',
+    C: 'Carrot',
+    D: 'Daga',
+    E: 'Eroplano',
+    F: 'Filipino',
+    G: 'Gagamba',
+    H: 'Hari',
+    I: 'Isda',
+    J: 'Jollibee',
+    K: 'Karabaw',
+    L: 'Lapis',
+    M: 'Manok',
+    N: 'Niyog',
+    Ñ: 'Niño',
+    NG: 'Ngipin',
+    O: 'Okra',
+    P: 'Pusa',
+    Q: 'Quezo',
+    R: 'Radyo',
+    S: 'Saging',
+    T: 'Talong',
+    U: 'Unggoy',
+    V: 'Vinta',
+    W: 'Watawat',
+    X: 'X-ray',
+    Y: 'Yelo',
+    Z: 'Zebra',
+}
+
+const Alphabet = () => {
+    useEffect(() => {
+        document.title = 'Alphabet'
+    })
+
+    const useLetterImage = (letter) => {
+        const [imageSrc, setImageSrc] = useState(null)
+
+        useEffect(() => {
+            const loadImage = async () => {
+                try {
+                    const image = await import(
+                        `../assets/alphabetbtn/${letter}.png`
+                    )
+                    setImageSrc(image.default)
+                } catch (err) {
+                    console.error(`Error loading image for ${letter}:`, err)
+                    setImageSrc(null)
+                }
+            }
+
+            loadImage()
+        }, [letter])
+
+        return imageSrc
+    }
+    return (
+        <>
+            <Background />
+            <div className="flex h-screen justify-between p-5">
+                {/* left column */}
+                <div className="w-1/10 flex flex-col justify-between">
+                    {/* Action button acting as a "Back" button */}
+                    <Actionbtn
+                        text=""
+                        to="/category"
+                        bgColor="#F40000"
+                        icon={LuArrowBigLeft}
+                    />
+                    {/* No need to pass onClick if using the default navigate(-1) */}
+                    <FullScreen />
+                </div>
+                {/* center */}
+                <div className="flex w-full flex-col items-center justify-center font-bubbles text-black">
+                    <div className="text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 border-lava bg-white p-8 mobile:h-[85%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
+                        <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 border-lava bg-white font-nunito text-4xl font-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
+                            Alpabeto
+                        </span>
+                        <div className="inner-shadow flex h-full w-full items-center space-x-4 overflow-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
+                            {alphabet.map((letter, index) => {
+                                const imageSrc = useLetterImage(letter)
+                                const isNG = letter === 'NG'
+                                const sound = letterName[letter]
+                                return (
+                                    <Link
+                                        key={index}
+                                        to="/leveldifficulty"
+                                        className={`text-shadow flex h-[80%] flex-col justify-between rounded-2xl border-8 border-lava bg-butter active:scale-95${
+                                            isNG ? 'w-72' : 'w-auto'
+                                        } `}
+                                    >
+                                        {/* letter */}
+                                        <div className="flex justify-start text-5xl ipad:text-6xl">
+                                            {isNG
+                                                ? 'NG ng'
+                                                : `${letter}${letter.toLowerCase()}`}
+                                        </div>
+
+                                        {/* letter img */}
+                                        <div>
+                                            {imageSrc ? (
+                                                <img
+                                                    src={imageSrc}
+                                                    alt={`${letter} letter`}
+                                                    className={`object-contain object-center ${
+                                                        isNG ? 'w-10' : 'w-10'
+                                                    }`}
+                                                />
+                                            ) : (
+                                                <span>Image not found</span>
+                                            )}
+                                        </div>
+
+                                        {/*letter name/sound  */}
+                                        <div className="flex justify-end">
+                                            {sound || 'No sound available'}{' '}
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
+                {/* right column */}
+                <div className="w-1/10 flex select-none flex-col space-y-4 mobile:space-y-3">
+                    {/* Action button acting as a "Back" button */}
+                    <Actionbtn
+                        text=""
+                        to="/settings"
+                        bgColor="#AB47BC"
+                        icon={PiGearSixBold}
+                    />
+                    <Actionbtn
+                        text=""
+                        to="/achievement"
+                        bgColor="#8BC34A"
+                        icon={IoBulbOutline}
+                    />
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Alphabet
+

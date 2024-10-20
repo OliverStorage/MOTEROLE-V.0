@@ -1,45 +1,85 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Background from '../components/Background'
-import { LuArrowBigLeft } from 'react-icons/lu'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+import line from '../assets/categorybtn/line.png'
+import shape from '../assets/categorybtn/shape.png'
+import abc from '../assets/categorybtn/abc.png'
 
 const Achievement = () => {
     useEffect(() => {
         document.title = 'Achievements'
     })
-    const navigate = useNavigate()
     return (
         <>
             <Background />
-
-            <div className="relative flex h-screen w-screen flex-col items-center justify-center space-y-4 xl:space-y-6">
-                {/* Title */}
-                <span className="font-bubbles text-6xl text-white drop-shadow-[5px_5px_0px_#000000] xl:text-9xl">
-                    Mga Tagumpay
-                </span>
-
-                {/* Achievement Cards Container */}
-                <div className="relative flex h-[70%] w-[80%] flex-col items-center space-y-4 overflow-y-auto rounded-xl bg-black bg-opacity-50 px-4 py-5">
-                    {/* Achievement Cards */}
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
-                    <div className="h-24 w-[80%] flex-shrink-0 rounded-xl border-4 border-[#FFD700] bg-white"></div>
+            <div className="flex h-screen justify-between p-5">
+                {/* left column */}
+                <div className="w-1/10 flex flex-col justify-between">
+                    {/* Action button acting as a "Back" button */}
+                    <Actionbtn
+                        text=""
+                        to="#"
+                        isLink={false}
+                        bgColor="#F40000"
+                        icon={LuArrowBigLeft}
+                    />
+                    {/* No need to pass onClick if using the default navigate(-1) */}
+                    <FullScreen />
                 </div>
-
-                {/* Back Button */}
-                <button
-                    onClick={() => navigate(-1)}
-                    className="absolute left-5 top-0 flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white transition-all duration-150 [box-shadow:0_4px_0_0_#ab0000,0_6px_0_0_#1b70f841] active:translate-y-1 active:border-b-[0px] active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]"
-                >
-                    <LuArrowBigLeft className="size-10 p-1 xl:size-14" />
-                </button>
+                {/* center */}
+                <div className="-mt-12 flex w-full flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-8 mobile:space-y-3">
+                    <div className="text-shadow text-8xl mobile:text-5xl ipad:text-7xl">
+                        Mga Tagumpay
+                    </div>
+                    <div className="flex h-[70%] w-[80%] rounded-2xl bg-black bg-opacity-60 p-8 mobile:p-4 ipad:h-[60%] ipad:p-6">
+                        <div className="flex h-full w-full flex-col space-y-4 overflow-y-auto rounded-2xl font-nunito text-4xl font-black text-black mobile:overflow-y-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-y-auto">
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                            <div className="flex h-1/4 w-full flex-shrink-0 items-center rounded-xl border-4 border-sunshine bg-white px-4 mobile:h-1/3 ipad:h-1/4">
+                                1
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* right column */}
+                <div className="w-1/10 flex select-none flex-col space-y-4 opacity-0 mobile:space-y-3">
+                    {/* Action button acting as a "Back" button */}
+                    <Actionbtn
+                        text=""
+                        disabled={true}
+                        to="/settings"
+                        bgColor="#AB47BC"
+                        icon={PiGearSixBold}
+                    />
+                    <Actionbtn
+                        text=""
+                        disabled={true}
+                        to="/achievement"
+                        bgColor="#8BC34A"
+                        icon={IoBulbOutline}
+                    />
+                </div>
             </div>
         </>
     )
