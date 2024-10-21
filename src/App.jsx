@@ -16,6 +16,9 @@ import Tutorial from './pages/Tutorial'
 import Achievement from './pages/Achievement'
 import Try from './pages/Try'
 import ModalSettings from './components/ModalSettings'
+import A from './components/abcEasy/A'
+import B from './components/abcEasy/B'
+import C from './components/abcEasy/C'
 
 const App = () => {
     return (
@@ -35,6 +38,10 @@ const App = () => {
                 <Route path="/tutorial" element={<Tutorial />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/ingame" element={<Ingame />} />
+
+                <Route path="/a" element={<A />} />
+                <Route path="/b" element={<B />} />
+                <Route path="/c" element={<C />} />
 
                 <Route path="/try" element={<Try />} />
 

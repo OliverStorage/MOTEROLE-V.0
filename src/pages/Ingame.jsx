@@ -7,6 +7,7 @@ import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import ModalSettings from '../components/ModalSettings'
+import A from '../assets/abcEasy/A.png'
 
 const Ingame = () => {
     const [showModal, setShowModal] = useState(false)
@@ -35,10 +36,19 @@ const Ingame = () => {
                         <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 border-bluesky bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
                             TITLE
                         </span>
-                        <div className="flex h-full w-full flex-col items-center justify-between rounded-2xl border-8 border-wood bg-darkgreen px-6 py-10 mobile:overflow-x-auto mobile:rounded-xl mobile:border-4 mobile:py-8 ipad:overflow-x-auto">
+                        <div
+                         
+                            className="flex h-full bg-center relative bg-contain bg-no-repeat w-full flex-col items-center justify-between rounded-2xl border-8 border-wood bg-darkgreen px-6 py-10 mobile:overflow-x-auto mobile:rounded-xl mobile:border-4 mobile:py-8 ipad:overflow-x-auto"
+                        >
                             <div className="h-2 w-full bg-lineblue mobile:h-1" />
                             <div className="h-2 w-full border-t-8 border-dashed border-linered mobile:border-t-4" />
                             <div className="h-2 w-full bg-lineblue mobile:h-1" />
+                            <div style={{
+                                backgroundImage:`url(${A})`,
+                            }}
+                                className='absolute ipad:m-4 mobile:m-4 inset-0 z-10 bg-center bg-contain bg-no-repeat'>
+                                
+                </div>
                         </div>
                     </div>
                 </div>

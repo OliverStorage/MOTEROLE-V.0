@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Background from '../components/Background'
-import FullScreen from '../components/FullScreen'
-import Actionbtn from '../components/Actionbtn'
+import Background from '../Background'
+import FullScreen from '../FullScreen'
+import Actionbtn from '../Actionbtn'
 import { Link } from 'react-router-dom'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import ModalSettings from '../components/ModalSettings'
-import A from '../assets/abcEasy/A.png'
+import ModalSettings from '../ModalSettings'
+import A from '../../assets/abcEasy/A.png'
 
 const letterA = () => {
     const [showModal, setShowModal] = useState(false) // Declare the state for showModal

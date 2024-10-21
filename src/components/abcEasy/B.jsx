@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Background from '../components/Background'
-import FullScreen from '../components/FullScreen'
-import Actionbtn from '../components/Actionbtn'
+import Background from '../Background'
+import FullScreen from '../FullScreen'
+import Actionbtn from '../Actionbtn'
 import { Link } from 'react-router-dom'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import ModalSettings from '../components/ModalSettings'
-import A from '../assets/abcEasy/A.png'
+import ModalSettings from '../ModalSettings'
+import B from '../../assets/abcEasy/C.png'
 
-const letterA = () => {
+const letterB = () => {
     const [showModal, setShowModal] = useState(false) // Declare the state for showModal
     return (
         <>
@@ -39,7 +39,7 @@ const letterA = () => {
                             <div className="h-2 w-full bg-lineblue mobile:h-1" />
                             <div
                                 style={{
-                                    backgroundImage: `url(${A})`,
+                                    backgroundImage: `url(${B})`,
                                 }}
                                 className="absolute inset-0 z-10 bg-contain bg-center bg-no-repeat mobile:m-4 ipad:m-4"
                             ></div>
@@ -75,4 +75,4 @@ const letterA = () => {
     )
 }
 
-export default letterA
+export default letterB
