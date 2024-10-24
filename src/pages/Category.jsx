@@ -32,14 +32,6 @@ const Category = () => {
         console.log(categories); // For debugging
     }; //effect
 
-    const handleCategorySelect = async (categoryName, categoryId) => {
-        // Here you would add the selected category to the Exercise table
-        await addDoc(collection(db, 'Exercise'), {
-            CategoryName: categoryName,
-            CategoryId: categoryId,
-        });
-        console.log(`Selected category: ${categoryName}, ID: ${categoryId}`);
-    };
 
     return (
         <>

@@ -61,13 +61,21 @@ const MemoizedActionbtn = React.memo(({ text, to, bgColor, icon }) => (
 const Exercises = () => {
     const {categoryId} = useParams()
     const navigate = useNavigate();
+
     const lineTypes = ['Patayo', 'Pahilis', 'Pahiga', 'Pakurba', 'Pazigzag'];
     const lineImages = useLineImages(lineTypes);
+
+    const shapeTypes = ['Tatsulok', 'Oblong', 'Parihaba', 'Parisukat', 'Bilog'];
+    const shapeImages = useLineImages(shapeTypes);
+
+    const alphabetTypes = ['A', 'B', 'C', 'D'];
+    const alphabetImages = useLineImages(alphabetTypes);
+
     const [exercises, setExercises] = useState(null);
 
     useEffect(() => {
         document.title = 'Line';
-        const exercisesCollection = collection(db, 'Exercise');
+        const exercisesCollection = collection(db, 'Exercises');
         const exercisesQuery = query(exercisesCollection,where("CategoryId", "==", categoryId));
         const unsubscribe = onSnapshot(exercisesQuery, async (snapshot) => {
             const exercisesdb = snapshot.docs.map(doc => ({
@@ -81,23 +89,6 @@ const Exercises = () => {
        return () => unsubscribe();
         
     }, []);
-
-    
-
-    const handleExerciseSelect = async (exerciseName, exerciseId) => {
-        try {
-            const docRef = await addDoc(collection(db, 'Exercise'), {
-                ExerciseId: exerciseId,
-                CategoryId: 'your_category_id', // Replace with actual category ID
-                DifficultyLevel: 'your_difficulty_level', // Replace with actual difficulty level
-                ExerciseName: exerciseName,
-            });
-            console.log('Document written with ID: ', docRef.id);
-            navigate('/leveldifficulty'); // Proceed to Difficulty Level
-        } catch (error) {
-            console.error("Error adding document: ", error);
-        }
-    };
 
     return (
         <>

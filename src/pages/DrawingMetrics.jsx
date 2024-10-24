@@ -65,9 +65,9 @@ const DrawingMetrics = () => {
     return (
         <div className="drawing-metrics">
             <h1>Drawing Metrics Comparison</h1>
-            <input type="file" onChange={(e) => handleImageChange(e, setUserImage)} />
+            <input type="file" accept="image/png" onChange={(e) => handleImageChange(e, setUserImage)} />
             {userImage && <canvas ref={canvasRefUser} style={{ display: 'none' }} />}
-            <input type="file" onChange={(e) => handleImageChange(e, setCorrectImage)} />
+            <input type="file" accept="image/png" onChange={(e) => handleImageChange(e, setCorrectImage)} />
             {correctImage && <canvas ref={canvasRefCorrect} style={{ display: 'none' }} />}
             <button onClick={compareDrawings}>Compare Drawings</button>
 
