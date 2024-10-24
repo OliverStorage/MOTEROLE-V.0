@@ -38,6 +38,7 @@ export default {
                 darkpeach: '#FD8C70',
                 modalbrownlight: '#E8CBA0',
                 modalbrowndark: '#986300',
+                lavender: '#9168E2',
             },
         },
     },
