@@ -53,24 +53,25 @@ const Category = () => {
                         Mga Kategorya
                     </div>
                     <div className="text-shadow flex h-[70%] w-[80%] rounded-3xl border-8 border-bluesky bg-white p-8 mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
-                        <div className="inner-shadow text-black mobile:rounded-xl flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:text-2xl ipad:overflow-x-auto">
-                            
-                            {categories?.length > 1 && categories.map(category => (
-                                 <Link
-                                 key={category.id}
-                                 to={`/Exercises/${category.id}`}
-                                 className="text-shadow flex h-[80%] w-72 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 border-bluesky bg-butter p-2 duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-60"
-                                 onClick={() => handleCategorySelect('Linya', 'k41GvFSEcpDZNsZZ1RwK')}
-                             >
-                                 <div
-                                     style={{ backgroundImage: `url(${line})` }}
-                                     className="h-full w-full bg-cover bg-center"
-                                 ></div>
-                                 <div>{category.CategoryName}</div>
-                                </Link>
-                            ))}
-                            
-                            
+                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-x-auto">
+                            {categories?.length > 1 &&
+                                categories.map((category) => (
+                                    <Link
+                                        key={category.id}
+                                        to={`/Exercises/${category.id}`}
+                                        className={`text-shadow flex h-[80%] w-72 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 ${category.borderColor} bg-butter p-2 duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-60`}
+                                        // onClick={() => handleCategorySelect('Linya','k41GvFSEcpDZNsZZ1RwK')}
+                                    >
+                                        <div
+                                            style={{
+                                                backgroundImage: `url(${line})`,
+                                            }}
+                                            className="h-full w-full bg-cover bg-center"
+                                        ></div>
+                                        <div>{category.CategoryName}</div>
+                                    </Link>
+                                ))}
+
                             {/* <Link
                                 to="/line"
                                 className="text-shadow flex h-[80%] w-72 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 border-bluesky bg-butter p-2 duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-60"
