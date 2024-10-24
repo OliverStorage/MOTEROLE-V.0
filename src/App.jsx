@@ -19,6 +19,7 @@ import ModalSettings from './components/ModalSettings'
 import A from './components/abcEasy/A'
 import B from './components/abcEasy/B'
 import C from './components/abcEasy/C'
+import Exercises from './pages/Exercises'
 
 const App = () => {
     return (
@@ -38,6 +39,8 @@ const App = () => {
                 <Route path="/tutorial" element={<Tutorial />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/ingame" element={<Ingame />} />
+
+                <Route path="/Exercises/:categoryId" element={<Exercises/>} /> 
 
                 <Route path="/a" element={<A />} />
                 <Route path="/b" element={<B />} />
