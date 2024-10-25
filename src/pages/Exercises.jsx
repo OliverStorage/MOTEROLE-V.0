@@ -8,15 +8,12 @@ import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import { db } from '../firebaseConfig' // Ensure the correct path
 import {
-    getFirestore,
     collection,
-    getDocs,
-    addDoc,
+    doc,
+    onSnapshot,
+    orderBy,
     query,
     where,
-    onSnapshot,
-    doc,
-    orderBy,
 } from 'firebase/firestore'
 
 // Image loader function for line background and images
@@ -43,7 +40,6 @@ const useLineImages = (lineTypes) => {
                         `Error loading images for ${lineType}:`,
                         err.message,
                     )
-                    // Fallback image if import fails
                     const fallbackImage = '/path/to/fallback.png'
                     return {
                         [lineType]: {
@@ -81,19 +77,11 @@ const MemoizedActionbtn = React.memo(({ text, to, bgColor, icon }) => (
 const Exercises = () => {
     const { categoryId } = useParams()
     const navigate = useNavigate()
-
-    // const lineTypes = ['Patayo', 'Pahilis', 'Pahiga', 'Pakurba', 'Pazigzag'];
-    // const lineImages = useLineImages(lineTypes);
-    // const shapeTypes = ['Tatsulok', 'Oblong', 'Parihaba', 'Parisukat', 'Bilog'];
-    // const shapeImages = useLineImages(shapeTypes);
-    // const alphabetTypes = ['A', 'B', 'C', 'D'];
-    // const alphabetImages = useLineImages(alphabetTypes);
-
-    const [exercises, setExercises] = useState(null)
+    const [exercises, setExercises] = useState([])
     const [category, setCategory] = useState(null)
 
     useEffect(() => {
-        document.title = 'Line'
+        document.title = 'Exercises'
         const categoryDocRef = doc(db, 'Category', categoryId)
         const categoryUnsubscribe = onSnapshot(
             categoryDocRef,
@@ -103,99 +91,100 @@ const Exercises = () => {
                         ...docSnapshot.data(),
                         id: docSnapshot.id,
                     }
-                    setCategory([categoryData]) // Putting it in an array to match your setCategory logic
+                    setCategory(categoryData)
                     console.log(categoryData) // For debugging
                 }
             },
         )
+
         const exercisesCollection = collection(db, 'Exercises')
         const exercisesQuery = query(
             exercisesCollection,
             where('CategoryId', '==', categoryId),
             orderBy('Order', 'asc'),
         )
-        const unsubscribe = onSnapshot(exercisesQuery, async (snapshot) => {
-            const exercisesdb = snapshot.docs.map((doc) => ({
+
+        const unsubscribe = onSnapshot(exercisesQuery, (snapshot) => {
+            const exercisesData = snapshot.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
             }))
-            setExercises(exercisesdb)
-            console.log(exercisesdb) // For debugging
+            setExercises(exercisesData)
+            console.log(exercisesData) // For debugging
         })
 
         return () => {
             unsubscribe()
             categoryUnsubscribe()
         }
-    }, [])
+    }, [categoryId])
 
-    if (category) {
-        return (
-            <>
-                <Background />
-                <div className="flex h-screen justify-between p-5">
-                    {/* Left column */}
-                    <div className="w-1/10 flex flex-col justify-between">
-                        <MemoizedActionbtn
-                            text=""
-                            to="/category"
-                            bgColor="#F40000"
-                            icon={LuArrowBigLeft}
-                        />
-                        <FullScreen />
-                    </div>
+    if (!category) return null // Loading state
 
-                    {/* Center */}
-                    <div className="flex w-full flex-col items-center justify-center overflow-hidden font-bubbles text-white">
-                        <div
-                            className={`text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 ${category[0].borderColor} bg-white p-8 mobile:h-[80%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6`}
+    return (
+        <>
+            <Background />
+            <div className="flex h-screen justify-between p-5">
+                {/* Left column */}
+                <div className="w-1/10 flex flex-col justify-between">
+                    <MemoizedActionbtn
+                        text=""
+                        to="/category"
+                        bgColor="#F40000"
+                        icon={LuArrowBigLeft}
+                    />
+                    <FullScreen />
+                </div>
+
+                {/* Center */}
+                <div className="flex w-full flex-col items-center justify-center overflow-hidden font-bubbles text-white">
+                    <div
+                        className={`text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 ${category.borderColor} bg-white p-8 mobile:h-[80%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6`}
+                    >
+                        {/* Title */}
+                        <span
+                            className={`${category.borderColor} absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl`}
                         >
-                            {/* Title */}
-                            <span
-                                className={`${category[0].borderColor} absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl`}
-                            >
-                                asda
-                            </span>
+                            {category.CategoryName}
+                        </span>
 
-                            {/* Exercises Container */}
-                            <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
-                                {exercises?.length > 0 &&
-                                    exercises.map((exercise, index) => (
-                                        <div
-                                            key={index}
-                                            //onClick={() => handleExerciseSelect(lineType, lineType === 'Patayo' ? 'kVhA311ENofLQ8RAkqVR' : lineType === 'Pahiga' ? 'CpZHiUm5Nfk1tPEzTSSl' : lineType === 'Pahilis' ? 'giVbV06XN4G831EAlmSN' : lineType === 'Pakurba' ? 'wpjd9BIqU1HPE5ilfwBL' : 'dwWIxXQ7sr5HIwW1Ryw3')}
-                                            className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-center rounded-2xl border-8 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
-                                        >
-                                            <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center mobile:size-[90%] ipad:size-[90%]">
-                                                <span>
-                                                    {exercise.ExerciseName}
-                                                </span>
-                                            </div>
+                        {/* Exercises Container */}
+                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
+                            {exercises.length > 0 &&
+                                exercises.map((exercise) => (
+                                    <Link
+                                        key={exercise.id}
+                                        to={`/GameExercise/${exercise.id}`}
+                                        state={{ categoryId }} // Pass categoryId
+                                        className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-center rounded-2xl border-8 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
+                                    >
+                                        <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center mobile:size-[90%] ipad:size-[90%]">
+                                            <span>{exercise.ExerciseName}</span>
                                         </div>
-                                    ))}
-                            </div>
+                                    </Link>
+                                ))}
                         </div>
                     </div>
-
-                    {/* Right column */}
-                    <div className="w-1/10 flex select-none flex-col space-y-4 mobile:space-y-3">
-                        <MemoizedActionbtn
-                            text=""
-                            to="/settings"
-                            bgColor="#AB47BC"
-                            icon={PiGearSixBold}
-                        />
-                        <MemoizedActionbtn
-                            text=""
-                            to="/achievement"
-                            bgColor="#8BC34A"
-                            icon={IoBulbOutline}
-                        />
-                    </div>
                 </div>
-            </>
-        )
-    }
+
+                {/* Right column */}
+                <div className="w-1/10 flex select-none flex-col space-y-4 mobile:space-y-3">
+                    <MemoizedActionbtn
+                        text=""
+                        to="/settings"
+                        bgColor="#AB47BC"
+                        icon={PiGearSixBold}
+                    />
+                    <MemoizedActionbtn
+                        text=""
+                        to="/achievement"
+                        bgColor="#8BC34A"
+                        icon={IoBulbOutline}
+                    />
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default Exercises
