@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import Background from '../components/Background';
-import FullScreen from '../components/FullScreen';
-import Actionbtn from '../components/Actionbtn';
-import { Link, useNavigate } from 'react-router-dom';
-import { LuArrowBigLeft } from 'react-icons/lu';
-import { PiGearSixBold } from 'react-icons/pi';
-import { IoBulbOutline } from 'react-icons/io5';
-import { app } from '../firebaseConfig'; // Ensure the correct path
+import React, { useEffect, useState } from 'react'
+import Background from '../components/Background'
+import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link, useNavigate } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+import { app } from '../firebaseConfig' // Ensure the correct path
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore'
 
 // Image loader function for line background and images
 const useLineImages = (lineTypes) => {
-    const [images, setImages] = useState({});
+    const [images, setImages] = useState({})
 
     useEffect(() => {
         const loadImages = async () => {
@@ -20,52 +20,52 @@ const useLineImages = (lineTypes) => {
                     const [linebg, lineimg] = await Promise.all([
                         import(`../assets/linebg/${lineType}.png`),
                         import(`../assets/lineimg/${lineType}.png`),
-                    ]);
+                    ])
 
                     return {
                         [lineType]: {
                             linebg: linebg.default,
                             lineimg: lineimg.default,
                         },
-                    };
+                    }
                 } catch (err) {
-                    console.error(`Error loading images for ${lineType}:`, err);
-                    return { [lineType]: { linebg: null, lineimg: null } };
+                    console.error(`Error loading images for ${lineType}:`, err)
+                    return { [lineType]: { linebg: null, lineimg: null } }
                 }
-            });
+            })
 
-            const resolvedImages = await Promise.all(imagePromises);
+            const resolvedImages = await Promise.all(imagePromises)
             setImages(
                 resolvedImages.reduce(
                     (acc, imageObj) => ({ ...acc, ...imageObj }),
-                    {}
-                )
-            );
-        };
+                    {},
+                ),
+            )
+        }
 
         const debounceTimeout = setTimeout(() => {
-            loadImages();
-        }, 100);
+            loadImages()
+        }, 100)
 
-        return () => clearTimeout(debounceTimeout);
-    }, [lineTypes]);
+        return () => clearTimeout(debounceTimeout)
+    }, [lineTypes])
 
-    return images;
-};
+    return images
+}
 
 // Memoized Actionbtn to prevent unnecessary re-renders
 const MemoizedActionbtn = React.memo(({ text, to, bgColor, icon }) => (
     <Actionbtn text={text} to={to} bgColor={bgColor} icon={icon} />
-));
+))
 
 const Line = () => {
-    const navigate = useNavigate();
-    const lineTypes = ['Patayo', 'Pahilis', 'Pahiga', 'Pakurba', 'Pazigzag'];
-    const lineImages = useLineImages(lineTypes);
+    const navigate = useNavigate()
+    const lineTypes = ['Patayo', 'Pahilis', 'Pahiga', 'Pakurba', 'Pazigzag']
+    const lineImages = useLineImages(lineTypes)
 
     useEffect(() => {
-        document.title = 'Line';
-    }, []);
+        document.title = 'Line'
+    }, [])
 
     const handleExerciseSelect = async (exerciseName, exerciseId) => {
         try {
@@ -74,13 +74,13 @@ const Line = () => {
                 CategoryId: 'your_category_id', // Replace with actual category ID
                 DifficultyLevel: 'your_difficulty_level', // Replace with actual difficulty level
                 ExerciseName: exerciseName,
-            });
-            console.log('Document written with ID: ', docRef.id);
-            navigate('/leveldifficulty'); // Proceed to Difficulty Level
+            })
+            console.log('Document written with ID: ', docRef.id)
+            navigate('/leveldifficulty') // Proceed to Difficulty Level
         } catch (error) {
-            console.error("Error adding document: ", error);
+            console.error('Error adding document: ', error)
         }
-    };
+    }
 
     return (
         <>
@@ -106,16 +106,36 @@ const Line = () => {
                             {lineTypes.map((lineType, index) => (
                                 <div
                                     key={index}
-                                    onClick={() => handleExerciseSelect(lineType, lineType === 'Patayo' ? 'kVhA311ENofLQ8RAkqVR' : lineType === 'Pahiga' ? 'CpZHiUm5Nfk1tPEzTSSl' : lineType === 'Pahilis' ? 'giVbV06XN4G831EAlmSN' : lineType === 'Pakurba' ? 'wpjd9BIqU1HPE5ilfwBL' : 'dwWIxXQ7sr5HIwW1Ryw3')}
+                                    onClick={() =>
+                                        handleExerciseSelect(
+                                            lineType,
+                                            lineType === 'Patayo'
+                                                ? 'kVhA311ENofLQ8RAkqVR'
+                                                : lineType === 'Pahiga'
+                                                  ? 'CpZHiUm5Nfk1tPEzTSSl'
+                                                  : lineType === 'Pahilis'
+                                                    ? 'giVbV06XN4G831EAlmSN'
+                                                    : lineType === 'Pakurba'
+                                                      ? 'wpjd9BIqU1HPE5ilfwBL'
+                                                      : 'dwWIxXQ7sr5HIwW1Ryw3',
+                                        )
+                                    }
                                     className="text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-center rounded-2xl border-8 border-limblue bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
                                     style={{
-                                        backgroundImage: lineImages[lineType]?.linebg ? `url(${lineImages[lineType].linebg})` : 'none',
+                                        backgroundImage: lineImages[lineType]
+                                            ?.linebg
+                                            ? `url(${lineImages[lineType].linebg})`
+                                            : 'none',
                                     }}
                                 >
                                     <div
                                         className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center mobile:size-[90%] ipad:size-[90%]"
                                         style={{
-                                            backgroundImage: lineImages[lineType]?.lineimg ? `url(${lineImages[lineType].lineimg})` : 'none',
+                                            backgroundImage: lineImages[
+                                                lineType
+                                            ]?.lineimg
+                                                ? `url(${lineImages[lineType].lineimg})`
+                                                : 'none',
                                         }}
                                     >
                                         <span>{lineType}</span>
@@ -142,7 +162,7 @@ const Line = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Line;
+export default Line

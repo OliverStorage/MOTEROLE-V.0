@@ -1,77 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import Background from '../components/Background';
-import FullScreen from '../components/FullScreen';
-import Actionbtn from '../components/Actionbtn';
-import { Link, useNavigate } from 'react-router-dom';
-import { LuArrowBigLeft } from 'react-icons/lu';
-import { PiGearSixBold } from 'react-icons/pi';
-import { IoBulbOutline } from 'react-icons/io5';
-import line from '../assets/categorybtn/line.png';
-import shape from '../assets/categorybtn/shape.png';
-import abc from '../assets/categorybtn/abc.png';
-import { app } from '../firebaseConfig';
-import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
+import Background from '../components/Background'
+import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link, useNavigate } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+import line from '../assets/categorybtn/line.png'
+import shape from '../assets/categorybtn/shape.png'
+import abc from '../assets/categorybtn/abc.png'
+import { app } from '../firebaseConfig'
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    where,
+} from 'firebase/firestore'
 
-  
 const SignIn = () => {
-    const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate()
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
-        document.title = 'Signin in';
-    });
+        document.title = 'Signin in'
+    })
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        setErrorMessage('');
+        event.preventDefault()
+        setErrorMessage('')
 
-        const email = event.target['signup-email'].value.trim(); // Trim whitespace
-        const username = event.target['signup-username'].value.trim(); // Trim whitespace
-        const password = event.target['signup-password'].value.trim(); // Trim whitespace
+        const email = event.target['signup-email'].value.trim() // Trim whitespace
+        const username = event.target['signup-username'].value.trim() // Trim whitespace
+        const password = event.target['signup-password'].value.trim() // Trim whitespace
 
-        console.log("Email:", email);
-        console.log("Username:", username);
-        console.log("Password:", password);
+        console.log('Email:', email)
+        console.log('Username:', username)
+        console.log('Password:', password)
 
         try {
-            const db = getFirestore(app);
-            const accountHoldersRef = collection(db, 'AccountHolder');
-            const preschoolersRef = collection(db, 'Preschooler');
+            const db = getFirestore(app)
+            const accountHoldersRef = collection(db, 'AccountHolder')
+            const preschoolersRef = collection(db, 'Preschooler')
 
-            const q = query(accountHoldersRef, where('Email', '==', email));
-            const accountHolderSnapshot = await getDocs(q);
+            const q = query(accountHoldersRef, where('Email', '==', email))
+            const accountHolderSnapshot = await getDocs(q)
 
-            console.log("AccountHolder Snapshot:", accountHolderSnapshot);
+            console.log('AccountHolder Snapshot:', accountHolderSnapshot)
 
             if (accountHolderSnapshot.empty) {
-                setErrorMessage('Incorrect Email, Username or Password');
-                return;
+                setErrorMessage('Incorrect Email, Username or Password')
+                return
             }
 
-            const accountHolderId = accountHolderSnapshot.docs[0].id;
+            const accountHolderId = accountHolderSnapshot.docs[0].id
 
             const preschoolerQ = query(
                 preschoolersRef,
                 where('Username', '==', username),
                 where('Password', '==', password),
-                where('AccountHolderId', '==', accountHolderId)
-            );
-            const preschoolerSnapshot = await getDocs(preschoolerQ);
+                where('AccountHolderId', '==', accountHolderId),
+            )
+            const preschoolerSnapshot = await getDocs(preschoolerQ)
 
-            console.log("Preschooler Snapshot:", preschoolerSnapshot);
+            console.log('Preschooler Snapshot:', preschoolerSnapshot)
 
             if (preschoolerSnapshot.empty) {
-                setErrorMessage('Incorrect Email, Username or Password');
-                return;
+                setErrorMessage('Incorrect Email, Username or Password')
+                return
             }
 
-            navigate('/menu');
-
+            navigate('/menu')
         } catch (error) {
-            console.error('Error signing in:', error);
-            setErrorMessage('An error occurred. Please try again later.');
+            console.error('Error signing in:', error)
+            setErrorMessage('An error occurred. Please try again later.')
         }
-    };
+    }
 
     return (
         <>
@@ -122,7 +126,7 @@ const SignIn = () => {
                         </form>
 
                         {errorMessage && (
-                            <div className="absolute -bottom-14 text-red-500 text-center font-bold">
+                            <div className="absolute -bottom-14 text-center font-bold text-red-500">
                                 {errorMessage}
                             </div>
                         )}
@@ -156,7 +160,7 @@ const SignIn = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default SignIn;
+export default SignIn

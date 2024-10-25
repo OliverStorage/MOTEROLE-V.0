@@ -13,25 +13,24 @@ import { app } from '../firebaseConfig' // Import Firebase config
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore'
 
 const Category = () => {
-    const db = getFirestore(app); // Initialize Firestore 
+    const db = getFirestore(app) // Initialize Firestore
     const [categories, setCategories] = useState(null)
 
     useEffect(() => {
-        document.title = 'Category';
-        fetchCategories();
-    }, []);
+        document.title = 'Category'
+        fetchCategories()
+    }, [])
 
     const fetchCategories = async () => {
-        const categoryCollection = collection(db, 'Category');
-        const categorySnapshot = await getDocs(categoryCollection);
-        const categories = categorySnapshot.docs.map(doc => ({
+        const categoryCollection = collection(db, 'Category')
+        const categorySnapshot = await getDocs(categoryCollection)
+        const categories = categorySnapshot.docs.map((doc) => ({
             ...doc.data(),
-            id: doc.id
-        }));
-        setCategories(categories);
-        console.log(categories); // For debugging
-    }; //effect
-
+            id: doc.id,
+        }))
+        setCategories(categories)
+        console.log(categories) // For debugging
+    } //effect
 
     return (
         <>
@@ -52,7 +51,7 @@ const Category = () => {
                     <div className="text-shadow text-8xl mobile:text-5xl ipad:text-7xl">
                         Mga Kategorya
                     </div>
-                    <div className="text-shadow flex h-[70%] w-[80%] rounded-3xl border-8 border-bluesky bg-white p-8 mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
+                    <div className="text-shadow flex h-[70%] w-[80%] rounded-3xl border-8 border-limblue bg-white p-8 mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
                         <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-x-auto">
                             {categories?.length > 1 &&
                                 categories.map((category) => (
@@ -128,4 +127,4 @@ const Category = () => {
     )
 }
 
-export default Category;
+export default Category

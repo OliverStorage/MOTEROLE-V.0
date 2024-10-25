@@ -18,7 +18,7 @@ const ModalLeaderBoard = ({ onClose }) => {
                         style={{ backgroundImage: `url(${Ribbon})` }}
                         className="absolute inset-x-0 -top-7 flex h-28 w-full flex-col items-center bg-cover bg-center text-center mobile:-top-9"
                     >
-                        <div className="absolute -right-6 z-50 ipad:-right-7 mobile:top-3 mobile:-right-5">
+                        <div className="absolute -right-6 z-50 mobile:-right-5 mobile:top-3 ipad:-right-7">
                             <button className="action-btn flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white">
                                 <LuArrowBigLeft
                                     onClick={onClose}

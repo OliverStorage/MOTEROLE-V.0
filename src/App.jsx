@@ -40,7 +40,7 @@ const App = () => {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/ingame" element={<Ingame />} />
 
-                <Route path="/Exercises/:categoryId" element={<Exercises/>} /> 
+                <Route path="/Exercises/:categoryId" element={<Exercises />} />
 
                 <Route path="/a" element={<A />} />
                 <Route path="/b" element={<B />} />

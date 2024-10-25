@@ -1,75 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import Background from '../components/Background';
-import Play from '../assets/menubutton/play.png';
-import Achievement from '../assets/menubutton/achievement.png';
-import Profile from '../assets/menubutton/profile.png';
-import Settings from '../assets/menubutton/settings.png';
-import { Link, useNavigate } from 'react-router-dom';
-import FullScreen from '../components/FullScreen';
-import Leader from '../assets/leaderboard/leader.png';
-import ModalLeaderBoard from '../components/ModalLeaderBoard';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, child, get, update } from 'firebase/database';
-import { app } from '../firebaseConfig';
+import React, { useEffect, useState } from 'react'
+import Background from '../components/Background'
+import Play from '../assets/menubutton/play.png'
+import Achievement from '../assets/menubutton/achievement.png'
+import Profile from '../assets/menubutton/profile.png'
+import Settings from '../assets/menubutton/settings.png'
+import { Link, useNavigate } from 'react-router-dom'
+import FullScreen from '../components/FullScreen'
+import Leader from '../assets/leaderboard/leader.png'
+import ModalLeaderBoard from '../components/ModalLeaderBoard'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getDatabase, ref, child, get, update } from 'firebase/database'
+import { app } from '../firebaseConfig'
 
-const database = getDatabase(app);
+const database = getDatabase(app)
 
 const Menu = () => {
-    const [showModal, setShowModal] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        document.title = 'Menu';
+        document.title = 'Menu'
 
         const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
             if (user) {
-                const uid = user.uid;
-                const dbRef = ref(database);
+                const uid = user.uid
+                const dbRef = ref(database)
 
                 get(child(dbRef, `AccountHolder/${uid}`))
                     .then((snapshot) => {
                         if (snapshot.exists()) {
-                            const accountHolderData = snapshot.val();
-                            console.log("AccountHolder Data:", accountHolderData);
-                            
-                            const accountHolderId = accountHolderData.AccountHolderId;
-                            return get(child(dbRef, `Preschooler/${accountHolderId}`));
+                            const accountHolderData = snapshot.val()
+                            console.log(
+                                'AccountHolder Data:',
+                                accountHolderData,
+                            )
+
+                            const accountHolderId =
+                                accountHolderData.AccountHolderId
+                            return get(
+                                child(dbRef, `Preschooler/${accountHolderId}`),
+                            )
                         } else {
-                            console.log("No AccountHolder data available");
-                            setLoading(false);
+                            console.log('No AccountHolder data available')
+                            setLoading(false)
                         }
                     })
                     .then((preschoolerSnapshot) => {
-                        if (preschoolerSnapshot && preschoolerSnapshot.exists()) {
-                            const preschoolerData = preschoolerSnapshot.val();
-                            console.log("Preschooler Data:", preschoolerData);
+                        if (
+                            preschoolerSnapshot &&
+                            preschoolerSnapshot.exists()
+                        ) {
+                            const preschoolerData = preschoolerSnapshot.val()
+                            console.log('Preschooler Data:', preschoolerData)
                         } else {
-                            console.log("No Preschooler data available");
+                            console.log('No Preschooler data available')
                         }
                     })
                     .catch((error) => {
-                        console.error("Error fetching data:", error);
+                        console.error('Error fetching data:', error)
                     })
                     .finally(() => {
-                        setLoading(false);
-                    });
+                        setLoading(false)
+                    })
             } else {
-                console.log("User is signed out");
-                setLoading(false);
+                console.log('User is signed out')
+                setLoading(false)
             }
-        });
+        })
 
-        return () => unsubscribe(); // Cleanup subscription
-    }, []);
+        return () => unsubscribe() // Cleanup subscription
+    }, [])
 
     const handleLaroClick = () => {
-        const auth = getAuth();
-        const user = auth.currentUser;
+        const auth = getAuth()
+        const user = auth.currentUser
 
         if (user) {
-            const userId = user.uid;
-            const userRef = ref(database, `users/${userId}`);
+            const userId = user.uid
+            const userRef = ref(database, `users/${userId}`)
 
             // Reset selections when going to the Category page
             update(userRef, {
@@ -78,14 +87,14 @@ const Menu = () => {
                 selectedDifficulty: null,
                 startTime: null,
                 score: 0,
-                results: null
-            });
+                results: null,
+            })
         }
-        navigate('/category');
-    };
+        navigate('/category')
+    }
 
     if (loading) {
-        return <div>Loading...</div>; // Loading state
+        return <div>Loading...</div> // Loading state
     }
 
     return (
@@ -96,7 +105,9 @@ const Menu = () => {
                     <FullScreen />
                 </div>
                 <div className="-mt-20 flex w-[80%] flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-10">
-                    <div className="text-shadow text-9xl mobile:text-7xl">MoTeRole</div>
+                    <div className="text-shadow text-9xl mobile:text-7xl">
+                        MoTeRole
+                    </div>
                     <div className="flex space-x-4 text-4xl mobile:text-xl ipad:text-2xl">
                         <Link
                             to="/category"
@@ -147,7 +158,7 @@ const Menu = () => {
                 <div className="w-1/10 flex select-none flex-col justify-between opacity-100">
                     <button
                         onClick={() => setShowModal(true)}
-                        className="flex cursor-pointer mobile:-translate-y-1 items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1"
+                        className="flex cursor-pointer items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1 mobile:-translate-y-1"
                     >
                         <img
                             src={Leader}
@@ -163,7 +174,7 @@ const Menu = () => {
                 </div>
             )}
         </>
-    );
-};
+    )
+}
 
-export default Menu;
+export default Menu

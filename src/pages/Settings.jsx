@@ -1,20 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import Actionbtn from '../components/Actionbtn'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import TermsConditions from '../components/TermsConditions' // Import the modal component
+import TermsConditions from '../components/TermsConditions'
+import bbbs from '../assets/bbbs.mp3'
 
 const Settings = () => {
-    const [tugtogVolume, setTugtogVolume] = useState(30) // Initial volume for Tugtog (Music)
-    const [tunogVolume, setTunogVolume] = useState(30) // Initial volume for Tunog (Sound Effects)
+    const [tugtogVolume, setTugtogVolume] = useState(30) // Initial volume for Music
+    const [tunogVolume, setTunogVolume] = useState(30) // Initial volume for Sound Effects
+    const [selectedSong, setSelectedSong] = useState('bbbs.mp3') // Default selected song
     const [showModal, setShowModal] = useState(false) // State for toggling the modal
+    const [isPlaying, setIsPlaying] = useState(false) // Track whether the audio is playing
+    const audioRef = useRef(null) // Ref for controlling the audio
 
     useEffect(() => {
         document.title = 'Settings'
     }, [])
+
+    // Play or pause the audio based on user interaction
+    const handlePlayMusic = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause()
+            } else {
+                audioRef.current.play()
+            }
+            setIsPlaying(!isPlaying)
+        }
+    }
+
+    // Adjust the volume of the music
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = tugtogVolume / 100 // Convert volume to 0-1 range
+        }
+    }, [tugtogVolume])
+
+    // Change the song when a new one is selected
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.pause() // Stop the current audio
+            audioRef.current.load() // Reload the new song
+            if (isPlaying) {
+                audioRef.current.play() // Play the new song if the audio was playing
+            }
+        }
+    }, [selectedSong])
 
     // Handler functions to change the volume levels
     const handleTugtogVolumeChange = (e) => {
@@ -23,6 +57,10 @@ const Settings = () => {
 
     const handleTunogVolumeChange = (e) => {
         setTunogVolume(e.target.value)
+    }
+
+    const handleSongChange = (e) => {
+        setSelectedSong(e.target.value)
     }
 
     return (
@@ -82,19 +120,33 @@ const Settings = () => {
                                         Mga Tugtog:
                                     </div>
                                     <select
-                                        name=""
-                                        id=""
-                                        defaultValue="music1"
+                                        name="song-select"
+                                        id="song-select"
+                                        value={selectedSong}
+                                        onChange={handleSongChange}
                                         className="h-10 w-full rounded-lg bg-white px-4 text-3xl text-black focus:outline-none mobile:h-8 mobile:text-xl ipad:text-lg"
                                     >
-                                        <option value="music1">
-                                            Baba black sheep
+                                        <option value="bbbs.mp3">
+                                            Baba Black Sheep
                                         </option>
-                                        <option value="music2">2</option>
-                                        <option value="music3">3</option>
-                                        <option value="music4">4</option>
+                                        <option value="music2.mp3">
+                                            Song 2
+                                        </option>
+                                        <option value="music3.mp3">
+                                            Song 3
+                                        </option>
+                                        <option value="music4.mp3">
+                                            Song 4
+                                        </option>
                                     </select>
                                 </div>
+                                {/* Play/Pause Button */}
+                                <button
+                                    onClick={handlePlayMusic}
+                                    className="mt-4 text-white"
+                                >
+                                    {isPlaying ? 'Pause Music' : 'Play Music'}
+                                </button>
                             </div>
 
                             <div className="flex justify-evenly space-x-4 text-center text-xl mobile:text-sm ipad:text-xl">
@@ -112,7 +164,6 @@ const Settings = () => {
                     </div>
                 </div>
                 {/* right column */}
-                {/* disabled and zero-opacity */}
                 <div className="w-1/10 flex select-none flex-col space-y-4 opacity-0 mobile:space-y-3">
                     <Actionbtn
                         text=""
@@ -130,6 +181,8 @@ const Settings = () => {
                     />
                 </div>
             </div>
+            {/* Audio element */}
+            <audio ref={audioRef} src={`/assets/${selectedSong}`} loop />
 
             {/* Modal */}
             {showModal && (

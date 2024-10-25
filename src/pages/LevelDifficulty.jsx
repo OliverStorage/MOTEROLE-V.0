@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import Background from '../components/Background';
-import FullScreen from '../components/FullScreen';
-import Actionbtn from '../components/Actionbtn';
-import { Link, useNavigate } from 'react-router-dom';
-import { LuArrowBigLeft } from 'react-icons/lu';
-import { PiGearSixBold } from 'react-icons/pi';
-import { IoBulbOutline } from 'react-icons/io5';
-import Madali from '../assets/levelbtn/Madali.png';
-import Karaniwan from '../assets/levelbtn/Karaniwan.png';
-import Mahirap from '../assets/levelbtn/Mahirap.png';
-import { db } from '../firebaseConfig'; // Import your Firebase configuration
-import { collection, addDoc } from 'firebase/firestore'; // Import Firestore functions
+import React, { useEffect } from 'react'
+import Background from '../components/Background'
+import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { Link, useNavigate } from 'react-router-dom'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+import Madali from '../assets/levelbtn/Madali.png'
+import Karaniwan from '../assets/levelbtn/Karaniwan.png'
+import Mahirap from '../assets/levelbtn/Mahirap.png'
+import { db } from '../firebaseConfig' // Import your Firebase configuration
+import { collection, addDoc } from 'firebase/firestore' // Import Firestore functions
 
 const LevelDifficulty = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     useEffect(() => {
-        document.title = 'Line';
-    }, []);
+        document.title = 'Line'
+    }, [])
 
     const handleDifficultySelect = async (level, difficultyLevelId) => {
         try {
@@ -26,13 +26,13 @@ const LevelDifficulty = () => {
                 categoryId: 'Linesk41GvFSEcpDZNsZZ1RwK',
                 difficultyLevel: level,
                 difficultyLevelId: difficultyLevelId,
-            });
+            })
             // Proceed to game session
-            navigate('/ingame');
+            navigate('/ingame')
         } catch (error) {
-            console.error("Error adding document: ", error);
+            console.error('Error adding document: ', error)
         }
-    };
+    }
 
     return (
         <>
@@ -46,7 +46,7 @@ const LevelDifficulty = () => {
                         isLink={false}
                         onClick={() => {
                             // Handle back button action
-                            navigate('/'); // or your desired route
+                            navigate('/') // or your desired route
                         }}
                     />
                     <FullScreen />
@@ -58,33 +58,54 @@ const LevelDifficulty = () => {
                         </span>
                         <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 text-center font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-3xl ipad:overflow-x-auto">
                             <div
-                                onClick={() => handleDifficultySelect('Madali', 'q7VKQsFEEsi0W3UFyCeS')}
-                                className="text-shadow h-[80%] w-72 flex-shrink-0 rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3 cursor-pointer"
+                                onClick={() =>
+                                    handleDifficultySelect(
+                                        'Madali',
+                                        'q7VKQsFEEsi0W3UFyCeS',
+                                    )
+                                }
+                                className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
                             >
                                 <div
-                                    style={{ backgroundImage: `url(${Madali})` }}
+                                    style={{
+                                        backgroundImage: `url(${Madali})`,
+                                    }}
                                     className="h-full w-full bg-cover bg-center"
                                 >
                                     <span>Madali</span>
                                 </div>
                             </div>
                             <div
-                                onClick={() => handleDifficultySelect('Karaniwan', 'NI9yTKZHNSEoJuxO5nex')}
-                                className="text-shadow h-[80%] w-72 flex-shrink-0 rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3 cursor-pointer"
+                                onClick={() =>
+                                    handleDifficultySelect(
+                                        'Karaniwan',
+                                        'NI9yTKZHNSEoJuxO5nex',
+                                    )
+                                }
+                                className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
                             >
                                 <div
-                                    style={{ backgroundImage: `url(${Karaniwan})` }}
+                                    style={{
+                                        backgroundImage: `url(${Karaniwan})`,
+                                    }}
                                     className="h-full w-full bg-cover bg-center"
                                 >
                                     <span>Karaniwan</span>
                                 </div>
                             </div>
                             <div
-                                onClick={() => handleDifficultySelect('Mahirap', '1igko9SyAvKBXuaBKXrH')}
-                                className="text-shadow h-[80%] w-72 flex-shrink-0 rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3 cursor-pointer"
+                                onClick={() =>
+                                    handleDifficultySelect(
+                                        'Mahirap',
+                                        '1igko9SyAvKBXuaBKXrH',
+                                    )
+                                }
+                                className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
                             >
                                 <div
-                                    style={{ backgroundImage: `url(${Mahirap})` }}
+                                    style={{
+                                        backgroundImage: `url(${Mahirap})`,
+                                    }}
                                     className="h-full w-full bg-cover bg-center"
                                 >
                                     <span>Mahirap</span>
@@ -109,7 +130,7 @@ const LevelDifficulty = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default LevelDifficulty;
+export default LevelDifficulty

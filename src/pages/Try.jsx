@@ -6,7 +6,7 @@ import { LuArrowBigLeft } from 'react-icons/lu'
 const ModalResultHard = ({ onClose }) => {
     return (
         <div className="absolute inset-0 flex h-screen w-screen items-center justify-center bg-black bg-opacity-70 font-nunito font-black">
-            <div className="bg-lavender relative flex h-[70%] w-1/2 flex-col items-center justify-between gap-6 rounded-3xl border-8 border-black p-8 mobile:h-[80%] mobile:gap-5 mobile:p-4">
+            <div className="relative flex h-[70%] w-1/2 flex-col items-center justify-between gap-6 rounded-3xl border-8 border-black bg-lavender p-8 mobile:h-[80%] mobile:gap-5 mobile:p-4">
                 <img
                     src={Cloud}
                     alt="cloud.png"
