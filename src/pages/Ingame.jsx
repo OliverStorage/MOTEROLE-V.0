@@ -142,7 +142,7 @@ const Ingame = () => {
                             <div className="h-2 w-full border-t-8 border-dashed border-linered mobile:border-t-4" />
                             <div className="h-2 w-full bg-lineblue mobile:h-1" />
                             <div
-                                style={{ backgroundImage: `url(${A})` }}
+                                style={{ backgroundImage: `url(${A})` }}/*{gameexercise.ExerciseImage}*/
                                 className="absolute inset-0 z-10 bg-contain bg-center bg-no-repeat mobile:m-4 ipad:m-4"
                             />
                             {/* Canvas for Drawing */}

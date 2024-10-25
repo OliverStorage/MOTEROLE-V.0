@@ -20,6 +20,7 @@ import A from './components/abcEasy/A'
 import B from './components/abcEasy/B'
 import C from './components/abcEasy/C'
 import Exercises from './pages/Exercises'
+import GameExercise from './pages/GameExercise'
 
 const App = () => {
     return (
@@ -38,8 +39,9 @@ const App = () => {
                 <Route path="/achievement" element={<Achievement />} />
                 <Route path="/tutorial" element={<Tutorial />} />
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/ingame" element={<Ingame />} />
-
+                
+                <Route path="/Ingame/:gameexerciseId" element={<Ingame />} />
+                <Route path="/GameExercise/:exercisesId" element={<GameExercise />} />
                 <Route path="/Exercises/:categoryId" element={<Exercises />} />
 
                 <Route path="/a" element={<A />} />
