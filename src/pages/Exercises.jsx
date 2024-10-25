@@ -36,8 +36,10 @@ const useLineImages = (lineTypes) => {
                         },
                     };
                 } catch (err) {
+
                     console.error(`Error loading images for ${lineType}:`, err.message);
                     const fallbackImage = '/path/to/fallback.png';
+
                     return {
                         [lineType]: {
                             linebg: fallbackImage,
@@ -69,6 +71,7 @@ const MemoizedActionbtn = React.memo(({ text, to, bgColor, icon }) => (
 ));
 
 const Exercises = () => {
+
     const { categoryId } = useParams();
     const navigate = useNavigate();
     const [exercises, setExercises] = useState([]);
@@ -92,10 +95,12 @@ const Exercises = () => {
             orderBy('Order', 'asc')
         );
 
+
         const unsubscribe = onSnapshot(exercisesQuery, (snapshot) => {
             const exercisesData = snapshot.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
+
             }));
             setExercises(exercisesData);
             console.log(exercisesData); // For debugging
@@ -108,6 +113,7 @@ const Exercises = () => {
     }, [categoryId]);
 
     if (!category) return null; // Loading state
+
 
     return (
         <>
@@ -133,7 +139,9 @@ const Exercises = () => {
                         <span
                             className={`${category.borderColor} absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl`}
                         >
+
                            {category.CategoryName} 
+
                         </span>
 
                         {/* Exercises Container */}
@@ -174,5 +182,6 @@ const Exercises = () => {
         </>
     );
 };
+
 
 export default Exercises;
