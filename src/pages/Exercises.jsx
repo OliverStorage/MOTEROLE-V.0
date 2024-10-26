@@ -137,7 +137,7 @@ const Exercises = () => {
                     >
                         {/* Title */}
                         <span
-                            className={`${category.borderColor} absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl`}
+                            className={`${category.borderColor} absolute -top-9 flex h-14 w-1/3 px-4 items-center justify-center rounded-2xl border-8 bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:w-auto mobile:border-4 mobile:text-2xl ipad:text-3xl`}
                         >
 
                            {category.CategoryName} 

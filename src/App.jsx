@@ -21,38 +21,53 @@ import B from './components/abcEasy/B'
 import C from './components/abcEasy/C'
 import Exercises from './pages/Exercises'
 import GameExercise from './pages/GameExercise'
+import { MusicProvider } from './contexts/MusicContext' // Correct provider name
 
 const App = () => {
     return (
-        <HashRouter>
-            <Routes>
-                <Route index element={<Menu />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/menu" element={<Menu />} />
-                <Route path="/category" element={<Category />} />
-                <Route path="/line" element={<Line />} />
-                <Route path="/shape" element={<Shape />} />
-                <Route path="/alphabet" element={<Alphabet />} />
-                <Route path="/leveldifficulty" element={<LevelDifficulty />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/achievement" element={<Achievement />} />
-                <Route path="/tutorial" element={<Tutorial />} />
-                <Route path="/settings" element={<Settings />} />
-                
-                <Route path="/Ingame/:gameexerciseId" element={<Ingame />} />
-                <Route path="/GameExercise/:exercisesId" element={<GameExercise />} />
-                <Route path="/Exercises/:categoryId" element={<Exercises />} />
+        <MusicProvider>
+            <HashRouter>
+                <Routes>
+                    <Route index element={<Menu />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/menu" element={<Menu />} />
+                    <Route path="/category" element={<Category />} />
+                    <Route path="/line" element={<Line />} />
+                    <Route path="/shape" element={<Shape />} />
+                    <Route path="/alphabet" element={<Alphabet />} />
+                    <Route
+                        path="/leveldifficulty"
+                        element={<LevelDifficulty />}
+                    />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/achievement" element={<Achievement />} />
+                    <Route path="/tutorial" element={<Tutorial />} />
+                    <Route path="/settings" element={<Settings />} />
 
-                <Route path="/a" element={<A />} />
-                <Route path="/b" element={<B />} />
-                <Route path="/c" element={<C />} />
+                    <Route
+                        path="/Ingame/:gameexerciseId"
+                        element={<Ingame />}
+                    />
+                    <Route
+                        path="/GameExercise/:exercisesId"
+                        element={<GameExercise />}
+                    />
+                    <Route
+                        path="/Exercises/:categoryId"
+                        element={<Exercises />}
+                    />
 
-                <Route path="/try" element={<Try />} />
+                    <Route path="/a" element={<A />} />
+                    <Route path="/b" element={<B />} />
+                    <Route path="/c" element={<C />} />
 
-                <Route path="*" element={<Error />} />
-            </Routes>
-        </HashRouter>
+                    <Route path="/try" element={<Try />} />
+
+                    <Route path="*" element={<Error />} />
+                </Routes>
+            </HashRouter>
+        </MusicProvider>
     )
 }
 
