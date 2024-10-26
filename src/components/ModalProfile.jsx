@@ -22,8 +22,8 @@ const ModalProfile = ({ onClose }) => {
                     </div>
 
                     <div className="text-outline tracking-wide">My Profile</div>
-                    <div className="flex w-full items-center gap-3 text-3xl mobile:text-sm ipad:text-2xl mobile:gap-1">
-                        <div className="h-[100px] w-[110px] rounded-full border-4 border-bluesky bg-white ipad:h-[80px] ipad:w-[90px] mobile:w-[65px] mobile:h-[55px]"></div>
+                    <div className="flex w-full items-center gap-3 text-3xl mobile:gap-1 mobile:text-sm ipad:text-2xl">
+                        <div className="h-[100px] w-[110px] rounded-full border-4 border-bluesky bg-white mobile:h-[55px] mobile:w-[65px] ipad:h-[80px] ipad:w-[90px]"></div>
                         <div className="flex w-full justify-between">
                             <div className="text-outline flex flex-col justify-between">
                                 <div className="flex gap-3 mobile:gap-1">
@@ -37,7 +37,7 @@ const ModalProfile = ({ onClose }) => {
                                 </div>
                             </div>
                             <div className="flex flex-col items-end justify-between">
-                                <button className="bg-back inner-shadow-deactive rounded-xl px-3 py-1 duration-100 active:translate-y-1 active:drop-shadow-[0px_0px_0px_#000000]">
+                                <button className="inner-shadow-deactive rounded-xl bg-back px-3 py-1 duration-100 active:translate-y-1 active:drop-shadow-[0px_0px_0px_#000000]">
                                     <span className="text-outline flex items-center justify-center text-xl mobile:text-xs">
                                         Logout
                                     </span>
@@ -49,8 +49,8 @@ const ModalProfile = ({ onClose }) => {
                         </div>
                     </div>
                     {/* tab */}
-                    <div className="text-moldcheese flex h-full w-full flex-col space-y-2  overflow-hidden p-1 text-3xl mobile:text-base">
-                        <div className="text-outline flex w-full space-x-4 mobile:space-x-2">
+                    <div className="flex h-full w-full flex-col space-y-2 overflow-hidden p-1 text-3xl text-moldcheese mobile:text-base">
+                        <div className="flex w-full space-x-4 mobile:space-x-2">
                             {/* Tab 1 */}
                             <div
                                 onClick={() => setActiveTab('category')}
@@ -61,9 +61,17 @@ const ModalProfile = ({ onClose }) => {
                                 }`}
                             >
                                 <span
-                                    className={`drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]`}
+                                    className={`flex items-center space-x-1 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]`}
                                 >
-                                    Kategory
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FFD568"
+                                        height="1em"
+                                        width="1em"
+                                    >
+                                        <path d="M21 4h-3V3a1 1 0 00-1-1H7a1 1 0 00-1 1v1H3a1 1 0 00-1 1v3c0 4.31 1.799 6.91 4.819 7.012A6.001 6.001 0 0011 17.91V20H9v2h6v-2h-2v-2.09a6.01 6.01 0 004.181-2.898C20.201 14.91 22 12.31 22 8V5a1 1 0 00-1-1zM4 8V6h2v6.83C4.216 12.078 4 9.299 4 8zm8 8c-2.206 0-4-1.794-4-4V4h8v8c0 2.206-1.794 4-4 4zm6-3.17V6h2v2c0 1.299-.216 4.078-2 4.83z" />
+                                    </svg>
+                                    <span> Kategory</span>
                                 </span>
                             </div>
                             {/* Tab 2 */}
@@ -76,15 +84,23 @@ const ModalProfile = ({ onClose }) => {
                                 }`}
                             >
                                 <span
-                                    className={`drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]`}
+                                    className={`flex items-center space-x-1 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]`}
                                 >
-                                    Lebel
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FFD568"
+                                        height="1em"
+                                        width="1em"
+                                    >
+                                        <path d="M6 13H2a1 1 0 00-1 1v8a1 1 0 001 1h4a1 1 0 001-1v-8a1 1 0 00-1-1zm-1 8H3v-6h2zM22 9h-4a1 1 0 00-1 1v12a1 1 0 001 1h4a1 1 0 001-1V10a1 1 0 00-1-1zm-1 12h-2V11h2zM14 1h-4a1 1 0 00-1 1v20a1 1 0 001 1h4a1 1 0 001-1V2a1 1 0 00-1-1zm-1 20h-2V3h2z" />
+                                    </svg>
+                                    <span> Lebel</span>
                                 </span>
                             </div>
                         </div>
 
                         {activeTab === 'category' ? (
-                            <div className="inner-shadow flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3">
+                            <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
                                 <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
                                     asda
                                 </div>
@@ -114,7 +130,7 @@ const ModalProfile = ({ onClose }) => {
                                 </div>
                             </div>
                         ) : (
-                            <div className="inner-shadow flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3">
+                            <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
                                 <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
                                     123 asda
                                 </div>
