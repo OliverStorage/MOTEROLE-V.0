@@ -6,9 +6,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import line from '../assets/categorybtn/line.png'
-import shape from '../assets/categorybtn/shape.png'
-import abc from '../assets/categorybtn/abc.png'
 import { app } from '../firebaseConfig'
 import {
     getFirestore,

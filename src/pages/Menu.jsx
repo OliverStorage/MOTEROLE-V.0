@@ -11,6 +11,7 @@ import ModalLeaderBoard from '../components/ModalLeaderBoard'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getDatabase, ref, child, get, update } from 'firebase/database'
 import { app } from '../firebaseConfig'
+import ModalProfile from '../components/ModalProfile'
 
 const database = getDatabase(app)
 
@@ -132,7 +133,7 @@ const Menu = () => {
                             <span>Tagumpay</span>
                         </Link>
                         <Link
-                            to="/profile"
+                            onClick={() => setShowModal(true)}
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-bluesky p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
                         >
                             <img
@@ -170,7 +171,7 @@ const Menu = () => {
             </div>
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <ModalLeaderBoard onClose={() => setShowModal(false)} />
+                    <ModalProfile onClose={() => setShowModal(false)} />
                 </div>
             )}
         </>
