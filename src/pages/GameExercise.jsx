@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Background from '../components/Background';
 import FullScreen from '../components/FullScreen';
@@ -16,25 +17,26 @@ const GameExercise = () => {
     const [gameExercises, setGameExercises] = useState([]);
     const navigate = useNavigate(); // Use navigate for programmatic navigation
 
+
     useEffect(() => {
-        document.title = 'Game Exercise';
-        const gameExerciseCollection = collection(db, 'GameExercise');
+        document.title = 'Game Exercise'
+        const gameExerciseCollection = collection(db, 'GameExercise')
         const gameExerciseQuery = query(
             gameExerciseCollection,
-            where('ExercisesId', '==', exercisesId)
-        );
+            where('ExercisesId', '==', exercisesId),
+        )
 
         const unsubscribe = onSnapshot(gameExerciseQuery, (snapshot) => {
             const gameExercisesData = snapshot.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
-            }));
-            setGameExercises(gameExercisesData);
-            console.log(gameExercisesData);
-        });
+            }))
+            setGameExercises(gameExercisesData)
+            console.log(gameExercisesData)
+        })
 
-        return () => unsubscribe();
-    }, [exercisesId]);
+        return () => unsubscribe()
+    }, [exercisesId])
 
     const handleDifficultySelect = async (gameExerciseId) => {
         // Prepare data for GameSession
@@ -69,20 +71,24 @@ const GameExercise = () => {
                     <FullScreen />
                 </div>
                 <div className="flex w-full flex-col items-center justify-center font-bubbles text-white">
-                    <div className="text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 border-softgray bg-white p-8">
-                        <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 border-softgray bg-white font-nunito text-4xl font-black text-black">
-                            Mga Lebel sa {/* Lagay ng {exercises.ExerciseName}*/}
+                    <div className="text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 border-softgray bg-white p-8 mobile:h-[80%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
+                        <span className="absolute -top-9 flex h-14 w-auto items-center justify-center rounded-2xl border-8 border-softgray bg-white px-4 font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
+                            Mga Lebel sa
+                            {/* Lagay ng {exercises.ExerciseName}*/}
                         </span>
-                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 text-center font-nunito text-4xl font-black text-black">
+                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 text-center font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
                             {gameExercises.length > 0 &&
                                 gameExercises.map((gameExercise) => (
+
                                     <div
                                         key={gameExercise.id} 
                                         onClick={() => handleDifficultySelect(gameExercise.id)} // Use the handler
                                         className={`text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
-                                    >
+
                                         <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center">
-                                            <span>{gameExercise.DifficultyLevel}</span>
+                                            <span>
+                                                {gameExercise.DifficultyLevel}
+                                            </span>
                                         </div>
                                     </div>
                                 ))}
@@ -105,7 +111,7 @@ const GameExercise = () => {
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default GameExercise;
+export default GameExercise

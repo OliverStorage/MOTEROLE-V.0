@@ -116,7 +116,7 @@ const Alphabet = () => {
                     <FullScreen />
                 </div>
 
-                <div className="just text-shadow relative flex h-[70%] w-[75%] flex-col items-center rounded-3xl border-8 border-lava bg-white p-8 mobile:h-[85%] mobile:w-[72%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:w-[71%] ipad:p-6">
+                <div className="just text-shadow relative flex h-[70%] w-[75%] flex-col items-center rounded-3xl border-8 border-lava bg-white p-8 mobile:h-[85%] mobile:w-[72%] mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
                     <span className="absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 border-lava bg-white font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
                         Letra
                     </span>
