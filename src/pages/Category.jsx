@@ -10,27 +10,38 @@ import line from '../assets/categorybtn/line.png'
 import shape from '../assets/categorybtn/shape.png'
 import abc from '../assets/categorybtn/abc.png'
 import { app } from '../firebaseConfig' // Import Firebase config
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, orderBy, query } from 'firebase/firestore';
 
 const Category = () => {
-    const db = getFirestore(app) // Initialize Firestore
-    const [categories, setCategories] = useState(null)
+    const db = getFirestore(app);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        document.title = 'Category'
-        fetchCategories()
-    }, [])
+        document.title = 'Category';
+        fetchCategories();
+    }, []);
 
     const fetchCategories = async () => {
-        const categoryCollection = collection(db, 'Category')
-        const categorySnapshot = await getDocs(categoryCollection)
-        const categories = categorySnapshot.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-        }))
-        setCategories(categories)
-        console.log(categories) // For debugging
-    } //effect
+        try {
+            setLoading(true);
+            const categoryCollection = collection(db, 'Category');
+
+            // Create a query to order by the 'Order' field
+            const categoryQuery = query(categoryCollection, orderBy('Order'));
+
+            const categorySnapshot = await getDocs(categoryQuery);
+            const categories = categorySnapshot.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+            }));
+            setCategories(categories);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
