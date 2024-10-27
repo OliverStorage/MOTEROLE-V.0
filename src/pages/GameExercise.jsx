@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import Background from '../components/Background'
-import FullScreen from '../components/FullScreen'
-import Actionbtn from '../components/Actionbtn'
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
-import { LuArrowBigLeft } from 'react-icons/lu'
-import { PiGearSixBold } from 'react-icons/pi'
-import { IoBulbOutline } from 'react-icons/io5'
-import { db } from '../firebaseConfig'
-import { collection, query, where, onSnapshot } from 'firebase/firestore'
+
+import React, { useEffect, useState } from 'react';
+import Background from '../components/Background';
+import FullScreen from '../components/FullScreen';
+import Actionbtn from '../components/Actionbtn';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { LuArrowBigLeft } from 'react-icons/lu';
+import { PiGearSixBold } from 'react-icons/pi';
+import { IoBulbOutline } from 'react-icons/io5';
+import { db } from '../firebaseConfig';
+import { collection, query, where, onSnapshot, addDoc } from 'firebase/firestore';
 
 const GameExercise = () => {
-    const { exercisesId } = useParams()
-    const location = useLocation()
-    const categoryId = location.state?.categoryId // Get categoryId from state
-    const [gameExercises, setGameExercises] = useState([])
+    const { exercisesId } = useParams();
+    const location = useLocation();
+    const categoryId = location.state?.categoryId; // Get categoryId from state
+    const [gameExercises, setGameExercises] = useState([]);
+    const navigate = useNavigate(); // Use navigate for programmatic navigation
+
 
     useEffect(() => {
         document.title = 'Game Exercise'
@@ -34,6 +37,25 @@ const GameExercise = () => {
 
         return () => unsubscribe()
     }, [exercisesId])
+
+    const handleDifficultySelect = async (gameExerciseId) => {
+        // Prepare data for GameSession
+        const sessionData = {
+            GameExerciseId: gameExerciseId,
+            SessionStartTime: new Date(), // Set the current time
+            // You may need to set PreschoolerID based on your application logic
+        };
+
+        // Add the session to the GameSession table
+        try {
+            const gameSessionRef = collection(db, 'GameSession');
+            await addDoc(gameSessionRef, sessionData);
+            // Navigate to the GameSession if needed
+            navigate(`/Ingame/${gameExerciseId}`);
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    };
 
     return (
         <>
@@ -57,17 +79,18 @@ const GameExercise = () => {
                         <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 text-center font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
                             {gameExercises.length > 0 &&
                                 gameExercises.map((gameExercise) => (
-                                    <Link
-                                        key={gameExercise.id}
-                                        to={`/Ingame/${gameExercise.id}`}
-                                        className={`text-shadow flex h-[80%] w-72 flex-shrink-0 cursor-pointer items-center justify-center rounded-2xl border-8 border-softgray bg-butter mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
-                                    >
+
+                                    <div
+                                        key={gameExercise.id} 
+                                        onClick={() => handleDifficultySelect(gameExercise.id)} // Use the handler
+                                        className={`text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
+
                                         <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center">
                                             <span>
                                                 {gameExercise.DifficultyLevel}
                                             </span>
                                         </div>
-                                    </Link>
+                                    </div>
                                 ))}
                         </div>
                     </div>
