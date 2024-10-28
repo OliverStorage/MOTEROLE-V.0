@@ -22,7 +22,7 @@ const SignUp = () => {
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
-        document.title = 'Sign up'
+        document.title = 'MoTeRole - Sign up'
     })
 
     const db = getFirestore(app)

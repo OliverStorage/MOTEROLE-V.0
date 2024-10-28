@@ -8,6 +8,8 @@ import { collection, query, where, onSnapshot, addDoc } from 'firebase/firestore
 import Background from '../components/Background';
 import FullScreen from '../components/FullScreen';
 import Actionbtn from '../components/Actionbtn';
+import InfoPopup from '../components/InfoPopup'
+
 
 const GameExercise = () => {
     const { exercisesId } = useParams();
@@ -20,7 +22,6 @@ const GameExercise = () => {
         document.title = 'Game Exercise';
         const gameExerciseCollection = collection(db, 'GameExercise');
         const gameExerciseQuery = query(gameExerciseCollection, where('ExercisesId', '==', exercisesId));
-
         const unsubscribe = onSnapshot(gameExerciseQuery, (snapshot) => {
             const gameExercisesData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             setGameExercises(gameExercisesData);
@@ -32,18 +33,22 @@ const GameExercise = () => {
     const handleDifficultySelect = async (gameExerciseId) => {
         const sessionData = {
             GameExerciseId: gameExerciseId,
+
             SessionStartTime: new Date(),
         };
 
+
         try {
+
             const gameSessionRef = collection(db, 'GameSession');
             await addDoc(gameSessionRef, sessionData);
             navigate(`/Ingame/${gameExerciseId}`);
         } catch (error) {
             console.error("Error adding document: ", error);
             // You might want to show a user-friendly message here
+
         }
-    };
+    }
 
     const GameExerciseCard = ({ gameExercise }) => (
         <div
@@ -81,18 +86,29 @@ const GameExercise = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-1/10 flex flex-col space-y-4">
-                    <Actionbtn
-                        text=""
-                        to="/settings"
-                        bgColor="#AB47BC"
-                        icon={PiGearSixBold}
-                    />
-                    <Actionbtn
-                        text=""
-                        to="/achievement"
-                        bgColor="#8BC34A"
-                        icon={IoBulbOutline}
+                <div className="w-1/10 flex select-none flex-col justify-between">
+                    <div className="flex flex-col space-y-4 mobile:space-y-3">
+                        <Actionbtn
+                            text=""
+                            to="/settings"
+                            bgColor="#AB47BC"
+                            icon={PiGearSixBold}
+                        />
+                        {/* <Actionbtn
+                            text=""
+                            to="/achievement"
+                            bgColor="#8BC34A"
+                            icon={IoBulbOutline}
+                        /> */}
+                    </div>
+                    <InfoPopup
+                        className="flex flex-col"
+                        messages={[
+                            'LEBEL: PUMILI SA TATLONG KAHON NG LEBEL ANG NAIS NA SUBUKAN',
+                            'MADALI NA LEBEL NG LINYA: SUNDAN ANG LINYA BATAY SA GABAY NG NUMERO AT I-TRACE ANG LINYA',
+                            'KARANIWAN NA LEBEL NG LINYA: SUNDAN ANG LINYA BATAY SA LINYA NG PAG-TRACE',
+                            'MAHIRAP NA LEBEL NG LINYA: ISULAT ANG LINYA NG WALANG GABAY NA BATAYAN',
+                        ]}
                     />
                 </div>
             </div>

@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom'
 import Background from './Background'
 import FullScreen from './FullScreen'
 import Actionbtn from './Actionbtn'
+import { useEffect } from 'react'
 
 const CategoryPage = ({ title, items, images, borderColor, toPath }) => {
+    useEffect(() => {
+        document.title = 'MoTeRole - Category'
+    }, [])
     return (
         <div className="relative flex h-screen w-screen items-center justify-between p-5">
             {/* Left column */}

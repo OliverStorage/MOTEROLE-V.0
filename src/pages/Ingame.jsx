@@ -27,7 +27,7 @@ const Ingame = () => {
     const [difficultyLevel, setDifficultyLevel] = useState(null);
 
     useEffect(() => {
-        document.title = 'IN GAME';
+        document.title = 'MoTeRole - IN GAME';
     }, []);
 
     useEffect(() => {
@@ -248,12 +248,12 @@ const Ingame = () => {
                         icon={PiGearSixBold}
                         onClick={() => setShowModal(true)}
                     />
-                    <Actionbtn
+                    {/* <Actionbtn
                         text=""
                         to="/achievement"
                         bgColor="#8BC34A"
                         icon={IoBulbOutline}
-                    />
+                    /> */}
                 </div>
             </div>
 

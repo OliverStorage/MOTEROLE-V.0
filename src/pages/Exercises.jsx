@@ -78,7 +78,7 @@ const Exercises = () => {
     const [category, setCategory] = useState(null);
 
     useEffect(() => {
-        document.title = 'Exercises';
+        document.title = 'MoTeRole - Exercises';
         const categoryDocRef = doc(db, 'Category', categoryId);
         const categoryUnsubscribe = onSnapshot(categoryDocRef, (docSnapshot) => {
             if (docSnapshot.exists()) {
@@ -171,12 +171,12 @@ const Exercises = () => {
                         bgColor="#AB47BC"
                         icon={PiGearSixBold}
                     />
-                    <MemoizedActionbtn
+                    {/* <MemoizedActionbtn
                         text=""
                         to="/achievement"
                         bgColor="#8BC34A"
                         icon={IoBulbOutline}
-                    />
+                    /> */}
                 </div>
             </div>
         </>

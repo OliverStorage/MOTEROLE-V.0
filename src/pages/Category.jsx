@@ -11,6 +11,7 @@ import shape from '../assets/categorybtn/shape.png'
 import abc from '../assets/categorybtn/abc.png'
 import { app } from '../firebaseConfig' // Import Firebase config
 import { getFirestore, collection, getDocs, orderBy, query } from 'firebase/firestore';
+import InfoPopup from '../components/InfoPopup'
 
 const Category = () => {
     const db = getFirestore(app);
@@ -18,7 +19,7 @@ const Category = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        document.title = 'Category';
+        document.title = 'MoTeRole - Category'
         fetchCategories();
     }, []);
 
@@ -119,18 +120,28 @@ const Category = () => {
                     </div>
                 </div>
                 {/* right column */}
-                <div className="w-1/10 flex select-none flex-col space-y-4 mobile:space-y-3">
-                    <Actionbtn
-                        text=""
-                        to="/settings"
-                        bgColor="#AB47BC"
-                        icon={PiGearSixBold}
-                    />
-                    <Actionbtn
-                        text=""
-                        to="/achievement"
-                        bgColor="#8BC34A"
-                        icon={IoBulbOutline}
+                <div className="w-1/10 flex select-none flex-col justify-between">
+                    <div className="flex flex-col space-y-4 mobile:space-y-3">
+                        <Actionbtn
+                            text=""
+                            to="/settings"
+                            bgColor="#AB47BC"
+                            icon={PiGearSixBold}
+                        />
+                        {/* <Actionbtn
+                            text=""
+                            to="/achievement"
+                            bgColor="#8BC34A"
+                            icon={IoBulbOutline}
+                        /> */}
+                    </div>
+                    <InfoPopup
+                        className="flex flex-col"
+                        messages={[
+                            'Linya: Sa Kategoryang ito, iguguhit ang iba’t - ibang uri ng linya.',
+                            'Hugis: Sa Kategoryang ito, iguguhit ang iba’t - ibang uri ng hugis.',
+                            'Alpabeto: Sa Kategoryang ito, iguguhit ang iba’t - ibang uri ng hugis.',
+                        ]}
                     />
                 </div>
             </div>

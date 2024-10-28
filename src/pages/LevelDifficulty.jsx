@@ -11,12 +11,13 @@ import Karaniwan from '../assets/levelbtn/Karaniwan.png'
 import Mahirap from '../assets/levelbtn/Mahirap.png'
 import { db } from '../firebaseConfig' // Import your Firebase configuration
 import { collection, addDoc } from 'firebase/firestore' // Import Firestore functions
+import InfoPopup from '../components/InfoPopup'
 
 const LevelDifficulty = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        document.title = 'Line'
+        document.title = 'MoTeRole - Level Difficulty'
     }, [])
 
     const handleDifficultySelect = async (level, difficultyLevelId) => {
@@ -114,18 +115,28 @@ const LevelDifficulty = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-1/10 flex select-none flex-col space-y-4 mobile:space-y-3">
-                    <Actionbtn
-                        text=""
-                        to="/settings"
-                        bgColor="#AB47BC"
-                        icon={PiGearSixBold}
-                    />
-                    <Actionbtn
-                        text=""
-                        to="/achievement"
-                        bgColor="#8BC34A"
-                        icon={IoBulbOutline}
+                <div className="w-1/10 flex select-none flex-col justify-between">
+                    <div className="flex flex-col space-y-4 mobile:space-y-3">
+                        <Actionbtn
+                            text=""
+                            to="/settings"
+                            bgColor="#AB47BC"
+                            icon={PiGearSixBold}
+                        />
+                        <Actionbtn
+                            text=""
+                            to="/achievement"
+                            bgColor="#8BC34A"
+                            icon={IoBulbOutline}
+                        />
+                    </div>
+                    <InfoPopup
+                        className="flex flex-col"
+                        messages={[
+                            'Linya: Sa Kategoryang ito, iguguhit ang iba’t - ibang uri ng linya.',
+                            'Hugis: Sa Kategoryang ito, iguguhit ang iba’t - ibang uri ng hugis.',
+                            'Alpabeto: Sa Kategoryang ito, iguguhit ang iba’t - ibang uri ng hugis.',
+                        ]}
                     />
                 </div>
             </div>

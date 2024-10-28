@@ -3,7 +3,7 @@ import { LuArrowBigLeft } from 'react-icons/lu'
 
 const ModalProfile = ({ onClose }) => {
     useEffect(() => {
-        document.title = 'Profile'
+         document.title = 'MoteRole - Profile'
     }, [])
 
     const [activeTab, setActiveTab] = useState('category')
@@ -131,31 +131,31 @@ const ModalProfile = ({ onClose }) => {
                             </div>
                         ) : (
                             <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123 asda
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123
                                 </div>
                             </div>

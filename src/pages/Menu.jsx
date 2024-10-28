@@ -6,12 +6,13 @@ import Profile from '../assets/menubutton/profile.png'
 import Settings from '../assets/menubutton/settings.png'
 import { Link, useNavigate } from 'react-router-dom'
 import FullScreen from '../components/FullScreen'
-import Leader from '../assets/leaderboard/leader.png'
+import DP from '../assets/DisplayP.png'
 import ModalLeaderBoard from '../components/ModalLeaderBoard'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getDatabase, ref, child, get, update } from 'firebase/database'
 import { app } from '../firebaseConfig'
 import ModalProfile from '../components/ModalProfile'
+import InfoPopup from '../components/InfoPopup'
 
 const database = getDatabase(app)
 
@@ -21,7 +22,7 @@ const Menu = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        document.title = 'Menu'
+        document.title = 'MoteRole - Menu'
 
         const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
             if (user) {
@@ -109,7 +110,7 @@ const Menu = () => {
                     <div className="text-shadow text-9xl mobile:text-7xl">
                         MoTeRole
                     </div>
-                    <div className="flex space-x-4 text-4xl mobile:text-xl ipad:text-2xl">
+                    <div className="flex space-x-10 text-4xl mobile:space-x-5 mobile:text-xl ipad:text-2xl">
                         <Link
                             to="/category"
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-applegreen p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
@@ -132,7 +133,7 @@ const Menu = () => {
                             />
                             <span>Tagumpay</span>
                         </Link>
-                        <Link
+                        {/* <Link
                             onClick={() => setShowModal(true)}
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-bluesky p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
                         >
@@ -142,7 +143,7 @@ const Menu = () => {
                                 className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
                             />
                             <span>Profile</span>
-                        </Link>
+                        </Link> */}
                         <Link
                             to="/settings"
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-grape p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
@@ -159,6 +160,26 @@ const Menu = () => {
                 <div className="w-1/10 flex select-none flex-col justify-between opacity-100">
                     <button
                         onClick={() => setShowModal(true)}
+                        className="flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full text-center text-white outline outline-4 outline-modalbrowndark duration-100 active:translate-y-1 mobile:-translate-y-1"
+                    >
+                        <img
+                            src={DP}
+                            alt="Leaderboard"
+                            className="size-14 select-none mobile:size-10 ipad:size-14"
+                        />
+                    </button>
+                    <InfoPopup
+                        className="flex flex-col"
+                        messages={[
+                            'Main Menu: pumili sa tatlong kahon ang nais ng manlalaro na gawin',
+                            'Laro: sa kahong iito ang magsisimula na ang laro',
+                            'Tagumpay: sa kahong ito makikita ang mga natapos sa laro',
+                            'Settings: sa kahong ito maaring ayusin ang tugtog at tunog na nais ng manlalaro',
+                        ]}
+                    />
+
+                    {/* <button
+                        onClick={() => setShowModal(true)}
                         className="flex cursor-pointer items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1 mobile:-translate-y-1"
                     >
                         <img
@@ -166,7 +187,7 @@ const Menu = () => {
                             alt="Leaderboard"
                             className="size-12 mobile:size-10 ipad:size-14"
                         />
-                    </button>
+                    </button> */}
                 </div>
             </div>
             {showModal && (

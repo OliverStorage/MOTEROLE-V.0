@@ -8,8 +8,13 @@ import Top1 from '../assets/leaderboard/top1.png'
 import Top2 from '../assets/leaderboard/top2.png'
 import Top3 from '../assets/leaderboard/top3.png'
 import { LuArrowBigLeft } from 'react-icons/lu'
+import { useEffect } from 'react'
 
 const ModalLeaderBoard = ({ onClose }) => {
+    useEffect(() => {
+        document.title = 'MoteRole - Leaderboard'
+    }, [])
+
     return (
         <>
             <div className="absolute inset-0 flex h-screen w-screen items-center justify-center bg-black bg-opacity-70 font-nunito font-black">

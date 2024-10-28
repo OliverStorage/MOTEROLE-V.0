@@ -20,7 +20,7 @@ const SignIn = () => {
     const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
-        document.title = 'Signin in'
+        document.title = 'MoTeRole - Sign in'
     })
 
     const handleSubmit = async (event) => {
