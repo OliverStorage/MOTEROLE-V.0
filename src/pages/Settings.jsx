@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import Actionbtn from '../components/Actionbtn'
@@ -6,63 +6,27 @@ import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import TermsConditions from '../components/TermsConditions'
-import bbbs from '../assets/bbbs.mp3'
-// import music2 from '../assets/music2.mp3'
-// import music3 from '../assets/music3.mp3'
-// import music4 from '../assets/music4.mp3'
+import { MusicContext } from '../contexts/MusicContext'
 
 const Settings = () => {
-    const [tugtogVolume, setTugtogVolume] = useState(30) // Music volume
     const [tunogVolume, setTunogVolume] = useState(30) // Sound effects volume
-    const [selectedSong, setSelectedSong] = useState('bbbs') // Default song key
     const [showModal, setShowModal] = useState(false) // Toggle modal
-    const [isPlaying, setIsPlaying] = useState(false) // Track play/pause status
-    const audioRef = useRef(null) // Ref for controlling audio
 
-    // Map for audio file paths
-    const songMap = {
-        bbbs: bbbs,
-        // music2: music2,
-        // music3: music3,
-        // music4: music4,
-    }
+    // Use MusicContext to get music settings and functions
+    const {
+        tugtogVolume,
+        setTugtogVolume,
+        selectedSong,
+        setSelectedSong,
+        isPlaying,
+        togglePlay,
+    } = useContext(MusicContext)
 
     useEffect(() => {
         document.title = 'Settings'
     }, [])
 
-    // Toggle play/pause for the audio
-    const handlePlayMusic = () => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause()
-            } else {
-                audioRef.current.play()
-            }
-            setIsPlaying(!isPlaying)
-        }
-    }
-
-    // Adjust volume based on tugtogVolume
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.volume = tugtogVolume / 100 // Convert to 0-1 range
-        }
-    }, [tugtogVolume])
-
-    // Load and play the selected song
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.src = songMap[selectedSong] // Set the source to selected song path
-            audioRef.current.pause()
-            audioRef.current.load()
-            if (isPlaying) {
-                audioRef.current.play()
-            }
-        }
-    }, [selectedSong, isPlaying])
-
-    // Volume change handler
+    // Volume change handlers
     const handleTugtogVolumeChange = (e) => setTugtogVolume(e.target.value)
     const handleTunogVolumeChange = (e) => setTunogVolume(e.target.value)
     const handleSongChange = (e) => setSelectedSong(e.target.value)
@@ -90,9 +54,9 @@ const Settings = () => {
                     </div>
                     <div className="flex h-[70%] w-[80%] rounded-2xl bg-black bg-opacity-60 p-8 mobile:p-4 ipad:h-[60%] ipad:p-6">
                         <div className="flex h-full w-full flex-col justify-between overflow-y-auto rounded-2xl text-center font-nunito text-5xl font-black text-black mobile:overflow-y-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-y-auto">
-                            <div className="flex flex-col space-y-4 text-white">
+                            <div className="flex flex-col space-y-4 text-white overflow-y-auto">
                                 {/* Volume Sliders */}
-                                <div className="flex justify-evenly space-x-10">
+                                <div className="flex justify-evenly space-x-10 px-4">
                                     <div className="flex w-full flex-col space-y-4">
                                         <span>Tugtog</span>
                                         <input
@@ -142,7 +106,7 @@ const Settings = () => {
 
                                 {/* Play/Pause Button */}
                                 <button
-                                    onClick={handlePlayMusic}
+                                    onClick={togglePlay}
                                     className="mt-4 text-white"
                                 >
                                     {isPlaying ? 'Pause Music' : 'Play Music'}
@@ -183,9 +147,6 @@ const Settings = () => {
                     />
                 </div>
             </div>
-
-            {/* Audio Element for Background Music */}
-            <audio ref={audioRef} preload="auto" />
 
             {/* Modal */}
             {showModal && (

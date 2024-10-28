@@ -17,3 +17,14 @@
 .inner-shadow {
     @apply shadow-[inset_0_0px_20px_rgba(0,0,0,1)];
 }
+
+.inner-shadow-deactive {
+    @apply drop-shadow-[0px_2px_0px_#000000];
+}
+.inner-shadow-active {
+     @apply shadow-[inset_0_0px_4px_rgba(0,0,0,1)];
+}
+
+.text-outline {
+    @apply drop-shadow-[0px_0px_2px_#000000];
+}

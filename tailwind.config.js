@@ -14,6 +14,7 @@ export default {
                 abz: ['ABeeZee', 'sans-serif'],
             },
             colors: {
+                back: '#F40000',
                 sunshine: '#FFEB3B',
                 bluesky: '#4FC3F7',
                 applegreen: '#8BC34A',
@@ -39,6 +40,7 @@ export default {
                 modalbrownlight: '#E8CBA0',
                 modalbrowndark: '#986300',
                 lavender: '#9168E2',
+                moldcheese: '#F8BC35',
             },
         },
     },
