@@ -1,16 +1,24 @@
 import React from 'react';
 
-const ModalResult = ({ accuracy, onClose }) => {
+const ModalResult = ({ accuracy, letter, lines, shapes, onClose }) => {
     return (
-        <div className="bg-white rounded-lg p-5 shadow-lg">
-            <h2 className="text-xl font-bold">Result</h2>
-            <p className="mt-2">Accuracy: {accuracy.toFixed(2)}%</p>
-            <button
-                onClick={onClose}
-                className="mt-4 rounded bg-blue-600 p-2 text-white"
-            >
-                Close
-            </button>
+        <div className="modal-content">
+            <h2>Results</h2>
+            <p>Detected Letter: {letter}</p>
+            <p>Accuracy: {accuracy.toFixed(2)}%</p>
+            <h3>Line Detection</h3>
+            <ul>
+                {Object.entries(lines).map(([lineType, percentage]) => (
+                    <li key={lineType}>{lineType}: {percentage}%</li>
+                ))}
+            </ul>
+            <h3>Shape Detection</h3>
+            <ul>
+                {Object.entries(shapes).map(([shapeType, count]) => (
+                    <li key={shapeType}>{shapeType}: {count}</li>
+                ))}
+            </ul>
+            <button onClick={onClose}>Close</button>
         </div>
     );
 };
