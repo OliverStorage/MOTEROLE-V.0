@@ -8,21 +8,22 @@ import { IoBulbOutline } from 'react-icons/io5';
 import ModalSettings from '../components/ModalSettings';
 import ModalResult from '../components/ModalResult';
 import A from '../assets/abcEasy/A.png';
-import { db } from '../firebaseConfig'; // Import your Firebase config
+import { db } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Ingame = () => {
-    const { gameExerciseId } = useParams(); // Get the GameExerciseId from params
+    const { gameExerciseId } = useParams();
     const [showModal, setShowModal] = useState(false);
     const [showResultModal, setShowResultModal] = useState(false);
     const [isErasing, setIsErasing] = useState(false);
     const [accuracy, setAccuracy] = useState(0);
+    const [detectedLetter, setDetectedLetter] = useState("Unknown");
     const canvasRef = useRef(null);
     const ctxRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
-    
-    const preschoolerId = "somePreschoolerId"; // Replace with actual preschooler ID
+    const preschoolerId = "somePreschoolerId";
     const [difficultyLevel, setDifficultyLevel] = useState(null);
 
     useEffect(() => {
@@ -87,21 +88,46 @@ const Ingame = () => {
         ctxRef.current.beginPath();
     };
 
-    const submitCanvas = () => {
-        const canvas = canvasRef.current;
-        const ctx = ctxRef.current;
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
+    const preprocessImage = (imageData) => {
+        const img = new Image();
+        img.src = imageData;
 
-        for (let i = 0; i < data.length; i += 4) {
-            const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-            data[i] = avg;
-            data[i + 1] = avg;
-            data[i + 2] = avg;
+        return new Promise((resolve) => {
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 28; // Resize to model input size
+                canvas.height = 28;
+
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const normalizedData = new Float32Array(28 * 28);
+
+                for (let i = 0; i < data.data.length; i += 4) {
+                    const avg = (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3;
+                    normalizedData[i / 4] = avg / 255; // Normalize to [0, 1]
+                }
+                
+                resolve(normalizedData);
+            };
+        });
+    };
+
+    const submitCanvas = async () => {
+        const canvas = canvasRef.current;
+        const imageData = canvas.toDataURL('image/png');
+
+        try {
+            const processedData = await preprocessImage(imageData);
+            const response = await axios.post('http://127.0.0.1:8000/api/predict-view/', {
+                image: processedData,
+            });
+            setDetectedLetter(response.data.letter); // Get detected letter
+            setAccuracy(response.data.accuracy);
+        } catch (error) {
+            console.error("Error fetching the prediction:", error);
         }
 
-        ctx.putImageData(imageData, 0, 0);
-        setAccuracy(Math.random() * 100);
         setShowResultModal(true);
     };
 
@@ -138,7 +164,6 @@ const Ingame = () => {
             const gameSessionRef = collection(db, 'GameSession');
             await addDoc(gameSessionRef, sessionData);
             console.log('Game session created successfully');
-            // Optionally navigate or provide feedback to the user
         } catch (error) {
             console.error("Error creating game session: ", error);
         }
@@ -146,7 +171,7 @@ const Ingame = () => {
 
     const handleDifficultySelect = (level) => {
         setDifficultyLevel(level);
-        startGameSession(); // Start the game session immediately when a difficulty is selected
+        startGameSession();
     };
 
     return (
@@ -242,7 +267,7 @@ const Ingame = () => {
             {/* Modal for Result */}
             {showResultModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <ModalResult accuracy={accuracy} onClose={() => setShowResultModal(false)} />
+                    <ModalResult accuracy={accuracy} detectedLetter={detectedLetter} onClose={() => setShowResultModal(false)} />
                 </div>
             )}
         </>
