@@ -1,61 +1,60 @@
-
 import React, { useEffect, useState } from 'react';
-import Background from '../components/Background';
-import FullScreen from '../components/FullScreen';
-import Actionbtn from '../components/Actionbtn';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { LuArrowBigLeft } from 'react-icons/lu';
 import { PiGearSixBold } from 'react-icons/pi';
 import { IoBulbOutline } from 'react-icons/io5';
 import { db } from '../firebaseConfig';
 import { collection, query, where, onSnapshot, addDoc } from 'firebase/firestore';
+import Background from '../components/Background';
+import FullScreen from '../components/FullScreen';
+import Actionbtn from '../components/Actionbtn';
 
 const GameExercise = () => {
     const { exercisesId } = useParams();
-    const location = useLocation();
-    const categoryId = location.state?.categoryId; // Get categoryId from state
+    const { state } = useLocation();
+    const categoryId = state?.categoryId;
     const [gameExercises, setGameExercises] = useState([]);
-    const navigate = useNavigate(); // Use navigate for programmatic navigation
-
+    const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = 'Game Exercise'
-        const gameExerciseCollection = collection(db, 'GameExercise')
-        const gameExerciseQuery = query(
-            gameExerciseCollection,
-            where('ExercisesId', '==', exercisesId),
-        )
+        document.title = 'Game Exercise';
+        const gameExerciseCollection = collection(db, 'GameExercise');
+        const gameExerciseQuery = query(gameExerciseCollection, where('ExercisesId', '==', exercisesId));
 
         const unsubscribe = onSnapshot(gameExerciseQuery, (snapshot) => {
-            const gameExercisesData = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-                id: doc.id,
-            }))
-            setGameExercises(gameExercisesData)
-            console.log(gameExercisesData)
-        })
+            const gameExercisesData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            setGameExercises(gameExercisesData);
+        });
 
-        return () => unsubscribe()
-    }, [exercisesId])
+        return () => unsubscribe();
+    }, [exercisesId]);
 
     const handleDifficultySelect = async (gameExerciseId) => {
-        // Prepare data for GameSession
         const sessionData = {
             GameExerciseId: gameExerciseId,
-            SessionStartTime: new Date(), // Set the current time
-            // You may need to set PreschoolerID based on your application logic
+            SessionStartTime: new Date(),
         };
 
-        // Add the session to the GameSession table
         try {
             const gameSessionRef = collection(db, 'GameSession');
             await addDoc(gameSessionRef, sessionData);
-            // Navigate to the GameSession if needed
             navigate(`/Ingame/${gameExerciseId}`);
         } catch (error) {
             console.error("Error adding document: ", error);
+            // You might want to show a user-friendly message here
         }
     };
+
+    const GameExerciseCard = ({ gameExercise }) => (
+        <div
+            onClick={() => handleDifficultySelect(gameExercise.id)}
+            className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
+        >
+            <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center">
+                <span>{gameExercise.DifficultyLevel}</span>
+            </div>
+        </div>
+    );
 
     return (
         <>
@@ -64,7 +63,7 @@ const GameExercise = () => {
                 <div className="w-1/10 flex flex-col justify-between">
                     <Actionbtn
                         text=""
-                        to={`/Exercises/${categoryId}`} // Navigate back to exercises with the correct category
+                        to={`/Exercises/${categoryId}`}
                         bgColor="#F40000"
                         icon={LuArrowBigLeft}
                     />
@@ -74,24 +73,11 @@ const GameExercise = () => {
                     <div className="text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 border-softgray bg-white p-8 mobile:h-[80%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
                         <span className="absolute -top-9 flex h-14 w-auto items-center justify-center rounded-2xl border-8 border-softgray bg-white px-4 font-nunito text-4xl font-black text-black mobile:h-12 mobile:border-4 mobile:text-2xl ipad:text-3xl">
                             Mga Lebel sa
-                            {/* Lagay ng {exercises.ExerciseName}*/}
                         </span>
                         <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 text-center font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
-                            {gameExercises.length > 0 &&
-                                gameExercises.map((gameExercise) => (
-
-                                    <div
-                                        key={gameExercise.id} 
-                                        onClick={() => handleDifficultySelect(gameExercise.id)} // Use the handler
-                                        className={`text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
-
-                                        <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center">
-                                            <span>
-                                                {gameExercise.DifficultyLevel}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
+                            {gameExercises.length > 0 && gameExercises.map(gameExercise => (
+                                <GameExerciseCard key={gameExercise.id} gameExercise={gameExercise} />
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -111,7 +97,7 @@ const GameExercise = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default GameExercise
+export default GameExercise;
