@@ -1,178 +1,192 @@
-import React, { useEffect, useState, useRef } from 'react';
-import Background from '../components/Background';
-import FullScreen from '../components/FullScreen';
-import Actionbtn from '../components/Actionbtn';
-import { LuArrowBigLeft } from 'react-icons/lu';
-import { PiGearSixBold } from 'react-icons/pi';
-import { IoBulbOutline } from 'react-icons/io5';
-import ModalSettings from '../components/ModalSettings';
-import ModalResult from '../components/ModalResult';
-import A from '../assets/abcEasy/A.png';
-import { db } from '../firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState, useRef } from 'react'
+import Background from '../components/Background'
+import FullScreen from '../components/FullScreen'
+import Actionbtn from '../components/Actionbtn'
+import { LuArrowBigLeft } from 'react-icons/lu'
+import { PiGearSixBold } from 'react-icons/pi'
+import { IoBulbOutline } from 'react-icons/io5'
+import ModalSettings from '../components/ModalSettings'
+import ModalResult from '../components/ModalResult'
+import A from '../assets/abcEasy/A.png'
+import { db } from '../firebaseConfig'
+import { collection, addDoc } from 'firebase/firestore'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const Ingame = () => {
-    const { gameExerciseId } = useParams();
-    const [showModal, setShowModal] = useState(false);
-    const [showResultModal, setShowResultModal] = useState(false);
-    const [isErasing, setIsErasing] = useState(false);
-    const [accuracy, setAccuracy] = useState(0);
-    const [detectedLetter, setDetectedLetter] = useState("Unknown");
-    const canvasRef = useRef(null);
-    const ctxRef = useRef(null);
-    const [isDrawing, setIsDrawing] = useState(false);
-    const preschoolerId = "somePreschoolerId";
-    const [difficultyLevel, setDifficultyLevel] = useState(null);
+    const { gameExerciseId } = useParams()
+    const [showModal, setShowModal] = useState(false)
+    const [showResultModal, setShowResultModal] = useState(false)
+    const [isErasing, setIsErasing] = useState(false)
+    const [accuracy, setAccuracy] = useState(0)
+    const [detectedLetter, setDetectedLetter] = useState('Unknown')
+    const canvasRef = useRef(null)
+    const ctxRef = useRef(null)
+    const [isDrawing, setIsDrawing] = useState(false)
+    const preschoolerId = 'somePreschoolerId'
+    const [difficultyLevel, setDifficultyLevel] = useState(null)
+    const [xpath, setXpath] = useState([])
+    const [ypath, setYpath] = useState([])
 
     useEffect(() => {
-        document.title = 'MoTeRole - IN GAME';
-    }, []);
+        document.title = 'MoTeRole - IN GAME'
+    }, [])
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+        const canvas = canvasRef.current
+        canvas.width = canvas.offsetWidth
+        canvas.height = canvas.offsetHeight
 
-        ctxRef.current = canvas.getContext('2d', { willReadFrequently: true });
+        ctxRef.current = canvas.getContext('2d', { willReadFrequently: true })
 
         const handleResize = () => {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        };
+            canvas.width = canvas.offsetWidth
+            canvas.height = canvas.offsetHeight
+        }
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
+        window.addEventListener('resize', handleResize)
+        handleResize()
 
         return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
 
     const startDrawing = (e) => {
-        setIsDrawing(true);
-        draw(e);
-    };
+        setIsDrawing(true)
+        draw(e)
+    }
 
     const finishDrawing = () => {
-        setIsDrawing(false);
-        ctxRef.current.beginPath();
-    };
+        setIsDrawing(false)
+        ctxRef.current.beginPath()
+    }
 
     const draw = (e) => {
-        if (!isDrawing) return;
-        const ctx = ctxRef.current;
-        ctx.lineWidth = getLineWidth();
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = isErasing ? 'rgba(255, 255, 255, 1)' : 'white';
+        if (!isDrawing) return
+        const ctx = ctxRef.current
+        ctx.lineWidth = getLineWidth()
+        ctx.lineCap = 'round'
+        ctx.strokeStyle = isErasing ? 'rgba(255, 255, 255, 1)' : 'white'
 
-        const rect = canvasRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const rect = canvasRef.current.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const y = e.clientY - rect.top
 
-        ctx.globalCompositeOperation = isErasing ? 'destination-out' : 'source-over';
-        ctx.lineTo(x, y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    };
+        setXpath((prev) => [...prev, x])
+        setYpath((prev) => [...prev, y])
+
+        ctx.globalCompositeOperation = isErasing
+            ? 'destination-out'
+            : 'source-over'
+        ctx.lineTo(x, y)
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+    }
 
     const toggleEraser = () => {
-        setIsErasing((prev) => !prev);
-    };
+        setIsErasing((prev) => !prev)
+    }
 
     const resetCanvas = () => {
-        const ctx = ctxRef.current;
-        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        ctxRef.current.beginPath();
-    };
+        const ctx = ctxRef.current
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+        ctxRef.current.beginPath()
+    }
 
     const preprocessImage = (imageData) => {
-        const img = new Image();
-        img.src = imageData;
+        const img = new Image()
+        img.src = imageData
 
         return new Promise((resolve) => {
             img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = 28; // Resize to model input size
-                canvas.height = 28;
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                canvas.width = 28 // Resize to model input size
+                canvas.height = 28
 
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const normalizedData = new Float32Array(28 * 28);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+                const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
+                const normalizedData = new Float32Array(28 * 28)
 
                 for (let i = 0; i < data.data.length; i += 4) {
-                    const avg = (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3;
-                    normalizedData[i / 4] = avg / 255; // Normalize to [0, 1]
+                    const avg =
+                        (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3
+                    normalizedData[i / 4] = avg / 255 // Normalize to [0, 1]
                 }
-                
-                resolve(normalizedData);
-            };
-        });
-    };
+
+                resolve(normalizedData)
+            }
+        })
+    }
 
     const submitCanvas = async () => {
-        const canvas = canvasRef.current;
-        const imageData = canvas.toDataURL('image/png');
+        console.log(xpath)
+        console.log(ypath)
+
+        const canvas = canvasRef.current
+        const imageData = canvas.toDataURL('image/png')
 
         try {
-            const processedData = await preprocessImage(imageData);
-            const response = await axios.post('http://127.0.0.1:8000/api/predict-view/', {
-                image: processedData,
-            });
-            setDetectedLetter(response.data.letter); // Get detected letter
-            setAccuracy(response.data.accuracy);
+            const processedData = await preprocessImage(imageData)
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/predict-view/',
+                {
+                    image: processedData,
+                },
+            )
+            setDetectedLetter(response.data.letter) // Get detected letter
+            setAccuracy(response.data.accuracy)
         } catch (error) {
-            console.error("Error fetching the prediction:", error);
+            console.error('Error fetching the prediction:', error)
         }
 
-        setShowResultModal(true);
-    };
+        setShowResultModal(true)
+    }
 
     const handleTouchStart = (e) => {
-        startDrawing(e.touches[0]);
-    };
+        startDrawing(e.touches[0])
+    }
 
     const handleMouseMove = (e) => {
-        draw(e);
-    };
+        draw(e)
+    }
 
     const handleTouchMove = (e) => {
-        draw(e.touches[0]);
-    };
+        draw(e.touches[0])
+    }
 
     const getLineWidth = () => {
-        const width = window.innerWidth;
-        if (width >= 1024) return 60;
-        if (width >= 768) return 40;
-        return 25;
-    };
+        const width = window.innerWidth
+        if (width >= 1024) return 60
+        if (width >= 768) return 40
+        return 25
+    }
 
     const startGameSession = async () => {
-        const sessionStartTime = new Date();
+        const sessionStartTime = new Date()
         const sessionData = {
             GameExerciseId: gameExerciseId,
             PreschoolerId: preschoolerId,
             PreschoolerOutput: '',
             SessionStartTime: sessionStartTime,
             SessionEndTime: null,
-        };
+        }
 
         try {
-            const gameSessionRef = collection(db, 'GameSession');
-            await addDoc(gameSessionRef, sessionData);
-            console.log('Game session created successfully');
+            const gameSessionRef = collection(db, 'GameSession')
+            await addDoc(gameSessionRef, sessionData)
+            console.log('Game session created successfully')
         } catch (error) {
-            console.error("Error creating game session: ", error);
+            console.error('Error creating game session: ', error)
         }
-    };
+    }
 
     const handleDifficultySelect = (level) => {
-        setDifficultyLevel(level);
-        startGameSession();
-    };
+        setDifficultyLevel(level)
+        startGameSession()
+    }
 
     return (
         <>
@@ -267,11 +281,15 @@ const Ingame = () => {
             {/* Modal for Result */}
             {showResultModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <ModalResult accuracy={accuracy} detectedLetter={detectedLetter} onClose={() => setShowResultModal(false)} />
+                    <ModalResult
+                        accuracy={accuracy}
+                        detectedLetter={detectedLetter}
+                        onClose={() => setShowResultModal(false)}
+                    />
                 </div>
             )}
         </>
-    );
-};
+    )
+}
 
-export default Ingame;
+export default Ingame

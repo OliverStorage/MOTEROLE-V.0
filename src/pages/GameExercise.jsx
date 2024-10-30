@@ -53,9 +53,9 @@ const GameExercise = () => {
     const GameExerciseCard = ({ gameExercise }) => (
         <div
             onClick={() => handleDifficultySelect(gameExercise.id)}
-            className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-4 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
+            className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-2 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
         >
-            <div className="flex size-[90%] flex-col items-center justify-end bg-cover bg-center">
+            <div className="flex h-full flex-col items-center justify-end bg-cover bg-center">
                 <span>{gameExercise.DifficultyLevel}</span>
             </div>
         </div>
