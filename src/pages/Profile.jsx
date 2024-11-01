@@ -40,11 +40,11 @@ const Profile = () => {
                         <div className="flex h-full w-full flex-col space-y-4 overflow-y-auto font-nunito text-4xl font-black text-white mobile:overflow-y-auto mobile:rounded-md mobile:text-2xl ipad:overflow-y-auto">
                             {/* profile and info */}
                             <div className="flex space-x-10 mobile:space-x-4">
-                                <img
+                            {/* <img
                                     src=""
                                     alt="profile"
                                     className="size-56 rounded-xl border-2 mobile:size-28 ipad:size-44"
-                                />
+                                />     */}
                                 <div className="flex flex-col justify-between mobile:text-xl ipad:text-2xl">
                                     <div>Pangalan: Juan Dela Cruz</div>
                                     <div>Gender: Lalake</div>

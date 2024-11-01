@@ -12,11 +12,6 @@ const ModalResultHard = ({ onClose }) => {
                     alt="cloud.png"
                     className="absolute -left-56 -top-48 size-96 select-none mobile:-left-32 mobile:-top-28 mobile:size-56 ipad:-left-44 ipad:-top-40 ipad:size-80"
                 />
-                <img
-                    src={Grass}
-                    alt="cloud.png"
-                    className="ipad:-bottom-22 absolute -bottom-16 -right-28 size-56 select-none mobile:-bottom-10 mobile:-right-16 mobile:size-32 ipad:-bottom-16 ipad:-right-28 ipad:size-56"
-                />
 
                 <div className="absolute -right-6 -top-5 z-50 mobile:-right-5 mobile:-top-6 ipad:-right-7 ipad:-top-7">
                     <button className="action-btn flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center text-white">

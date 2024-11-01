@@ -23,7 +23,7 @@ const ModalProfile = ({ onClose }) => {
 
                     <div className="text-outline tracking-wide">My Profile</div>
                     <div className="flex w-full items-center gap-3 text-3xl mobile:gap-1 mobile:text-sm ipad:text-2xl">
-                        <div className="h-[100px] w-[110px] rounded-full border-4 border-bluesky bg-white mobile:h-[55px] mobile:w-[65px] ipad:h-[80px] ipad:w-[90px]"></div>
+                        {/* <div className="h-[100px] w-[110px] rounded-full border-4 border-bluesky bg-white mobile:h-[55px] mobile:w-[65px] ipad:h-[80px] ipad:w-[90px]"></div> */}
                         <div className="flex w-full justify-between">
                             <div className="text-outline flex flex-col justify-between">
                                 <div className="flex gap-3 mobile:gap-1">
@@ -65,13 +65,13 @@ const ModalProfile = ({ onClose }) => {
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
-                                        fill="#FFD568"
+                                        fill="currentColor"
                                         height="1em"
                                         width="1em"
                                     >
-                                        <path d="M21 4h-3V3a1 1 0 00-1-1H7a1 1 0 00-1 1v1H3a1 1 0 00-1 1v3c0 4.31 1.799 6.91 4.819 7.012A6.001 6.001 0 0011 17.91V20H9v2h6v-2h-2v-2.09a6.01 6.01 0 004.181-2.898C20.201 14.91 22 12.31 22 8V5a1 1 0 00-1-1zM4 8V6h2v6.83C4.216 12.078 4 9.299 4 8zm8 8c-2.206 0-4-1.794-4-4V4h8v8c0 2.206-1.794 4-4 4zm6-3.17V6h2v2c0 1.299-.216 4.078-2 4.83z" />
+                                        <path d="M10 3H4a1 1 0 00-1 1v6a1 1 0 001 1h6a1 1 0 001-1V4a1 1 0 00-1-1zM9 9H5V5h4v4zm11-6h-6a1 1 0 00-1 1v6a1 1 0 001 1h6a1 1 0 001-1V4a1 1 0 00-1-1zm-1 6h-4V5h4v4zm-9 4H4a1 1 0 00-1 1v6a1 1 0 001 1h6a1 1 0 001-1v-6a1 1 0 00-1-1zm-1 6H5v-4h4v4zm8-6c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z" />
                                     </svg>
-                                    <span> Kategory</span>
+                                    <span>Kategorya</span>
                                 </span>
                             </div>
                             {/* Tab 2 */}
@@ -94,7 +94,7 @@ const ModalProfile = ({ onClose }) => {
                                     >
                                         <path d="M6 13H2a1 1 0 00-1 1v8a1 1 0 001 1h4a1 1 0 001-1v-8a1 1 0 00-1-1zm-1 8H3v-6h2zM22 9h-4a1 1 0 00-1 1v12a1 1 0 001 1h4a1 1 0 001-1V10a1 1 0 00-1-1zm-1 12h-2V11h2zM14 1h-4a1 1 0 00-1 1v20a1 1 0 001 1h4a1 1 0 001-1V2a1 1 0 00-1-1zm-1 20h-2V3h2z" />
                                     </svg>
-                                    <span> Lebel</span>
+                                    <span>Leaderboard</span>
                                 </span>
                             </div>
                         </div>

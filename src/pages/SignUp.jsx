@@ -197,25 +197,23 @@ const SignUp = () => {
                             )}
 
                             {/* Sign Up button inside the form */}
-                            <div className="flex h-14 w-[100%] justify-evenly space-x-4 text-4xl mobile:h-10 mobile:text-xl">
+                            <div className="absolute text-white  -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
                                 <button
                                     type="submit"
                                     className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
                                 >
                                     Sign Up
                                 </button>
+                                <Link
+                                    to="/signin"
+                                    className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
+                                >
+                                    Sign In
+                                </Link>
                             </div>
                         </form>
 
                         {/* Sign In link outside the form */}
-                        <div className="absolute -bottom-20 flex h-14 w-[100%] justify-evenly space-x-4 text-4xl mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
-                            <Link
-                                to="/signin"
-                                className="text-shadow flex h-full w-1/3 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
-                            >
-                                Sign In
-                            </Link>
-                        </div>
                     </div>
                 </div>
 

@@ -122,7 +122,7 @@ const Menu = () => {
                             />
                             <span>Laro</span>
                         </Link>
-                        <Link
+                        {/* <Link
                             to="/achievement"
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-tangerine p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
                         >
@@ -132,8 +132,8 @@ const Menu = () => {
                                 className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
                             />
                             <span>Tagumpay</span>
-                        </Link>
-                        {/* <Link
+                        </Link> */}
+                        <Link
                             onClick={() => setShowModal(true)}
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-bluesky p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
                         >
@@ -143,7 +143,7 @@ const Menu = () => {
                                 className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
                             />
                             <span>Profile</span>
-                        </Link> */}
+                        </Link>
                         <Link
                             to="/settings"
                             className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-grape p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"

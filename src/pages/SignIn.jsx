@@ -114,28 +114,29 @@ const SignIn = () => {
                                 className="h-1/3 w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
                             />
 
-                            <button
-                                type="submit"
-                                className="text-shadow flex h-full w-1/3 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
-                            >
-                                Sign In
-                            </button>
+                            <div className="flex w-[80%] z-50 items-center text-white space-x-10 absolute -bottom-16 h-12">
+                                <button
+                                    type="submit"
+                                    className="text-shadow flex h-full w-full items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
+                                >
+                                    Sign In
+                                </button>
+                                <Link
+                                    to="/signup"
+                                    className="text-shadow flex h-full w-full items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
+                                >
+                                    Sign Up
+                                </Link>
+                            </div>
                         </form>
 
                         {errorMessage && (
-                            <div className="absolute -bottom-14 text-center font-bold text-red-500">
+                            <div className="absolute -bottom-28 text-center font-bold text-red-500">
                                 {errorMessage}
                             </div>
                         )}
 
-                        <div className="absolute -bottom-20 flex h-14 w-[100%] justify-evenly space-x-4 text-4xl mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
-                            <Link
-                                to="/signup"
-                                className="text-shadow flex h-full w-1/3 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
-                            >
-                                Sign Up
-                            </Link>
-                        </div>
+                        <div className="absolute -bottom-20 flex h-14 w-[100%] justify-evenly space-x-4 text-4xl mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl"></div>
                     </div>
                 </div>
                 {/* right column */}
