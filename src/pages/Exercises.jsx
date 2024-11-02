@@ -157,15 +157,25 @@ const Exercises = () => {
                                         key={exercise.id}
                                         to={`/GameExercise/${exercise.id}`}
                                         state={{ categoryId }} // Pass categoryId
-                                        className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 p-2 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
+                                        style={{
+                                            backgroundImage: `url(${exercise.imageURL})`,
+                                        }}
+                                        className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 bg-contain bg-no-repeat p-2 mobile:px-2 mobile:py-1 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
                                     >
-                                        <span className='flex justify-start w-full text-5xl'>{exercise.ExerciseName}</span>
-                                        <img
-                                            src={exercise.imageURL}
-                                            alt="exercise.imageURL"
-                                            className="flex size-[70%] flex-col items-center justify-end bg-cover bg-center mobile:size-[90%] ipad:size-[90%]"
-                                        />
-                                        <span className='flex justify-center w-full'>{exercise.ExerciseName}</span>
+                                        <div className="flex h-full w-full flex-col justify-between items-center">
+                                            <span className="flex w-full justify-start text-5xl mobile:text-3xl leading-none">
+                                                {exercise.Big}
+                                            </span>
+                                            <img
+                                                src={exercise.mainIMG}
+                                                alt=""
+                                                className='h-[65%]'
+                                            />
+                                            <span className="flex w-full justify-center">
+                                                {exercise.ExerciseName}
+                                                {exercise.letterSound}
+                                            </span>
+                                        </div>
                                     </Link>
                                 ))}
                         </div>
