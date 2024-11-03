@@ -5,8 +5,7 @@ import Actionbtn from '../components/Actionbtn'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
-import { IoBulbOutline } from 'react-icons/io5'
-import { db } from '../firebaseConfig' // Ensure the correct path
+import { db } from '../firebaseConfig'
 import {
     collection,
     doc,
@@ -16,32 +15,28 @@ import {
     where,
 } from 'firebase/firestore'
 
-// Image loader function for line background and images
+// Custom hook to load images asynchronously
 const useLineImages = (lineTypes) => {
     const [images, setImages] = useState({})
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const loadImages = async () => {
+            setLoading(true)
             const imagePromises = lineTypes.map(async (lineType) => {
                 try {
                     const [linebg, lineimg] = await Promise.all([
                         import(`../assets/linebg/${lineType}.png`),
                         import(`../assets/lineimg/${lineType}.png`),
                     ])
-
                     return {
                         [lineType]: {
                             linebg: linebg.default,
                             lineimg: lineimg.default,
                         },
                     }
-                } catch (err) {
-                    console.error(
-                        `Error loading images for ${lineType}:`,
-                        err.message,
-                    )
+                } catch {
                     const fallbackImage = '/path/to/fallback.png'
-
                     return {
                         [lineType]: {
                             linebg: fallbackImage,
@@ -53,21 +48,15 @@ const useLineImages = (lineTypes) => {
 
             const resolvedImages = await Promise.all(imagePromises)
             setImages(
-                resolvedImages.reduce(
-                    (acc, imageObj) => ({ ...acc, ...imageObj }),
-                    {},
-                ),
+                resolvedImages.reduce((acc, img) => ({ ...acc, ...img }), {}),
             )
+            setLoading(false)
         }
 
-        const debounceTimeout = setTimeout(() => {
-            loadImages()
-        }, 100)
-
-        return () => clearTimeout(debounceTimeout)
+        loadImages()
     }, [lineTypes])
 
-    return images
+    return { images, loading }
 }
 
 // Memoized Actionbtn to prevent unnecessary re-renders
@@ -80,20 +69,18 @@ const Exercises = () => {
     const navigate = useNavigate()
     const [exercises, setExercises] = useState([])
     const [category, setCategory] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         document.title = 'MoTeRole - Exercises'
         const categoryDocRef = doc(db, 'Category', categoryId)
+
         const categoryUnsubscribe = onSnapshot(
             categoryDocRef,
             (docSnapshot) => {
                 if (docSnapshot.exists()) {
-                    const categoryData = {
-                        ...docSnapshot.data(),
-                        id: docSnapshot.id,
-                    }
-                    setCategory(categoryData)
-                    console.log(categoryData) // For debugging
+                    setCategory({ ...docSnapshot.data(), id: docSnapshot.id })
+                    setLoading(false)
                 }
             },
         )
@@ -106,12 +93,9 @@ const Exercises = () => {
         )
 
         const unsubscribe = onSnapshot(exercisesQuery, (snapshot) => {
-            const exercisesData = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-                id: doc.id,
-            }))
-            setExercises(exercisesData)
-            console.log(exercisesData) // For debugging
+            setExercises(
+                snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+            )
         })
 
         return () => {
@@ -120,7 +104,7 @@ const Exercises = () => {
         }
     }, [categoryId])
 
-    if (!category) return null // Loading state
+    if (loading || !category) return <div>Loading...</div>
 
     return (
         <>
@@ -151,33 +135,32 @@ const Exercises = () => {
 
                         {/* Exercises Container */}
                         <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
-                            {exercises.length > 0 &&
-                                exercises.map((exercise) => (
-                                    <Link
-                                        key={exercise.id}
-                                        to={`/GameExercise/${exercise.id}`}
-                                        state={{ categoryId }} // Pass categoryId
-                                        style={{
-                                            backgroundImage: `url(${exercise.imageURL})`,
-                                        }}
-                                        className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 bg-contain bg-no-repeat p-2 mobile:px-2 mobile:py-1 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
-                                    >
-                                        <div className="flex h-full w-full flex-col justify-between items-center">
-                                            <span className="flex w-full justify-start text-5xl mobile:text-3xl leading-none">
-                                                {exercise.Big}
-                                            </span>
-                                            <img
-                                                src={exercise.mainIMG}
-                                                alt=""
-                                                className='h-[65%]'
-                                            />
-                                            <span className="flex w-full justify-center">
-                                                {exercise.ExerciseName}
-                                                {exercise.letterSound}
-                                            </span>
-                                        </div>
-                                    </Link>
-                                ))}
+                            {exercises.map((exercise) => (
+                                <Link
+                                    key={exercise.id}
+                                    to={`/GameExercise/${exercise.id}`}
+                                    state={{ categoryId }}
+                                    style={{
+                                        backgroundImage: `url(${exercise.imageURL})`,
+                                    }}
+                                    className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 bg-contain bg-no-repeat p-2 mobile:px-2 mobile:py-1 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
+                                >
+                                    <div className="flex h-full w-full flex-col items-center justify-between">
+                                        <span className="flex w-full justify-start text-5xl leading-none mobile:text-3xl">
+                                            {exercise.Big}
+                                        </span>
+                                        <img
+                                            src={exercise.mainIMG}
+                                            alt="Exercise"
+                                            className="h-[65%]"
+                                        />
+                                        <span className="flex w-full justify-center">
+                                            {exercise.ExerciseName}
+                                            {exercise.letterSound}
+                                        </span>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -190,12 +173,6 @@ const Exercises = () => {
                         bgColor="#AB47BC"
                         icon={PiGearSixBold}
                     />
-                    {/* <MemoizedActionbtn
-                        text=""
-                        to="/achievement"
-                        bgColor="#8BC34A"
-                        icon={IoBulbOutline}
-                    /> */}
                 </div>
             </div>
         </>
