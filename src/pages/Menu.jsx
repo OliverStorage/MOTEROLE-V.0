@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import Background from '../components/Background'
-import Play from '../assets/menubutton/play.png'
-import Achievement from '../assets/menubutton/achievement.png'
-import Profile from '../assets/menubutton/profile.png'
-import Settings from '../assets/menubutton/settings.png'
 import { Link, useNavigate } from 'react-router-dom'
+import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
-import DP from '../assets/DisplayP.png'
-import ModalLeaderBoard from '../components/ModalLeaderBoard'
+import ModalProfile from '../components/ModalProfile'
+import InfoPopup from '../components/InfoPopup'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getDatabase, ref, child, get, update } from 'firebase/database'
 import { app } from '../firebaseConfig'
-import ModalProfile from '../components/ModalProfile'
-import InfoPopup from '../components/InfoPopup'
+import Play from '../assets/menubutton/play.png'
+import Profile from '../assets/menubutton/profile.png'
+import Settings from '../assets/menubutton/settings.png'
+import DP from '../assets/DisplayP.png'
 
 const database = getDatabase(app)
 
@@ -24,54 +22,46 @@ const Menu = () => {
     useEffect(() => {
         document.title = 'MoteRole - Menu'
 
+        const fetchData = async (uid) => {
+            try {
+                const dbRef = ref(database)
+                const accountHolderSnap = await get(
+                    child(dbRef, `AccountHolder/${uid}`),
+                )
+                if (accountHolderSnap.exists()) {
+                    const accountHolderData = accountHolderSnap.val()
+                    console.log('AccountHolder Data:', accountHolderData)
+                    const preschoolerSnap = await get(
+                        child(
+                            dbRef,
+                            `Preschooler/${accountHolderData.AccountHolderId}`,
+                        ),
+                    )
+                    if (preschoolerSnap.exists()) {
+                        console.log('Preschooler Data:', preschoolerSnap.val())
+                    } else {
+                        console.log('No Preschooler data available')
+                    }
+                } else {
+                    console.log('No AccountHolder data available')
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
         const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
             if (user) {
-                const uid = user.uid
-                const dbRef = ref(database)
-
-                get(child(dbRef, `AccountHolder/${uid}`))
-                    .then((snapshot) => {
-                        if (snapshot.exists()) {
-                            const accountHolderData = snapshot.val()
-                            console.log(
-                                'AccountHolder Data:',
-                                accountHolderData,
-                            )
-
-                            const accountHolderId =
-                                accountHolderData.AccountHolderId
-                            return get(
-                                child(dbRef, `Preschooler/${accountHolderId}`),
-                            )
-                        } else {
-                            console.log('No AccountHolder data available')
-                            setLoading(false)
-                        }
-                    })
-                    .then((preschoolerSnapshot) => {
-                        if (
-                            preschoolerSnapshot &&
-                            preschoolerSnapshot.exists()
-                        ) {
-                            const preschoolerData = preschoolerSnapshot.val()
-                            console.log('Preschooler Data:', preschoolerData)
-                        } else {
-                            console.log('No Preschooler data available')
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error fetching data:', error)
-                    })
-                    .finally(() => {
-                        setLoading(false)
-                    })
+                fetchData(user.uid)
             } else {
                 console.log('User is signed out')
                 setLoading(false)
             }
         })
 
-        return () => unsubscribe() // Cleanup subscription
+        return () => unsubscribe()
     }, [])
 
     const handleLaroClick = () => {
@@ -79,11 +69,7 @@ const Menu = () => {
         const user = auth.currentUser
 
         if (user) {
-            const userId = user.uid
-            const userRef = ref(database, `users/${userId}`)
-
-            // Reset selections when going to the Category page
-            update(userRef, {
+            update(ref(database, `users/${user.uid}`), {
                 selectedCategory: null,
                 selectedExercise: null,
                 selectedDifficulty: null,
@@ -95,9 +81,22 @@ const Menu = () => {
         navigate('/category')
     }
 
-    if (loading) {
-        return <div>Loading...</div> // Loading state
-    }
+    const MenuItem = ({ to, imgSrc, label, onClick, bgColor }) => (
+        <Link
+            to={to}
+            onClick={onClick}
+            className={`text-shadow flex flex-col items-center space-y-4 rounded-3xl ${bgColor} p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4`}
+        >
+            <img
+                src={imgSrc}
+                alt={label}
+                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
+            />
+            <span>{label}</span>
+        </Link>
+    )
+
+    if (loading) return <div>Loading...</div>
 
     return (
         <>
@@ -111,50 +110,26 @@ const Menu = () => {
                         MoTeRole
                     </div>
                     <div className="flex space-x-10 text-4xl mobile:space-x-5 mobile:text-xl ipad:text-2xl">
-                        <Link
+                        <MenuItem
                             to="/category"
-                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-applegreen p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
-                        >
-                            <img
-                                src={Play}
-                                alt="Play"
-                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
-                            />
-                            <span>Laro</span>
-                        </Link>
-                        {/* <Link
-                            to="/achievement"
-                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-tangerine p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
-                        >
-                            <img
-                                src={Achievement}
-                                alt="Achievement"
-                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
-                            />
-                            <span>Tagumpay</span>
-                        </Link> */}
-                        <Link
+                            imgSrc={Play}
+                            label="Laro"
+                            onClick={handleLaroClick}
+                            bgColor="bg-applegreen"
+                        />
+                        <MenuItem
+                            to="#"
+                            imgSrc={Profile}
+                            label="Profile"
                             onClick={() => setShowModal(true)}
-                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-bluesky p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
-                        >
-                            <img
-                                src={Profile}
-                                alt="Profile"
-                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
-                            />
-                            <span>Profile</span>
-                        </Link>
-                        <Link
+                            bgColor="bg-bluesky"
+                        />
+                        <MenuItem
                             to="/settings"
-                            className="text-shadow flex flex-col items-center space-y-4 rounded-3xl bg-grape p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4"
-                        >
-                            <img
-                                src={Settings}
-                                alt="Settings"
-                                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
-                            />
-                            <span>Settings</span>
-                        </Link>
+                            imgSrc={Settings}
+                            label="Settings"
+                            bgColor="bg-grape"
+                        />
                     </div>
                 </div>
                 <div className="w-1/10 flex select-none flex-col justify-between opacity-100">
@@ -177,17 +152,6 @@ const Menu = () => {
                             'Settings: sa kahong ito maaring ayusin ang tugtog at tunog na nais ng manlalaro',
                         ]}
                     />
-
-                    {/* <button
-                        onClick={() => setShowModal(true)}
-                        className="flex cursor-pointer items-center justify-center rounded-xl text-center text-white duration-100 active:translate-y-1 mobile:-translate-y-1"
-                    >
-                        <img
-                            src={Leader}
-                            alt="Leaderboard"
-                            className="size-12 mobile:size-10 ipad:size-14"
-                        />
-                    </button> */}
                 </div>
             </div>
             {showModal && (

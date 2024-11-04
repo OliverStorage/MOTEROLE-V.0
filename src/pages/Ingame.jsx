@@ -9,12 +9,12 @@ import ModalSettings from '../components/ModalSettings'
 import ModalResult from '../components/ModalResult'
 import A from '../assets/abcEasy/A.png'
 import { db } from '../firebaseConfig'
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, doc, getDoc, query } from 'firebase/firestore'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const Ingame = () => {
-    const { gameExerciseId } = useParams()
+    const { gamesessionId } = useParams()
     const [showModal, setShowModal] = useState(false)
     const [showResultModal, setShowResultModal] = useState(false)
     const [isErasing, setIsErasing] = useState(false)
@@ -27,10 +27,43 @@ const Ingame = () => {
     const [difficultyLevel, setDifficultyLevel] = useState(null)
     const [xpath, setXpath] = useState([])
     const [ypath, setYpath] = useState([])
+    const [gameSession, setGameSession] = useState(null)
 
     useEffect(() => {
         document.title = 'MoTeRole - IN GAME'
+        const fetchGameExercise = async () => {
+            try {
+                const gameSessionCollection = collection(db, 'GameSession')
+                const gameSessionRef = doc(gameSessionCollection, gamesessionId)
+                const gameSessionDoc = await getDoc(gameSessionRef)
+
+                if (gameSessionDoc.exists()) {
+                    // console.log('Game Exercise Data:', gameSessionDoc.data())
+                } else {
+                    console.log('No such document!')
+                }
+                const data = gameSessionDoc.data()
+                console.log(data.GameExerciseId)
+                const gameExerciseCollection = collection(db, 'GameExercise')
+                const gameExerciseRef = doc(
+                    gameExerciseCollection,
+                    data.GameExerciseId,
+                )
+                const gameExerciseDoc = await getDoc(gameExerciseRef)
+                console.log(gameExerciseDoc.data())
+                setGameSession(gameExerciseDoc.data())
+            } catch (error) {
+                console.error('Error fetching game exercise:', error)
+            }
+        }
+
+        fetchGameExercise()
+        console.log(gamesessionId)
     }, [])
+
+    useEffect(() => {
+        console.log(gameSession)
+    }, [gameSession])
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -121,28 +154,31 @@ const Ingame = () => {
         })
     }
 
+    // const submitCanvas = async () => {
+    //     console.log(xpath)
+    //     console.log(ypath)
+
+    //     const canvas = canvasRef.current
+    //     const imageData = canvas.toDataURL('image/png')
+
+    //     try {
+    //         const processedData = await preprocessImage(imageData)
+    //         const response = await axios.post(
+    //             'http://127.0.0.1:8000/api/predict-view/',
+    //             {
+    //                 image: processedData,
+    //             },
+    //         )
+    //         setDetectedLetter(response.data.letter) // Get detected letter
+    //         setAccuracy(response.data.accuracy)
+    //     } catch (error) {
+    //         console.error('Error fetching the prediction:', error)
+    //     }
+
+    //     setShowResultModal(true)
+    // }
     const submitCanvas = async () => {
-        console.log(xpath)
-        console.log(ypath)
-
-        const canvas = canvasRef.current
-        const imageData = canvas.toDataURL('image/png')
-
-        try {
-            const processedData = await preprocessImage(imageData)
-            const response = await axios.post(
-                'http://127.0.0.1:8000/api/predict-view/',
-                {
-                    image: processedData,
-                },
-            )
-            setDetectedLetter(response.data.letter) // Get detected letter
-            setAccuracy(response.data.accuracy)
-        } catch (error) {
-            console.error('Error fetching the prediction:', error)
-        }
-
-        setShowResultModal(true)
+        //save as image function
     }
 
     const handleTouchStart = (e) => {
@@ -210,10 +246,15 @@ const Ingame = () => {
                             <div className="h-2 w-full bg-lineblue mobile:h-1" />
                             <div className="h-2 w-full border-t-8 border-dashed border-linered mobile:border-t-4" />
                             <div className="h-2 w-full bg-lineblue mobile:h-1" />
-                            <div
-                                style={{ backgroundImage: `url(${A})` }}
-                                className="absolute inset-0 z-10 bg-contain bg-center bg-no-repeat mobile:m-4 ipad:m-4"
-                            />
+                            {gameSession && (
+                                <div
+                                    style={{
+                                        backgroundImage: `url(${gameSession.ExerciseImage})`,
+                                    }}
+                                    className="absolute inset-0 z-10 bg-contain bg-center bg-no-repeat mobile:m-4 ipad:m-4"
+                                />
+                            )}
+                            {!gameSession && <>Loading...</>}
                             <div className="absolute inset-0 z-20 flex items-center justify-center">
                                 <canvas
                                     ref={canvasRef}

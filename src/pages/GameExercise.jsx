@@ -61,8 +61,9 @@ const GameExercise = () => {
                     SessionStartTime: new Date(),
                 }
                 const gameSessionRef = collection(db, 'GameSession')
-                await addDoc(gameSessionRef, sessionData)
-                navigate(`/Ingame/${gameExerciseId}`)
+                const docref = await addDoc(gameSessionRef, sessionData)
+                const GameSessionId = docref.id
+                navigate(`/Ingame/${GameSessionId}`)
             } catch (error) {
                 console.error('Error starting game session:', error)
             }

@@ -15,49 +15,49 @@ import {
     where,
 } from 'firebase/firestore'
 
-// Custom hook to load images asynchronously
-const useLineImages = (lineTypes) => {
-    const [images, setImages] = useState({})
-    const [loading, setLoading] = useState(true)
+// // Custom hook to load images asynchronously
+// const useLineImages = (lineTypes) => {
+//     const [images, setImages] = useState({})
+//     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        const loadImages = async () => {
-            setLoading(true)
-            const imagePromises = lineTypes.map(async (lineType) => {
-                try {
-                    const [linebg, lineimg] = await Promise.all([
-                        import(`../assets/linebg/${lineType}.png`),
-                        import(`../assets/lineimg/${lineType}.png`),
-                    ])
-                    return {
-                        [lineType]: {
-                            linebg: linebg.default,
-                            lineimg: lineimg.default,
-                        },
-                    }
-                } catch {
-                    const fallbackImage = '/path/to/fallback.png'
-                    return {
-                        [lineType]: {
-                            linebg: fallbackImage,
-                            lineimg: fallbackImage,
-                        },
-                    }
-                }
-            })
+//     useEffect(() => {
+//         const loadImages = async () => {
+//             setLoading(true)
+//             const imagePromises = lineTypes.map(async (lineType) => {
+//                 try {
+//                     const [linebg, lineimg] = await Promise.all([
+//                         import(`../assets/linebg/${lineType}.png`),
+//                         import(`../assets/lineimg/${lineType}.png`),
+//                     ])
+//                     return {
+//                         [lineType]: {
+//                             linebg: linebg.default,
+//                             lineimg: lineimg.default,
+//                         },
+//                     }
+//                 } catch {
+//                     const fallbackImage = '/path/to/fallback.png'
+//                     return {
+//                         [lineType]: {
+//                             linebg: fallbackImage,
+//                             lineimg: fallbackImage,
+//                         },
+//                     }
+//                 }
+//             })
 
-            const resolvedImages = await Promise.all(imagePromises)
-            setImages(
-                resolvedImages.reduce((acc, img) => ({ ...acc, ...img }), {}),
-            )
-            setLoading(false)
-        }
+//             const resolvedImages = await Promise.all(imagePromises)
+//             setImages(
+//                 resolvedImages.reduce((acc, img) => ({ ...acc, ...img }), {}),
+//             )
+//             setLoading(false)
+//         }
 
-        loadImages()
-    }, [lineTypes])
+//         loadImages()
+//     }, [lineTypes])
 
-    return { images, loading }
-}
+//     return { images, loading }
+// }
 
 // Memoized Actionbtn to prevent unnecessary re-renders
 const MemoizedActionbtn = React.memo(({ text, to, bgColor, icon }) => (

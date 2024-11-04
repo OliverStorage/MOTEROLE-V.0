@@ -45,10 +45,7 @@ const App = () => {
                     <Route path="/tutorial" element={<Tutorial />} />
                     <Route path="/settings" element={<Settings />} />
 
-                    <Route
-                        path="/Ingame/:gameexerciseId"
-                        element={<Ingame />}
-                    />
+                    <Route path="/Ingame/:gamesessionId" element={<Ingame />} />
                     <Route
                         path="/GameExercise/:exercisesId"
                         element={<GameExercise />}
