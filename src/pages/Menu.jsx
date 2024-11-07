@@ -21,6 +21,7 @@ const Menu = () => {
 
     useEffect(() => {
         document.title = 'MoteRole - Menu'
+        const auth = getAuth()
 
         const fetchData = async (uid) => {
             try {
@@ -28,9 +29,11 @@ const Menu = () => {
                 const accountHolderSnap = await get(
                     child(dbRef, `AccountHolder/${uid}`),
                 )
+
                 if (accountHolderSnap.exists()) {
                     const accountHolderData = accountHolderSnap.val()
                     console.log('AccountHolder Data:', accountHolderData)
+
                     const preschoolerSnap = await get(
                         child(
                             dbRef,
@@ -52,7 +55,7 @@ const Menu = () => {
             }
         }
 
-        const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 fetchData(user.uid)
             } else {
@@ -87,28 +90,33 @@ const Menu = () => {
             onClick={onClick}
             className={`text-shadow flex flex-col items-center space-y-4 rounded-3xl ${bgColor} p-5 duration-100 active:scale-95 mobile:space-y-2 mobile:rounded-lg mobile:p-3 ipad:rounded-xl ipad:p-4`}
         >
-            <img
-                src={imgSrc}
-                alt={label}
-                className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
-            />
+            {loading ? (
+                <div className="loader">Loading...</div>
+            ) : (
+                <img
+                    src={imgSrc}
+                    alt={label}
+                    className="size-52 rounded-lg bg-butter mobile:size-28 mobile:rounded-md ipad:size-36"
+                />
+            )}
             <span>{label}</span>
         </Link>
     )
-
-    if (loading) return <div>Loading...</div>
 
     return (
         <>
             <Background />
             <div className="flex h-screen justify-between p-5">
+                {/* Left Side */}
                 <div className="flex flex-col justify-end">
                     <FullScreen />
                 </div>
+
+                {/* Center */}
                 <div className="-mt-20 flex w-[80%] flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-10">
-                    <div className="text-shadow text-9xl mobile:text-7xl">
+                    <h1 className="text-shadow text-9xl mobile:text-7xl">
                         MoTeRole
-                    </div>
+                    </h1>
                     <div className="flex space-x-10 text-4xl mobile:space-x-5 mobile:text-xl ipad:text-2xl">
                         <MenuItem
                             to="/category"
@@ -132,16 +140,22 @@ const Menu = () => {
                         />
                     </div>
                 </div>
+
+                {/* Right Side */}
                 <div className="w-1/10 flex select-none flex-col justify-between opacity-100">
                     <button
                         onClick={() => setShowModal(true)}
                         className="flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full text-center text-white outline outline-4 outline-modalbrowndark duration-100 active:translate-y-1 mobile:-translate-y-1"
                     >
-                        <img
-                            src={DP}
-                            alt="Leaderboard"
-                            className="size-14 select-none mobile:size-10 ipad:size-14"
-                        />
+                        {loading ? (
+                            <div className="loader">Loading...</div>
+                        ) : (
+                            <img
+                                src={DP}
+                                alt="Leaderboard"
+                                className="size-14 select-none mobile:size-10 ipad:size-14"
+                            />
+                        )}
                     </button>
                     <InfoPopup
                         className="flex flex-col"
@@ -154,6 +168,7 @@ const Menu = () => {
                     />
                 </div>
             </div>
+
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">
                     <ModalProfile onClose={() => setShowModal(false)} />

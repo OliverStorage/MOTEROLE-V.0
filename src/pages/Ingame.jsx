@@ -7,7 +7,6 @@ import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import ModalSettings from '../components/ModalSettings'
 import ModalResult from '../components/ModalResult'
-import A from '../assets/abcEasy/A.png'
 import { db } from '../firebaseConfig'
 import { collection, addDoc, doc, getDoc, query } from 'firebase/firestore'
 import { useParams } from 'react-router-dom'
@@ -28,6 +27,7 @@ const Ingame = () => {
     const [xpath, setXpath] = useState([])
     const [ypath, setYpath] = useState([])
     const [gameSession, setGameSession] = useState(null)
+    const [activeExercise, setActiveExercise] = useState(1)
 
     useEffect(() => {
         document.title = 'MoTeRole - IN GAME'
@@ -128,31 +128,31 @@ const Ingame = () => {
         ctxRef.current.beginPath()
     }
 
-    const preprocessImage = (imageData) => {
-        const img = new Image()
-        img.src = imageData
+    // const preprocessImage = (imageData) => {
+    //     const img = new Image()
+    //     img.src = imageData
 
-        return new Promise((resolve) => {
-            img.onload = () => {
-                const canvas = document.createElement('canvas')
-                const ctx = canvas.getContext('2d')
-                canvas.width = 28 // Resize to model input size
-                canvas.height = 28
+    //     return new Promise((resolve) => {
+    //         img.onload = () => {
+    //             const canvas = document.createElement('canvas')
+    //             const ctx = canvas.getContext('2d')
+    //             canvas.width = 28 // Resize to model input size
+    //             canvas.height = 28
 
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-                const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-                const normalizedData = new Float32Array(28 * 28)
+    //             ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+    //             const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
+    //             const normalizedData = new Float32Array(28 * 28)
 
-                for (let i = 0; i < data.data.length; i += 4) {
-                    const avg =
-                        (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3
-                    normalizedData[i / 4] = avg / 255 // Normalize to [0, 1]
-                }
+    //             for (let i = 0; i < data.data.length; i += 4) {
+    //                 const avg =
+    //                     (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3
+    //                 normalizedData[i / 4] = avg / 255 // Normalize to [0, 1]
+    //             }
 
-                resolve(normalizedData)
-            }
-        })
-    }
+    //             resolve(normalizedData)
+    //         }
+    //     })
+    // }
 
     // const submitCanvas = async () => {
     //     console.log(xpath)
@@ -177,8 +177,29 @@ const Ingame = () => {
 
     //     setShowResultModal(true)
     // }
-    const submitCanvas = async () => {
-        //save as image function
+
+    //for small letter
+    //   const submitCanvas = async () => {
+    //       if (gameSession.ExerciseImage2) {
+    //           setActiveExercise(2)
+    //       }
+    //   }
+
+    const submitCanvas = () => {
+        // const canvas = canvasRef.current
+        // const imageData = canvas.toDataURL('image/png') // Capture the canvas data as PNG
+
+        // // Create a link element to download the image
+        // const link = document.createElement('a')
+        // link.href = imageData
+        // link.download = `${gamesessionId}-${Date.now()}-${activeExercise}` // Set the download file name
+        // link.click()
+        resetCanvas()
+
+        //small letter
+        if (gameSession.ExerciseImage2) {
+            setActiveExercise(2)
+        }
     }
 
     const handleTouchStart = (e) => {
@@ -193,12 +214,21 @@ const Ingame = () => {
         draw(e.touches[0])
     }
 
-    const getLineWidth = () => {
-        const width = window.innerWidth
-        if (width >= 1024) return 60
-        if (width >= 768) return 40
-        return 25
-    }
+  const getLineWidth = () => {
+      const width = window.innerWidth
+
+      // Adjust line width if ExerciseImage2 (activeExercise 2) is active
+      if (activeExercise === 2) {
+          if (width >= 1500 && width <= 2000) return 50
+          if (width >= 1024 && width < 1500) return 35
+          return 25 // Default width for other screen sizes
+      }
+
+      // Default line widths for other exercises
+      if (width >= 1500 && width <= 2000) return 62
+      if (width >= 1024 && width < 1500) return 45
+      return 30
+  }
 
     const startGameSession = async () => {
         const sessionStartTime = new Date()
@@ -249,7 +279,7 @@ const Ingame = () => {
                             {gameSession && (
                                 <div
                                     style={{
-                                        backgroundImage: `url(${gameSession.ExerciseImage})`,
+                                        backgroundImage: `url(${activeExercise === 1 ? gameSession.ExerciseImage : gameSession.ExerciseImage2})`,
                                     }}
                                     className="absolute inset-0 z-10 bg-contain bg-center bg-no-repeat mobile:m-4 ipad:m-4"
                                 />

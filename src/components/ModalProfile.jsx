@@ -1,12 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { LuArrowBigLeft } from 'react-icons/lu'
+import { app } from '../firebaseConfig'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { FaEdit } from 'react-icons/fa'
 
 const ModalProfile = ({ onClose }) => {
+    const [activeTab, setActiveTab] = useState('category')
+    const [profileImage, setProfileImage] = useState('') // State for profile image
+    const [uploading, setUploading] = useState(false) // State for upload status
+    const storage = getStorage(app)
+
     useEffect(() => {
-         document.title = 'MoteRole - Profile'
+        document.title = 'MoteRole - Profile'
     }, [])
 
-    const [activeTab, setActiveTab] = useState('category')
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            setUploading(true)
+            const storageRef = ref(storage, `profileImages/${file.name}`)
+            await uploadBytes(storageRef, file) // Uploading to Firebase Storage
+            const imageUrl = await getDownloadURL(storageRef) // Get the download URL
+            setProfileImage(imageUrl) // Set the profile image URL
+            setUploading(false)
+        }
+    }
 
     return (
         <>
@@ -23,7 +41,26 @@ const ModalProfile = ({ onClose }) => {
 
                     <div className="text-outline tracking-wide">My Profile</div>
                     <div className="flex w-full items-center gap-3 text-3xl mobile:gap-1 mobile:text-sm ipad:text-2xl">
-                        {/* <div className="h-[100px] w-[110px] rounded-full border-4 border-bluesky bg-white mobile:h-[55px] mobile:w-[65px] ipad:h-[80px] ipad:w-[90px]"></div> */}
+                        <div className="relative flex w-[20%] items-end">
+                            {/* make this img changable  */}
+                            <img
+                                src=""
+                                alt="user.png"
+                                className="h-[100px] w-[100px] rounded-full border-4 border-bluesky text-base mobile:h-[60px] mobile:w-[60px] ipad:h-[90px] ipad:w-[90px]"
+                            />
+                            <div className="flex">
+                                <label htmlFor="userProfileImage" className='mobile:size-5 ipad:size-'>
+                                    <FaEdit className="h-full w-full cursor-pointer" />
+                                </label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                    id="userProfileImage"
+                                />
+                            </div>
+                        </div>
                         <div className="flex w-full justify-between">
                             <div className="text-outline flex flex-col justify-between">
                                 <div className="flex gap-3 mobile:gap-1">
@@ -104,59 +141,11 @@ const ModalProfile = ({ onClose }) => {
                                 <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
                                     asda
                                 </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    asda
-                                </div>
                             </div>
                         ) : (
                             <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
                                 <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
                                     123 asda
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
-                                </div>
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    123
                                 </div>
                             </div>
                         )}

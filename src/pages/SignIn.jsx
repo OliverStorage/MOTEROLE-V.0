@@ -3,7 +3,6 @@ import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import Actionbtn from '../components/Actionbtn'
 import { Link, useNavigate } from 'react-router-dom'
-import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import { app } from '../firebaseConfig'
@@ -98,6 +97,7 @@ const SignIn = () => {
                                 id="sigin-email"
                                 placeholder="Email"
                                 className="h-1/3 w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                autoComplete='email'
                             />
                             <input
                                 type="text"
@@ -105,6 +105,7 @@ const SignIn = () => {
                                 id="sigin-username"
                                 placeholder="Username"
                                 className="h-1/3 w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                autoComplete='username'
                             />
                             <input
                                 type="password"
@@ -112,6 +113,7 @@ const SignIn = () => {
                                 id="sigin-password"
                                 placeholder="Password"
                                 className="h-1/3 w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                autoComplete='current-password'
                             />
 
                             <div className="flex w-[80%] z-50 items-center text-white space-x-10 absolute -bottom-16 h-12">

@@ -3,7 +3,6 @@ import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import Actionbtn from '../components/Actionbtn'
 import { Link, useNavigate } from 'react-router-dom'
-import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import { app } from '../firebaseConfig'
@@ -35,7 +34,7 @@ const SignUp = () => {
         const firstName = e.target['signup-firstname'].value
         const lastName = e.target['signup-lastname'].value
         const username = e.target['signup-username'].value
-
+        const gender = e.target['signup-gender'].value
         try {
             // 1. Check if email already exists in AccountHolder
             const accountHoldersCollection = collection(db, 'AccountHolder')
@@ -89,7 +88,8 @@ const SignUp = () => {
                 Username: username,
                 Password: password,
                 Points: 0, // Initial points
-                Achievements: [], // Initial achievements (empty array)
+                Achievements: [],
+                Gender: gender, // Initial achievements (empty array)
             })
             console.log('Preschooler added to Firestore!')
 
@@ -147,13 +147,14 @@ const SignUp = () => {
                                     id="signup-username"
                                     placeholder="Username"
                                     className="h-full w-1/2 rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                    autoComplete='username'
                                 />
                                 <div className="flex w-1/2 justify-evenly">
                                     <div className="flex items-center space-x-4">
                                         <input
                                             type="radio"
                                             name="signup-gender"
-                                            id="female"
+                                            id="signup-gender-famale"
                                             value="female"
                                             className="h-8 w-8 border-4 border-grape px-4 focus:outline-0 mobile:h-4 mobile:w-4 mobile:rounded-xl"
                                         />
@@ -164,7 +165,7 @@ const SignUp = () => {
                                             defaultChecked
                                             type="radio"
                                             name="signup-gender"
-                                            id="male"
+                                            id="signup-gender-male"
                                             value="male"
                                             className="h-8 w-8 border-4 border-grape px-4 focus:outline-0 mobile:h-4 mobile:w-4 mobile:rounded-xl"
                                         />
@@ -182,6 +183,7 @@ const SignUp = () => {
                                 id="signup-email"
                                 placeholder="Email"
                                 className="h-full w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                autoComplete='email'
                             />
                             <input
                                 type="password"
@@ -189,6 +191,7 @@ const SignUp = () => {
                                 id="signup-password"
                                 placeholder="Password"
                                 className="h-full w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                autoComplete='new-password'
                             />
                             {errorMessage && (
                                 <div className="text-red-500">
@@ -197,7 +200,7 @@ const SignUp = () => {
                             )}
 
                             {/* Sign Up button inside the form */}
-                            <div className="absolute text-white  -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
+                            <div className="absolute -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl text-white mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
                                 <button
                                     type="submit"
                                     className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
