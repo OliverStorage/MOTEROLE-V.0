@@ -97,10 +97,10 @@ const Exercises = () => {
 
                 <div className="flex w-full flex-col items-center justify-center overflow-hidden font-bubbles text-white">
                     <div
-                        className={`${category.borderColor}  text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 bg-white p-8 mobile:h-[80%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6`}
+                        className={`border-${category.borderColor} text-shadow relative flex h-[70%] w-[80%] justify-center rounded-3xl border-8 bg-white p-8 mobile:h-[80%] mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6`}
                     >
                         <span
-                            className={`${category.borderColor} absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 bg-white px-4 font-nunito text-4xl font-black text-black mobile:h-12 mobile:w-auto mobile:border-4 mobile:text-2xl ipad:text-3xl`}
+                            className={`border-${category.borderColor} absolute -top-9 flex h-14 w-1/3 items-center justify-center rounded-2xl border-8 bg-white px-4 font-nunito text-4xl font-black text-black mobile:h-12 mobile:w-auto mobile:border-4 mobile:text-2xl ipad:text-3xl`}
                         >
                             {category.CategoryName}
                         </span>

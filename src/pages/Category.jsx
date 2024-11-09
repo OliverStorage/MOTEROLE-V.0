@@ -73,7 +73,7 @@ const Category = () => {
                                     <Link
                                         key={category.id}
                                         to={`/Exercises/${category.id}`}
-                                        className={`text-shadow flex h-[80%] w-72 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 ${category.borderColor} bg-butter p-2 duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-60`}
+                                        className={`border-${category.borderColor} text-shadow flex h-[80%] w-72 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 bg-butter p-2 duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-60`}
                                     >
                                         <div className="relative h-full w-full bg-cover bg-center">
                                             {loading ? (
