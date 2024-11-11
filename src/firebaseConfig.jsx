@@ -14,6 +14,8 @@ const firebaseConfig = {
     messagingSenderId: '360928086516',
     appId: '1:360928086516:web:bb34b9f6e30dc1748f11a1',
     measurementId: 'G-QKV84BYD93',
+    databaseURL:
+        'https://motorole-bdee3-default-rtdb.asia-southeast1.firebasedatabase.app',
 }
 
 // Initialize Firebase
