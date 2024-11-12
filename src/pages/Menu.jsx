@@ -23,46 +23,75 @@ const Menu = () => {
         document.title = 'MoteRole - Menu'
         const auth = getAuth()
 
-        const fetchData = async (uid) => {
-            try {
-                const dbRef = ref(database)
-                const accountHolderSnap = await get(
-                    child(dbRef, `AccountHolder/${uid}`),
-                )
+       const fetchData = async (uid) => {
+           try {
+               const dbRef = ref(database)
+               // Assuming you have the email or username stored in the authentication data
+               const auth = getAuth()
+               const user = auth.currentUser
 
-                if (accountHolderSnap.exists()) {
-                    const accountHolderData = accountHolderSnap.val()
-                    console.log('AccountHolder Data:', accountHolderData)
+               if (user) {
+                   // Get the document from Preschooler that matches the user's email or username
+                   const preschoolerSnap = await get(
+                       child(dbRef, `Preschooler`),
+                   )
 
-                    const preschoolerSnap = await get(
-                        child(
-                            dbRef,
-                            `Preschooler/${accountHolderData.AccountHolderId}`,
-                        ),
-                    )
-                    if (preschoolerSnap.exists()) {
-                        console.log('Preschooler Data:', preschoolerSnap.val())
-                    } else {
-                        console.log('No Preschooler data available')
-                    }
-                } else {
-                    console.log('No AccountHolder data available')
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error)
-            } finally {
-                setLoading(false)
-            }
-        }
+                   if (preschoolerSnap.exists()) {
+                       const preschoolers = preschoolerSnap.val()
+                       let accountHolderId = null
 
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                fetchData(user.uid)
-            } else {
-                console.log('User is signed out')
-                setLoading(false)
-            }
-        })
+                       for (let key in preschoolers) {
+                           if (
+                               preschoolers[key].email === user.email ||
+                               preschoolers[key].username === 'someUsername'
+                           ) {
+                               accountHolderId =
+                                   preschoolers[key].AccountHolderId
+                               break
+                           }
+                       }
+
+                       if (accountHolderId) {
+                           const accountHolderSnap = await get(
+                               child(dbRef, `AccountHolder/${accountHolderId}`),
+                           )
+
+                           if (accountHolderSnap.exists()) {
+                               console.log(
+                                   'AccountHolder Data:',
+                                   accountHolderSnap.val(),
+                               )
+                           } else {
+                               console.log('No AccountHolder data available')
+                           }
+                       } else {
+                           console.log(
+                               'No matching Preschooler found for the user',
+                           )
+                       }
+                   } else {
+                       console.log('No Preschooler data available')
+                   }
+               }
+           } catch (error) {
+               console.error('Error fetching data:', error)
+           } finally {
+               setLoading(false)
+           }
+       }
+
+
+
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+              console.log('User UID:', user.uid)
+              fetchData(user.uid)
+          } else {
+              console.log('User is signed out')
+              setLoading(false)
+          }
+      })
+
 
         return () => unsubscribe()
     }, [])

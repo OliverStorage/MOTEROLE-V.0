@@ -4,6 +4,7 @@ import { app } from '../firebaseConfig'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { FaEdit } from 'react-icons/fa'
 
+
 const ModalProfile = ({ onClose }) => {
     const [activeTab, setActiveTab] = useState('category')
     const [profileImage, setProfileImage] = useState('') // State for profile image

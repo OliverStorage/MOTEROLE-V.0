@@ -5,7 +5,7 @@ import Actionbtn from '../components/Actionbtn'
 import { Link, useNavigate } from 'react-router-dom'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import { app } from '../firebaseConfig'
+import { app, db } from '../firebaseConfig'
 import {
     getFirestore,
     collection,
