@@ -5,100 +5,99 @@ import Actionbtn from '../components/Actionbtn'
 import { Link, useNavigate } from 'react-router-dom'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import { app, db } from '../firebaseConfig'
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    query,
-    where,
-    limit,
-} from 'firebase/firestore/lite'
+import { db } from '../firebaseConfig'
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
 
 const SignUp = () => {
     const navigate = useNavigate()
-    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
-        document.title = 'MoTeRole - Sign up'
+        document.title = 'MoTeRole - Sign Up'
     })
 
-    const db = getFirestore(app)
+    const [form, setForm] = useState({
+        firstname: '',
+        lastname: '',
+        username: '',
+        gender: 'Male',
+        email: '',
+        password: '',
+        achievements: '',
+        points: 0,
+    })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+
+        // Capitalize the first letter for specific fields
+        const capitalizeValue = (str) =>
+            str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+
+        setForm({
+            ...form,
+            [name]:
+                name === 'firstname' ||
+                name === 'lastname' ||
+                name === 'username' ||
+                name === 'gender'
+                    ? capitalizeValue(value)
+                    : value,
+        })
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        const email = e.target['signup-email'].value
-        const password = e.target['signup-password'].value
-        const firstName = e.target['signup-firstname'].value
-        const lastName = e.target['signup-lastname'].value
-        const username = e.target['signup-username'].value
-        const gender = e.target['signup-gender'].value
         try {
-            // 1. Check if email already exists in AccountHolder
-            const accountHoldersCollection = collection(db, 'AccountHolder')
-            const existingAccountHolderQuery = query(
-                accountHoldersCollection,
-                where('Email', '==', email),
+            // Check if AccountHolder exists
+            const accountHolderQuery = query(
+                collection(db, 'AccountHolder'),
+                where('Email', '==', form.email),
             )
-            const existingAccountHolderSnapshot = await getDocs(
-                existingAccountHolderQuery,
-            )
+            const accountHolderSnapshot = await getDocs(accountHolderQuery)
 
-            let accountHolderDocRef
+            let accountHolderId
 
-            if (!existingAccountHolderSnapshot.empty) {
-                // Use the existing AccountHolder document
-                accountHolderDocRef = existingAccountHolderSnapshot.docs[0].ref
+            if (accountHolderSnapshot.empty) {
+                // Create a new AccountHolder if it doesn't exist
+                const newAccountHolder = await addDoc(
+                    collection(db, 'AccountHolder'),
+                    {
+                        Email: form.email,
+                    },
+                )
+                accountHolderId = newAccountHolder.id
             } else {
-                // Create a new AccountHolder
-                accountHolderDocRef = await addDoc(accountHoldersCollection, {
-                    Email: email,
-                })
-                console.log(
-                    'New AccountHolder added to Firestore with ID:',
-                    accountHolderDocRef.id,
-                )
+                // Use the existing AccountHolderId
+                accountHolderId = accountHolderSnapshot.docs[0].id
             }
 
-            // 3. Count existing Preschoolers with the same AccountHolderId (limit to 20)
-            const preschoolersCollection = collection(db, 'Preschooler')
-            const existingPreschoolersQuery = query(
-                preschoolersCollection,
-                where('AccountHolderId', '==', accountHolderDocRef.id),
-                limit(20),
-            )
-            const existingPreschoolersSnapshot = await getDocs(
-                existingPreschoolersQuery,
-            )
-
-            if (existingPreschoolersSnapshot.size >= 20) {
-                setErrorMessage(
-                    'You have already used this account for the maximum number of allowed users (20).',
-                )
-                return
-            }
-
-            // 4. Create a new Preschooler with the AccountHolderId
-            await addDoc(preschoolersCollection, {
-                AccountHolderId: accountHolderDocRef.id,
-                Firstname: firstName,
-                Lastname: lastName,
-                Username: username,
-                Password: password,
-                Points: 0, // Initial points
-                Achievements: [],
-                Gender: gender, // Initial achievements (empty array)
+            // Add a new Preschooler linked to the AccountHolder
+            await addDoc(collection(db, 'Preschooler'), {
+                AccountHolderId: accountHolderId,
+                firstname: form.firstname,
+                lastname: form.lastname,
+                email: form.email,
+                gender: form.gender,
+                username: form.username,
+                password: form.password,
+                points: 0,
+                achievements: [],
+                profileImage: '',
             })
-            console.log('Preschooler added to Firestore!')
+
+            console.log('User registered successfully!')
+            setForm({
+                firstname: '',
+                lastname: '',
+                username: '',
+                gender: '',
+                email: '',
+                password: '',
+            })
 
             navigate('/signin')
         } catch (error) {
-            console.error('Error during sign up:', error)
-            setErrorMessage(
-                'An error occurred during sign up. Please try again.',
-            )
+            console.error('Error adding document: ', error)
         }
     }
     return (
@@ -109,7 +108,6 @@ const SignUp = () => {
                 <div className="w-1/10 flex flex-col justify-end">
                     <FullScreen />
                 </div>
-
                 {/* center */}
                 <div className="-mt-12 flex w-full flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-8 mobile:space-y-3">
                     <div className="text-shadow text-8xl mobile:text-5xl ipad:text-7xl">
@@ -126,36 +124,41 @@ const SignUp = () => {
                             <div className="flex h-full w-full justify-center space-x-4">
                                 <input
                                     type="text"
-                                    name="signup-firstname"
-                                    id="signup-firstname"
+                                    name="firstname"
                                     placeholder="First Name"
-                                    className="h-full w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                    value={form.firstname}
+                                    onChange={handleChange}
+                                    className="h-full w-full rounded-2xl border-4 border-grape px-4 capitalize focus:outline-0 mobile:rounded-xl"
+                                    required
                                 />
                                 <input
                                     type="text"
-                                    name="signup-lastname"
-                                    id="signup-lastname"
+                                    name="lastname"
                                     placeholder="Last Name"
-                                    className="h-full w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
+                                    value={form.lastname}
+                                    onChange={handleChange}
+                                    className="h-full w-full rounded-2xl border-4 border-grape px-4 capitalize focus:outline-0 mobile:rounded-xl"
+                                    required
                                 />
                             </div>
 
                             <div className="flex h-full w-full space-x-4">
                                 <input
                                     type="text"
-                                    name="signup-username"
-                                    id="signup-username"
+                                    name="username"
                                     placeholder="Username"
-                                    className="h-full w-1/2 rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
-                                    autoComplete='username'
+                                    value={form.username}
+                                    onChange={handleChange}
+                                    className="h-full w-1/2 rounded-2xl border-4 border-grape px-4 capitalize focus:outline-0 mobile:rounded-xl"
+                                    autoComplete="username"
+                                    required
                                 />
                                 <div className="flex w-1/2 justify-evenly">
                                     <div className="flex items-center space-x-4">
                                         <input
                                             type="radio"
-                                            name="signup-gender"
-                                            id="signup-gender-famale"
-                                            value="female"
+                                            name="genger"
+                                            value={form.gender === 'Female'}
                                             className="h-8 w-8 border-4 border-grape px-4 focus:outline-0 mobile:h-4 mobile:w-4 mobile:rounded-xl"
                                         />
                                         <label htmlFor="female">Female</label>
@@ -164,9 +167,8 @@ const SignUp = () => {
                                         <input
                                             defaultChecked
                                             type="radio"
-                                            name="signup-gender"
-                                            id="signup-gender-male"
-                                            value="male"
+                                            name="genger"
+                                            value={form.gender === 'Male'}
                                             className="h-8 w-8 border-4 border-grape px-4 focus:outline-0 mobile:h-4 mobile:w-4 mobile:rounded-xl"
                                         />
                                         <label htmlFor="male">Male</label>
@@ -179,26 +181,24 @@ const SignUp = () => {
                             </span>
                             <input
                                 type="email"
-                                name="signup-email"
-                                id="signup-email"
+                                name="email"
                                 placeholder="Email"
+                                value={form.email}
+                                onChange={handleChange}
                                 className="h-full w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
-                                autoComplete='email'
+                                autoComplete="email"
+                                required
                             />
                             <input
                                 type="password"
-                                name="signup-password"
-                                id="signup-password"
+                                name="password"
                                 placeholder="Password"
+                                value={form.password}
+                                onChange={handleChange}
                                 className="h-full w-full rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
-                                autoComplete='new-password'
+                                autoComplete="new-password"
+                                required
                             />
-                            {errorMessage && (
-                                <div className="text-red-500">
-                                    {errorMessage}
-                                </div>
-                            )}
-
                             {/* Sign Up button inside the form */}
                             <div className="absolute -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl text-white mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
                                 <button

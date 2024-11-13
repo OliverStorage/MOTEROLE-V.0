@@ -10,8 +10,6 @@ import Settings from './pages/Settings'
 import Exercises from './pages/Exercises'
 import GameExercise from './pages/GameExercise'
 import Achievement from './pages/Achievement'
-import Register from './pages/Register'
-import Login from './pages/Login'
 import Try from './pages/Try'
 import Error from './pages/Error'
 
@@ -20,7 +18,7 @@ const App = () => {
         <MusicProvider>
             <HashRouter>
                 <Routes>
-                    <Route index element={<Menu />} />
+                    <Route index element={<SignIn />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/menu" element={<Menu />} />
@@ -36,10 +34,6 @@ const App = () => {
                         path="/Exercises/:categoryId"
                         element={<Exercises />}
                     />
-
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-
                     <Route path="/try" element={<Try />} />
 
                     <Route path="*" element={<Error />} />

@@ -4,114 +4,18 @@ import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import ModalProfile from '../components/ModalProfile'
 import InfoPopup from '../components/InfoPopup'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { getDatabase, ref, child, get, update } from 'firebase/database'
-import { app } from '../firebaseConfig'
 import Play from '../assets/menubutton/play.png'
 import Profile from '../assets/menubutton/profile.png'
 import Settings from '../assets/menubutton/settings.png'
 import DP from '../assets/DisplayP.png'
 
-const database = getDatabase(app)
-
 const Menu = () => {
     const [showModal, setShowModal] = useState(false)
-    const [loading, setLoading] = useState(true)
-    const navigate = useNavigate()
+    const loading = false
 
     useEffect(() => {
         document.title = 'MoteRole - Menu'
-        const auth = getAuth()
-
-       const fetchData = async (uid) => {
-           try {
-               const dbRef = ref(database)
-               // Assuming you have the email or username stored in the authentication data
-               const auth = getAuth()
-               const user = auth.currentUser
-
-               if (user) {
-                   // Get the document from Preschooler that matches the user's email or username
-                   const preschoolerSnap = await get(
-                       child(dbRef, `Preschooler`),
-                   )
-
-                   if (preschoolerSnap.exists()) {
-                       const preschoolers = preschoolerSnap.val()
-                       let accountHolderId = null
-
-                       for (let key in preschoolers) {
-                           if (
-                               preschoolers[key].email === user.email ||
-                               preschoolers[key].username === 'someUsername'
-                           ) {
-                               accountHolderId =
-                                   preschoolers[key].AccountHolderId
-                               break
-                           }
-                       }
-
-                       if (accountHolderId) {
-                           const accountHolderSnap = await get(
-                               child(dbRef, `AccountHolder/${accountHolderId}`),
-                           )
-
-                           if (accountHolderSnap.exists()) {
-                               console.log(
-                                   'AccountHolder Data:',
-                                   accountHolderSnap.val(),
-                               )
-                           } else {
-                               console.log('No AccountHolder data available')
-                           }
-                       } else {
-                           console.log(
-                               'No matching Preschooler found for the user',
-                           )
-                       }
-                   } else {
-                       console.log('No Preschooler data available')
-                   }
-               }
-           } catch (error) {
-               console.error('Error fetching data:', error)
-           } finally {
-               setLoading(false)
-           }
-       }
-
-
-
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-          if (user) {
-              console.log('User UID:', user.uid)
-              fetchData(user.uid)
-          } else {
-              console.log('User is signed out')
-              setLoading(false)
-          }
-      })
-
-
-        return () => unsubscribe()
     }, [])
-
-    const handleLaroClick = () => {
-        const auth = getAuth()
-        const user = auth.currentUser
-
-        if (user) {
-            update(ref(database, `users/${user.uid}`), {
-                selectedCategory: null,
-                selectedExercise: null,
-                selectedDifficulty: null,
-                startTime: null,
-                score: 0,
-                results: null,
-            })
-        }
-        navigate('/category')
-    }
 
     const MenuItem = ({ to, imgSrc, label, onClick, bgColor }) => (
         <Link
@@ -151,7 +55,6 @@ const Menu = () => {
                             to="/category"
                             imgSrc={Play}
                             label="Laro"
-                            onClick={handleLaroClick}
                             bgColor="bg-applegreen"
                         />
                         <MenuItem
