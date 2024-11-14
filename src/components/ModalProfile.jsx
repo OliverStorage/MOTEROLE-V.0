@@ -15,24 +15,26 @@ const ModalProfile = ({ onClose }) => {
     const [preschooler, setpPeschooler] = useState(null)
     const storage = getStorage(app)
 
-  useEffect(() => {
-      document.title = 'MoteRole - Profile'
-      const storedUser = localStorage.getItem('loggedInUser')
-      if (storedUser) {
-          const parsedUser = JSON.parse(storedUser)
-          setLoggedInUser(parsedUser)
-          if (parsedUser?.AccountHolderId && parsedUser?.username) {
-              fetchPreschooler(parsedUser.AccountHolderId, parsedUser.username)
-          } else {
-              console.warn(
-                  'AccountHolderId or username is missing from parsedUser',
-              )
-          }
-      } else {
-          console.warn('No logged-in user found in localStorage')
-      }
-  }, [])
-
+    useEffect(() => {
+        document.title = 'MoteRole - Profile'
+        const storedUser = localStorage.getItem('loggedInUser')
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser)
+            setLoggedInUser(parsedUser)
+            if (parsedUser?.AccountHolderId && parsedUser?.username) {
+                fetchPreschooler(
+                    parsedUser.AccountHolderId,
+                    parsedUser.username,
+                )
+            } else {
+                console.warn(
+                    'AccountHolderId or username is missing from parsedUser',
+                )
+            }
+        } else {
+            console.warn('No logged-in user found in localStorage')
+        }
+    }, [])
 
     const fetchPreschooler = async (accountHolderId, username) => {
         try {
@@ -86,14 +88,26 @@ const ModalProfile = ({ onClose }) => {
                         </button>
                     </div>
                     <div className="text-outline tracking-wide">My Profile</div>
-                    <div className="flex w-full items-center gap-3 text-3xl mobile:gap-1 mobile:text-sm ipad:text-2xl">
+                    <div className="flex w-full items-center text-3xl mobile:gap-1 mobile:text-sm ipad:text-2xl">
                         <div className="relative flex w-[20%] items-end">
                             {/* make this img changable  */}
-                            <img
+                            {/* <img
                                 src={profileImage || 'default-user.png'}
                                 alt="user"
-                                className="h-[100px] w-[100px] rounded-full border-4 border-bluesky text-base mobile:h-[60px] mobile:w-[60px] ipad:h-[90px] ipad:w-[90px]"
-                            />
+                                className="h-[100px] w-[100px] object-center rounded-full text-base mobile:h-[60px] mobile:w-[60px] ipad:h-[90px] ipad:w-[90px]"
+                            /> */}
+                            <div className="h-[100px] w-[100px] overflow-hidden rounded-full border-4 border-bluesky object-center text-base mobile:h-[60px] mobile:w-[60px] ipad:h-[90px] ipad:w-[90px]">
+                                <img
+                                    src={
+                                        profileImage ||
+                                        preschooler?.profileImage ||
+                                        'default-user.png'
+                                    }
+                                    alt="user"
+                                    className="flex h-full w-full items-center justify-end"
+                                />
+                            </div>
+
                             <div className="flex">
                                 <label
                                     htmlFor="userProfileImage"
@@ -114,11 +128,13 @@ const ModalProfile = ({ onClose }) => {
                             <div className="text-outline flex flex-col justify-between">
                                 <div className="flex gap-3 mobile:gap-1">
                                     Username:
-                                    <span className='capitalize'>{preschooler?.username || 'N/A'}</span>
+                                    <span className="capitalize">
+                                        {preschooler?.username || 'N/A'}
+                                    </span>
                                 </div>
                                 <div className="flex gap-3 mobile:gap-1">
                                     Pangalan:{' '}
-                                    <span className='capitalize'>
+                                    <span className="capitalize">
                                         {preschooler
                                             ? `${preschooler.firstname} ${preschooler.lastname}`
                                             : 'N/A'}
@@ -126,7 +142,9 @@ const ModalProfile = ({ onClose }) => {
                                 </div>
                                 <div className="flex gap-3 mobile:gap-1">
                                     Email:
-                                    <span className='capitalize'>{preschooler?.email || 'N/A'}</span>
+                                    <span className="capitalize">
+                                        {preschooler?.email || 'N/A'}
+                                    </span>
                                 </div>
                             </div>
                             <div className="flex flex-col items-end justify-between">
@@ -140,7 +158,9 @@ const ModalProfile = ({ onClose }) => {
                                 </button>
                                 <div className="text-outline flex gap-3 mobile:gap-1">
                                     Gender:
-                                    <span className='capitalize'>{preschooler?.gender || 'N/A'}</span>
+                                    <span className="capitalize">
+                                        {preschooler?.gender || 'N/A'}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +188,9 @@ const ModalProfile = ({ onClose }) => {
                                     >
                                         <path d="M10 3H4a1 1 0 00-1 1v6a1 1 0 001 1h6a1 1 0 001-1V4a1 1 0 00-1-1zM9 9H5V5h4v4zm11-6h-6a1 1 0 00-1 1v6a1 1 0 001 1h6a1 1 0 001-1V4a1 1 0 00-1-1zm-1 6h-4V5h4v4zm-9 4H4a1 1 0 00-1 1v6a1 1 0 001 1h6a1 1 0 001-1v-6a1 1 0 00-1-1zm-1 6H5v-4h4v4zm8-6c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z" />
                                     </svg>
-                                    <span className='capitalize'>Kategorya</span>
+                                    <span className="capitalize">
+                                        Kategorya
+                                    </span>
                                 </span>
                             </div>
                             {/* Tab 2 */}
@@ -191,20 +213,26 @@ const ModalProfile = ({ onClose }) => {
                                     >
                                         <path d="M6 13H2a1 1 0 00-1 1v8a1 1 0 001 1h4a1 1 0 001-1v-8a1 1 0 00-1-1zm-1 8H3v-6h2zM22 9h-4a1 1 0 00-1 1v12a1 1 0 001 1h4a1 1 0 001-1V10a1 1 0 00-1-1zm-1 12h-2V11h2zM14 1h-4a1 1 0 00-1 1v20a1 1 0 001 1h4a1 1 0 001-1V2a1 1 0 00-1-1zm-1 20h-2V3h2z" />
                                     </svg>
-                                    <span className='capitalize'>Leaderboard</span>
+                                    <span className="capitalize">
+                                        Leaderboard
+                                    </span>
                                 </span>
                             </div>
                         </div>
                         {activeTab === 'category' ? (
                             <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
                                 <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    {/* achiemvents */}finish line1
+                                    {preschooler
+                                        ? `${preschooler.achievements[0]}`
+                                        : 'N/A'}
                                 </div>
                             </div>
                         ) : (
                             <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
                                 <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    {/* points */} 1000pts
+                                    {preschooler
+                                        ? `${preschooler.points}`
+                                        : 'N/A'}
                                 </div>
                             </div>
                         )}
