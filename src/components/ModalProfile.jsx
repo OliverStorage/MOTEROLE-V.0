@@ -220,19 +220,35 @@ const ModalProfile = ({ onClose }) => {
                             </div>
                         </div>
                         {activeTab === 'category' ? (
-                            <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
-                                    {preschooler
-                                        ? `${preschooler.achievements[0]}`
-                                        : 'N/A'}
-                                </div>
+                            <div className="overflow-y-auto">
+                                {preschooler &&
+                                preschooler.achievements &&
+                                preschooler.achievements.length > 0
+                                    ? preschooler.achievements.map(
+                                          (achievement, index) => (
+                                              <div
+                                                  key={index}
+                                                  className="mb-3 flex w-full flex-col overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]"
+                                              >
+                                                  <div className="h-20 flex-shrink-0 rounded-lg border-4 border-green-700 px-2 py-1">
+                                                      {achievement}
+                                                  </div>
+                                              </div>
+                                          ),
+                                      )
+                                    : 'N/A'}
                             </div>
                         ) : (
-                            <div className="flex w-full flex-col gap-5 overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
-                                <div className="h-20 flex-shrink-0 rounded-lg border-4 border-red-700 px-2 py-1">
-                                    {preschooler
-                                        ? `${preschooler.points}`
-                                        : 'N/A'}
+                            <div className="mb-3 flex w-full flex-col overflow-auto rounded-lg bg-white px-4 py-3 shadow-[inset_0_0px_4px_rgba(0,0,0,1)]">
+                                <div className="h-20 flex-shrink-0 space-x-3 rounded-lg  flex border-4 border-red-700 px-2 py-1">
+                                        <span>1st</span>
+                                        <span>Oliver Molina</span>
+                                    <div className='text-black'>
+                                        {preschooler
+                                            ? `${preschooler.points}`
+                                            : 'N/A'}
+                                    </div>
+                                    <span>Pts</span>
                                 </div>
                             </div>
                         )}
