@@ -8,6 +8,8 @@ import {
     where,
     getDocs,
 } from 'firebase/firestore'
+import { getPerformance } from 'firebase/performance'
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,5 +30,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app) // Initialize Firestore
+const perf = getPerformance(app)
 
-export { app, db }
+export { app, db, perf }

@@ -76,8 +76,9 @@ const Menu = () => {
                 {/* Right Side */}
                 <div className="w-1/10 flex select-none flex-col justify-between opacity-100">
                     <button
+                        disabled
                         onClick={() => setShowModal(true)}
-                        className="flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full text-center text-white outline outline-4 outline-modalbrowndark duration-100 active:translate-y-1 mobile:-translate-y-1"
+                        className="flex cursor-pointer  opacity-0 select-none items-center justify-center overflow-hidden rounded-full text-center text-white outline outline-4 outline-modalbrowndark duration-100 active:translate-y-1 mobile:-translate-y-1"
                     >
                         {loading ? (
                             <div className="loader">Loading...</div>

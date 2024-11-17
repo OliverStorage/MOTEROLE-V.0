@@ -43,14 +43,14 @@ const Ingame = () => {
                     console.log('No such document!')
                 }
                 const data = gameSessionDoc.data()
-                console.log(data.GameExerciseId)
+               // console.log(data.GameExerciseId)
                 const gameExerciseCollection = collection(db, 'GameExercise')
                 const gameExerciseRef = doc(
                     gameExerciseCollection,
                     data.GameExerciseId,
                 )
                 const gameExerciseDoc = await getDoc(gameExerciseRef)
-                console.log(gameExerciseDoc.data())
+               // console.log(gameExerciseDoc.data())
                 setGameSession(gameExerciseDoc.data())
             } catch (error) {
                 console.error('Error fetching game exercise:', error)
@@ -58,12 +58,12 @@ const Ingame = () => {
         }
 
         fetchGameExercise()
-        console.log(gamesessionId)
+       // console.log(gamesessionId)
     }, [])
 
-    useEffect(() => {
-        console.log(gameSession)
-    }, [gameSession])
+    // useEffect(() => {
+    //     console.log(gameSession)
+    // }, [gameSession])
 
     useEffect(() => {
         const canvas = canvasRef.current
