@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { LuArrowBigLeft } from 'react-icons/lu'
+import { FaEdit } from 'react-icons/fa'
 import { app, db } from '../firebaseConfig'
 import {
     getStorage,
@@ -8,7 +9,7 @@ import {
     getDownloadURL,
     deleteObject,
 } from 'firebase/storage'
-import { FaEdit } from 'react-icons/fa'
+
 import {
     collection,
     query,
@@ -211,12 +212,12 @@ const ModalProfile = ({ onClose }) => {
                             </span>
 
                             {editProfile && (
-                                <div className="ref={toggleEdit} ipad:-bottom-15 absolute -bottom-12 -right-24 z-50 flex w-56 rounded-xl border-4 border-black bg-white text-base text-black mobile:-bottom-[55px] mobile:-right-24 ipad:-right-24">
+                                <div className="absolute -bottom-[54px] -right-[94px] z-50 flex w-56 rounded-xl border-4 mobile:border-2 border-black bg-white text-base text-black mobile:-bottom-[45px] mobile:-right-[100px] ipad:-bottom-[55px] ipad:-right-[100px]">
                                     <div className="relative flex w-full items-center justify-evenly">
-                                        <div className="absolute -top-5 h-0 w-0 border-b-[16px] border-l-[15px] border-r-[15px] border-solid border-b-[#000] border-l-transparent border-r-transparent" />
+                                        <div className="absolute -top-5 mobile:-top-4 h-0 w-0 border-b-[16px] border-l-[15px] border-r-[15px] border-solid border-b-[#000] border-l-transparent border-r-transparent" />
                                         <label
                                             htmlFor="userProfileImage"
-                                            className="flex cursor-pointer items-center justify-center space-x-1 p-1"
+                                            className="flex cursor-pointer items-center justify-center space-x-1 p-1 mobile:p-0.5"
                                         >
                                             <svg
                                                 viewBox="0 0 1024 1024"
@@ -237,14 +238,13 @@ const ModalProfile = ({ onClose }) => {
                                             />
                                         </label>
 
-                                        {/* remove profile button */}
                                         <span
                                             onClick={() =>
                                                 handleRemoveImage(
                                                     preschooler.profileImage,
                                                 )
                                             }
-                                            className="flex cursor-pointer items-center justify-center space-x-1 p-1"
+                                            className="flex cursor-pointer items-center justify-center space-x-1 p-1 mobile:p-0.5"
                                         >
                                             <svg
                                                 fill="none"

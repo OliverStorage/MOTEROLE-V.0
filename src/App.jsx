@@ -9,7 +9,6 @@ import Ingame from './pages/Ingame'
 import Settings from './pages/Settings'
 import Exercises from './pages/Exercises'
 import GameExercise from './pages/GameExercise'
-import Achievement from './pages/Achievement'
 import Try from './pages/Try'
 import Error from './pages/Error'
 
@@ -23,7 +22,6 @@ const App = () => {
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/category" element={<Category />} />
-                    <Route path="/achievement" element={<Achievement />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/Ingame/:gamesessionId" element={<Ingame />} />
                     <Route

@@ -1,22 +1,53 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import ModalProfile from '../components/ModalProfile'
 import InfoPopup from '../components/InfoPopup'
-import Play from '../assets/menubutton/play.png'
-import Profile from '../assets/menubutton/profile.png'
-import Settings from '../assets/menubutton/settings.png'
 import DP from '../assets/DisplayP.png'
 
 const Menu = () => {
+    const [menuImages, setMenuImages] = useState({
+        Play: '',
+        Profile: '',
+        Settings: '',
+    })
     const [showModal, setShowModal] = useState(false)
-    const loading = false
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         document.title = 'MoteRole - Menu'
+        const storage = getStorage()
+
+        // Fetch image URLs concurrently using Promise.all
+        const fetchImages = async () => {
+            try {
+                const [playURL, profileURL, settingsURL] = await Promise.all([
+                    getDownloadURL(ref(storage, 'Menu/play.png')),
+                    getDownloadURL(ref(storage, 'Menu/profile.png')),
+                    getDownloadURL(ref(storage, 'Menu/settings.png')),
+                ])
+
+                setMenuImages({
+                    Play: playURL,
+                    Profile: profileURL,
+                    Settings: settingsURL,
+                })
+            } catch (error) {
+                console.error(
+                    'Error fetching images from Firebase Storage:',
+                    error,
+                )
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchImages()
     }, [])
 
+    // MenuItem component to avoid code duplication
     const MenuItem = ({ to, imgSrc, label, onClick, bgColor }) => (
         <Link
             to={to}
@@ -53,20 +84,20 @@ const Menu = () => {
                     <div className="flex space-x-10 text-4xl mobile:space-x-5 mobile:text-xl ipad:text-2xl">
                         <MenuItem
                             to="/category"
-                            imgSrc={Play}
+                            imgSrc={menuImages.Play}
                             label="Laro"
                             bgColor="bg-applegreen"
                         />
                         <MenuItem
                             to="#"
-                            imgSrc={Profile}
+                            imgSrc={menuImages.Profile}
                             label="Profile"
                             onClick={() => setShowModal(true)}
                             bgColor="bg-bluesky"
                         />
                         <MenuItem
                             to="/settings"
-                            imgSrc={Settings}
+                            imgSrc={menuImages.Settings}
                             label="Settings"
                             bgColor="bg-grape"
                         />
@@ -78,7 +109,7 @@ const Menu = () => {
                     <button
                         disabled
                         onClick={() => setShowModal(true)}
-                        className="flex cursor-pointer  opacity-0 select-none items-center justify-center overflow-hidden rounded-full text-center text-white outline outline-4 outline-modalbrowndark duration-100 active:translate-y-1 mobile:-translate-y-1"
+                        className="flex cursor-pointer select-none items-center justify-center overflow-hidden rounded-full text-center text-white opacity-0 outline outline-4 outline-modalbrowndark duration-100 active:translate-y-1 mobile:-translate-y-1"
                     >
                         {loading ? (
                             <div className="loader">Loading...</div>
