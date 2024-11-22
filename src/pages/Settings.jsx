@@ -23,7 +23,7 @@ const Settings = () => {
     } = useContext(MusicContext)
 
     useEffect(() => {
-         document.title = 'MoteRole - Settings'
+        document.title = 'MoteRole - Settings'
     }, [])
 
     // Volume change handlers
@@ -54,7 +54,7 @@ const Settings = () => {
                     </div>
                     <div className="flex h-[70%] w-[80%] rounded-2xl bg-black bg-opacity-60 p-8 mobile:p-4 ipad:h-[60%] ipad:p-6">
                         <div className="flex h-full w-full flex-col justify-between overflow-y-auto rounded-2xl text-center font-nunito text-5xl font-black text-black mobile:overflow-y-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-y-auto">
-                            <div className="flex flex-col space-y-4 text-white h-full overflow-y-auto">
+                            <div className="flex h-full flex-col space-y-4 overflow-y-auto text-white">
                                 {/* Volume Sliders */}
                                 <div className="flex justify-evenly space-x-10 px-4">
                                     <div className="flex w-full flex-col space-y-4">

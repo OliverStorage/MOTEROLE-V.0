@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MusicProvider } from './contexts/MusicContext'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
@@ -11,11 +11,12 @@ import Exercises from './pages/Exercises'
 import GameExercise from './pages/GameExercise'
 import Try from './pages/Try'
 import Error from './pages/Error'
+import ErrorModal from './components/ErrorModal'
 
 const App = () => {
     return (
         <MusicProvider>
-            <HashRouter>
+            <BrowserRouter>
                 <Routes>
                     <Route index element={<SignIn />} />
                     <Route path="/signup" element={<SignUp />} />
@@ -33,10 +34,11 @@ const App = () => {
                         element={<Exercises />}
                     />
                     <Route path="/try" element={<Try />} />
+                    <Route path="/errormodal" element={<ErrorModal />} />
 
                     <Route path="*" element={<Error />} />
                 </Routes>
-            </HashRouter>
+            </BrowserRouter>
         </MusicProvider>
     )
 }

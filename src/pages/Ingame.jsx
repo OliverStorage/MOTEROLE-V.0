@@ -43,14 +43,14 @@ const Ingame = () => {
                     console.log('No such document!')
                 }
                 const data = gameSessionDoc.data()
-               // console.log(data.GameExerciseId)
+                // console.log(data.GameExerciseId)
                 const gameExerciseCollection = collection(db, 'GameExercise')
                 const gameExerciseRef = doc(
                     gameExerciseCollection,
                     data.GameExerciseId,
                 )
                 const gameExerciseDoc = await getDoc(gameExerciseRef)
-               // console.log(gameExerciseDoc.data())
+                // console.log(gameExerciseDoc.data())
                 setGameSession(gameExerciseDoc.data())
             } catch (error) {
                 console.error('Error fetching game exercise:', error)
@@ -58,7 +58,7 @@ const Ingame = () => {
         }
 
         fetchGameExercise()
-       // console.log(gamesessionId)
+        // console.log(gamesessionId)
     }, [])
 
     // useEffect(() => {
@@ -214,21 +214,21 @@ const Ingame = () => {
         draw(e.touches[0])
     }
 
-  const getLineWidth = () => {
-      const width = window.innerWidth
+    const getLineWidth = () => {
+        const width = window.innerWidth
 
-      // Adjust line width if ExerciseImage2 (activeExercise 2) is active
-      if (activeExercise === 2) {
-          if (width >= 1500 && width <= 2000) return 50
-          if (width >= 1024 && width < 1500) return 35
-          return 25 // Default width for other screen sizes
-      }
+        // Adjust line width if ExerciseImage2 (activeExercise 2) is active
+        if (activeExercise === 2) {
+            if (width >= 1500 && width <= 2000) return 50
+            if (width >= 1024 && width < 1500) return 35
+            return 25 // Default width for other screen sizes
+        }
 
-      // Default line widths for other exercises
-      if (width >= 1500 && width <= 2000) return 62
-      if (width >= 1024 && width < 1500) return 45
-      return 30
-  }
+        // Default line widths for other exercises
+        if (width >= 1500 && width <= 2000) return 62
+        if (width >= 1024 && width < 1500) return 45
+        return 30
+    }
 
     const startGameSession = async () => {
         const sessionStartTime = new Date()

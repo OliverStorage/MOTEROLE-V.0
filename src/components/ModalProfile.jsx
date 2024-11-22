@@ -212,9 +212,9 @@ const ModalProfile = ({ onClose }) => {
                             </span>
 
                             {editProfile && (
-                                <div className="absolute -bottom-[54px] -right-[94px] z-50 flex w-56 rounded-xl border-4 mobile:border-2 border-black bg-white text-base text-black mobile:-bottom-[45px] mobile:-right-[100px] ipad:-bottom-[55px] ipad:-right-[100px]">
+                                <div className="absolute -bottom-[54px] -right-[94px] z-50 flex w-56 rounded-xl border-4 border-black bg-white text-base text-black mobile:-bottom-[45px] mobile:-right-[100px] mobile:border-2 ipad:-bottom-[55px] ipad:-right-[100px]">
                                     <div className="relative flex w-full items-center justify-evenly">
-                                        <div className="absolute -top-5 mobile:-top-4 h-0 w-0 border-b-[16px] border-l-[15px] border-r-[15px] border-solid border-b-[#000] border-l-transparent border-r-transparent" />
+                                        <div className="absolute -top-5 h-0 w-0 border-b-[16px] border-l-[15px] border-r-[15px] border-solid border-b-[#000] border-l-transparent border-r-transparent mobile:-top-4" />
                                         <label
                                             htmlFor="userProfileImage"
                                             className="flex cursor-pointer items-center justify-center space-x-1 p-1 mobile:p-0.5"

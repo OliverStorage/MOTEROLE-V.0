@@ -33,50 +33,49 @@ const SignIn = () => {
         setErrorMessage('') // Reset error message on input change
     }
 
-   const handleLogin = async (e) => {
-       e.preventDefault()
-       setErrorMessage('') // Clear previous error messages
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        setErrorMessage('') // Clear previous error messages
 
-       try {
-           // Query to find AccountHolder by email
-           const accountHolderQuery = query(
-               collection(db, 'AccountHolder'),
-               where('Email', '==', form.email),
-           )
-           const accountHolderSnapshot = await getDocs(accountHolderQuery)
+        try {
+            // Query to find AccountHolder by email
+            const accountHolderQuery = query(
+                collection(db, 'AccountHolder'),
+                where('Email', '==', form.email),
+            )
+            const accountHolderSnapshot = await getDocs(accountHolderQuery)
 
-           if (!accountHolderSnapshot.empty) {
-               const accountHolderId = accountHolderSnapshot.docs[0].id
-               // Query to find user by AccountHolderId, username, and password
-               const userQuery = query(
-                   collection(db, 'Preschooler'),
-                   where('AccountHolderId', '==', accountHolderId),
-                   where('username', '==', form.username),
-                   where('password', '==', form.password),
-               )
+            if (!accountHolderSnapshot.empty) {
+                const accountHolderId = accountHolderSnapshot.docs[0].id
+                // Query to find user by AccountHolderId, username, and password
+                const userQuery = query(
+                    collection(db, 'Preschooler'),
+                    where('AccountHolderId', '==', accountHolderId),
+                    where('username', '==', form.username),
+                    where('password', '==', form.password),
+                )
 
-               const userSnapshot = await getDocs(userQuery)
-               if (!userSnapshot.empty) {
-                   const user = userSnapshot.docs[0].data()
-                   setLoggedInUser(user)
-                   // Store the logged-in user in localStorage
-                   localStorage.setItem('loggedInUser', JSON.stringify(user))
-                   console.log('Login successful')
-                   navigate('/menu')
-               } else {
-                   setErrorMessage('Invalid username or password.')
-                   console.log('Invalid username or password.')
-               }
-           } else {
-               setErrorMessage('No account associated with this email.')
-               console.log('No account associated with this email.')
-           }
-       } catch (error) {
-           console.error('Error logging in: ', error)
-           setErrorMessage('An error occurred during login. Please try again.')
-       }
-   }
-
+                const userSnapshot = await getDocs(userQuery)
+                if (!userSnapshot.empty) {
+                    const user = userSnapshot.docs[0].data()
+                    setLoggedInUser(user)
+                    // Store the logged-in user in localStorage
+                    localStorage.setItem('loggedInUser', JSON.stringify(user))
+                    console.log('Login successful')
+                    navigate('/menu')
+                } else {
+                    setErrorMessage('Invalid username or password.')
+                    console.log('Invalid username or password.')
+                }
+            } else {
+                setErrorMessage('No account associated with this email.')
+                console.log('No account associated with this email.')
+            }
+        } catch (error) {
+            console.error('Error logging in: ', error)
+            setErrorMessage('An error occurred during login. Please try again.')
+        }
+    }
 
     const handleLogout = () => {
         setLoggedInUser(null)
@@ -133,18 +132,18 @@ const SignIn = () => {
                             />
 
                             <div className="absolute -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl text-white mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
-                                <button
-                                    type="submit"
-                                    className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
-                                >
-                                    Sign In
-                                </button>
                                 <Link
                                     to="/signup"
                                     className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
                                 >
                                     Sign Up
                                 </Link>
+                                <button
+                                    type="submit"
+                                    className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
+                                >
+                                    Sign In
+                                </button>
                             </div>
                         </form>
                     </div>

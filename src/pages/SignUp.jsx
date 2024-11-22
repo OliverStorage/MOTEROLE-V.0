@@ -36,10 +36,7 @@ const SignUp = () => {
         setForm({
             ...form,
             [name]:
-                name === 'firstname' ||
-                name === 'lastname' ||
-                name === 'username' ||
-                name === 'gender'
+                name === 'firstname' || name === 'lastname' || name === 'gender'
                     ? capitalizeValue(value)
                     : value,
         })
@@ -149,7 +146,7 @@ const SignUp = () => {
                                     placeholder="Username"
                                     value={form.username}
                                     onChange={handleChange}
-                                    className="h-full w-1/2 rounded-2xl border-4 border-grape px-4 capitalize focus:outline-0 mobile:rounded-xl"
+                                    className="h-full w-1/2 rounded-2xl border-4 border-grape px-4 focus:outline-0 mobile:rounded-xl"
                                     autoComplete="username"
                                     required
                                 />
@@ -201,22 +198,20 @@ const SignUp = () => {
                             />
                             {/* Sign Up button inside the form */}
                             <div className="absolute -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl text-white mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
-                                <button
-                                    type="submit"
-                                    className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
-                                >
-                                    Sign Up
-                                </button>
                                 <Link
                                     to="/signin"
                                     className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
                                 >
                                     Sign In
                                 </Link>
+                                <button
+                                    type="submit"
+                                    className="text-shadow flex h-full w-1/2 items-center justify-center rounded-xl bg-bluesky duration-100 active:scale-95"
+                                >
+                                    Sign Up
+                                </button>
                             </div>
                         </form>
-
-                        {/* Sign In link outside the form */}
                     </div>
                 </div>
 
