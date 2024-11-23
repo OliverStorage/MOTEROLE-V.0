@@ -12,39 +12,67 @@ import Exercises from './pages/Exercises'
 import GameExercise from './pages/GameExercise'
 import Try from './pages/Try'
 import Error from './pages/Error'
-// import ErrorModal from './components/ErrorModal'
 
 const App = () => {
     return (
         <MusicProvider>
             <BrowserRouter>
                 <Routes>
+                    {/* Public Routes */}
                     <Route index element={<SignIn />} />
-                    <Route path="/signup" element={<SignUp />} />
                     <Route path="/signin" element={<SignIn />} />
-                    {/* <Route
+                    <Route path="/signup" element={<SignUp />} />
+
+                    {/* Protected Routes (Requires User to be Logged In) */}
+                    <Route
                         path="/menu"
                         element={
                             <ProtectedRoute>
                                 <Menu />
                             </ProtectedRoute>
                         }
-                    /> */}
-                    <Route path="/menu" element={<Menu />} />
-                    <Route path="/category" element={<Category />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/Ingame/:gamesessionId" element={<Ingame />} />
+                    />
+                    <Route
+                        path="/category"
+                        element={
+                            <ProtectedRoute>
+                                <Category />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/settings"
+                        element={
+                            <ProtectedRoute>
+                                <Settings />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/Ingame/:gamesessionId"
+                        element={
+                            <ProtectedRoute>
+                                <Ingame />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route
                         path="/GameExercise/:exercisesId"
-                        element={<GameExercise />}
+                        element={
+                            <ProtectedRoute>
+                                <GameExercise />
+                            </ProtectedRoute>
+                        }
                     />
                     <Route
                         path="/Exercises/:categoryId"
-                        element={<Exercises />}
+                        element={
+                            <ProtectedRoute>
+                                <Exercises />
+                            </ProtectedRoute>
+                        }
                     />
                     <Route path="/try" element={<Try />} />
-                    {/* <Route path="/errormodal" element={<ErrorModal />} /> */}
-
                     <Route path="*" element={<Error />} />
                 </Routes>
             </BrowserRouter>

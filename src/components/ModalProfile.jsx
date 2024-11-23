@@ -176,10 +176,10 @@ const ModalProfile = ({ onClose }) => {
     }
 
     const handleLogout = () => {
-        setLoggedInUser(null)
-        localStorage.removeItem('loggedInUser')
+        Cookies.remove('userSession')
+        Cookies.remove('loggedInUser') // Remove logged-in user cookie
         console.log('Logout successful')
-        navigate('/signin')
+        navigate('/signin') // Redirect to sign-in
     }
 
     return (

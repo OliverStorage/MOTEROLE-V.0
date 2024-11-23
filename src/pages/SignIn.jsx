@@ -11,7 +11,6 @@ import Cookies from 'js-cookie'
 
 const SignIn = () => {
     const navigate = useNavigate()
-    const [loggedInUser, setLoggedInUser] = useState(null)
     const [form, setForm] = useState({
         email: '',
         username: '',
@@ -24,9 +23,10 @@ const SignIn = () => {
         document.title = 'MoTeRole - Sign in'
         const storedUser = Cookies.get('loggedInUser') // Get the cookie
         if (storedUser) {
-            setLoggedInUser(JSON.parse(storedUser))
+            
+            navigate('/menu') // Redirect to menu if logged in
         }
-    }, [])
+    }, [navigate])
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -60,15 +60,15 @@ const SignIn = () => {
                 const userSnapshot = await getDocs(userQuery)
                 if (!userSnapshot.empty) {
                     const user = userSnapshot.docs[0].data()
-                    setLoggedInUser(user)
 
                     // Store the logged-in user in cookies
                     Cookies.set('loggedInUser', JSON.stringify(user), {
                         expires: 7, // Cookie expires in 7 days
                     })
+                    Cookies.set('userSession', 'active', { expires: 7 }) // Set a session cookie
 
                     console.log('Login successful')
-                    navigate('/menu')
+                    navigate('/menu') // Redirect to menu after successful login
                 } else {
                     setErrorMessage('Invalid username or password.')
                     console.log('Invalid username or password.')
