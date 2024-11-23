@@ -58,6 +58,7 @@ const SignUp = () => {
 
             if (!duplicateSnapshot.empty) {
                 setErrorMessage('An account with these details already exists.')
+                console.log('An account with these details already exists.')
                 return
             }
 
@@ -114,6 +115,7 @@ const SignUp = () => {
             setErrorMessage(
                 'An error occurred while signing up. Please try again.',
             )
+            console.log('An error occurred while signing up. Please try again.')
         }
     }
     return (

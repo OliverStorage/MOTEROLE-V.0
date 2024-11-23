@@ -7,6 +7,7 @@ import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import { db } from '../firebaseConfig'
 import { collection, query, where, getDocs } from 'firebase/firestore'
+import Cookies from 'js-cookie'
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -18,10 +19,10 @@ const SignIn = () => {
     })
     const [errorMessage, setErrorMessage] = useState('')
 
-    // Check for a logged-in user in localStorage on component mount
+    // Check for a logged-in user in cookies on component mount
     useEffect(() => {
         document.title = 'MoTeRole - Sign in'
-        const storedUser = localStorage.getItem('loggedInUser')
+        const storedUser = Cookies.get('loggedInUser') // Get the cookie
         if (storedUser) {
             setLoggedInUser(JSON.parse(storedUser))
         }
@@ -58,22 +59,23 @@ const SignIn = () => {
 
                 const userSnapshot = await getDocs(userQuery)
                 if (!userSnapshot.empty) {
-                        const user = userSnapshot.docs[0].data()
-                        setLoggedInUser(user)
-                        // Store the logged-in user in localStorage
-                        localStorage.setItem(
-                            'loggedInUser',
-                            JSON.stringify(user),
-                        )
-                        console.log('Login successful')
-                        navigate('/menu')
+                    const user = userSnapshot.docs[0].data()
+                    setLoggedInUser(user)
+
+                    // Store the logged-in user in cookies
+                    Cookies.set('loggedInUser', JSON.stringify(user), {
+                        expires: 7, // Cookie expires in 7 days
+                    })
+
+                    console.log('Login successful')
+                    navigate('/menu')
                 } else {
                     setErrorMessage('Invalid username or password.')
                     console.log('Invalid username or password.')
                 }
             } else {
                 setErrorMessage('No account associated with this email.')
-                 console.log('No account associated with this email.')
+                console.log('No account associated with this email.')
             }
         } catch (error) {
             console.error('Error logging in: ', error)

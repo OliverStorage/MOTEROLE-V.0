@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 import Background from '../components/Background'
 import FullScreen from '../components/FullScreen'
 import ModalProfile from '../components/ModalProfile'
 import InfoPopup from '../components/InfoPopup'
 import DP from '../assets/DisplayP.png'
+import Cookies from 'js-cookie'
 
 const Menu = () => {
     const [menuImages, setMenuImages] = useState({
@@ -15,9 +16,19 @@ const Menu = () => {
     })
     const [showModal, setShowModal] = useState(false)
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
+    const [loggedInUser, setLoggedInUser] = useState(null)
 
     useEffect(() => {
         document.title = 'MoteRole - Menu'
+
+        const storedUser = Cookies.get('loggedInUser') // Retrieve user from cookies
+        if (storedUser) {
+            setLoggedInUser(JSON.parse(storedUser))
+        } else {
+            navigate('/signin') // Redirect to Sign In page if no user is found
+        }
+
         const storage = getStorage()
 
         // Fetch image URLs concurrently using Promise.all
@@ -45,7 +56,7 @@ const Menu = () => {
         }
 
         fetchImages()
-    }, [])
+    }, [navigate])
 
     // MenuItem component to avoid code duplication
     const MenuItem = ({ to, imgSrc, label, onClick, bgColor }) => (

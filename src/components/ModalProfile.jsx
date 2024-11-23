@@ -19,6 +19,7 @@ import {
     updateDoc,
 } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const ModalProfile = ({ onClose }) => {
     const navigate = useNavigate()
@@ -42,7 +43,8 @@ const ModalProfile = ({ onClose }) => {
         }
         document.addEventListener('mousedown', handler)
 
-        const storedUser = localStorage.getItem('loggedInUser')
+        // Fetch logged-in user from cookies instead of localStorage
+        const storedUser = Cookies.get('loggedInUser') // Retrieve user from cookies
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser)
             setLoggedInUser(parsedUser)
@@ -57,13 +59,14 @@ const ModalProfile = ({ onClose }) => {
                 )
             }
         } else {
-            console.warn('No logged-in user found in localStorage')
+            console.warn('No logged-in user found in cookies')
+            navigate('/signin') // Redirect to sign-in page if no user found
         }
 
         return () => {
             document.removeEventListener('mousedown', handler)
         }
-    }, [])
+    }, [navigate])
 
     const fetchPreschooler = async (accountHolderId, username) => {
         try {
