@@ -47,6 +47,7 @@ const SignIn = () => {
 
             if (!accountHolderSnapshot.empty) {
                 const accountHolderId = accountHolderSnapshot.docs[0].id
+
                 // Query to find user by AccountHolderId, username, and password
                 const userQuery = query(
                     collection(db, 'Preschooler'),
@@ -57,19 +58,22 @@ const SignIn = () => {
 
                 const userSnapshot = await getDocs(userQuery)
                 if (!userSnapshot.empty) {
-                    const user = userSnapshot.docs[0].data()
-                    setLoggedInUser(user)
-                    // Store the logged-in user in localStorage
-                    localStorage.setItem('loggedInUser', JSON.stringify(user))
-                    console.log('Login successful')
-                    navigate('/menu')
+                        const user = userSnapshot.docs[0].data()
+                        setLoggedInUser(user)
+                        // Store the logged-in user in localStorage
+                        localStorage.setItem(
+                            'loggedInUser',
+                            JSON.stringify(user),
+                        )
+                        console.log('Login successful')
+                        navigate('/menu')
                 } else {
                     setErrorMessage('Invalid username or password.')
                     console.log('Invalid username or password.')
                 }
             } else {
                 setErrorMessage('No account associated with this email.')
-                console.log('No account associated with this email.')
+                 console.log('No account associated with this email.')
             }
         } catch (error) {
             console.error('Error logging in: ', error)
@@ -77,20 +81,16 @@ const SignIn = () => {
         }
     }
 
-    const handleLogout = () => {
-        setLoggedInUser(null)
-        localStorage.removeItem('loggedInUser')
-    }
-
     return (
         <>
             <Background />
             <div className="relative flex h-screen justify-between p-5">
-                {/* left column */}
+                {/* Left Column */}
                 <div className="w-1/10 flex flex-col justify-end">
                     <FullScreen />
                 </div>
-                {/* center */}
+
+                {/* Center */}
                 <div className="relative -mt-12 flex w-full flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-8 mobile:space-y-3">
                     <div className="text-shadow w-full text-center text-8xl mobile:text-5xl ipad:text-7xl">
                         MoTeRole
@@ -146,10 +146,16 @@ const SignIn = () => {
                                 </button>
                             </div>
                         </form>
+                        {errorMessage && (
+                            <div className="absolute -top-9 z-[100] w-full text-center text-base font-normal text-white mobile:-top-6 ipad:-top-8">
+                                {errorMessage}
+                            </div>
+                        )}
                     </div>
                 </div>
-                {/* right column */}
-                <div className="w-1/10 mobile:space-y- flex select-none flex-col space-y-4 opacity-0">
+
+                {/* Right Column */}
+                <div className="w-1/10 flex select-none flex-col space-y-4 opacity-0">
                     <Actionbtn
                         text=""
                         to="/settings"

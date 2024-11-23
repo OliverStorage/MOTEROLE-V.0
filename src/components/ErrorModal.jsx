@@ -4,7 +4,7 @@ const ErrorModal = ({
     isVisible,
     title = 'Error Message',
     message = 'Something went wrong.',
-    buttonText = 'awi',
+    buttonText = 'Retry',
     onClose,
     onAction,
 }) => {

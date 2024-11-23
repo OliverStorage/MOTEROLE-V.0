@@ -10,6 +10,7 @@ import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
 
 const SignUp = () => {
     const navigate = useNavigate()
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         document.title = 'MoTeRole - Sign Up'
@@ -45,6 +46,21 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            // Query Firestore to check for duplicates
+            const duplicateQuery = query(
+                collection(db, 'Preschooler'),
+                where('username', '==', form.username),
+                where('password', '==', form.password),
+                where('firstname', '==', form.firstname),
+                where('lastname', '==', form.lastname),
+            )
+            const duplicateSnapshot = await getDocs(duplicateQuery)
+
+            if (!duplicateSnapshot.empty) {
+                setErrorMessage('An account with these details already exists.')
+                return
+            }
+
             // Check if AccountHolder exists
             const accountHolderQuery = query(
                 collection(db, 'AccountHolder'),
@@ -95,6 +111,9 @@ const SignUp = () => {
             navigate('/signin')
         } catch (error) {
             console.error('Error adding document: ', error)
+            setErrorMessage(
+                'An error occurred while signing up. Please try again.',
+            )
         }
     }
     return (
@@ -212,6 +231,11 @@ const SignUp = () => {
                                 </button>
                             </div>
                         </form>
+                        {errorMessage && (
+                            <div className="absolute -top-9 z-[100] w-full text-center text-base font-normal text-white mobile:-top-6 ipad:-top-8">
+                                {errorMessage}
+                            </div>
+                        )}
                     </div>
                 </div>
 
