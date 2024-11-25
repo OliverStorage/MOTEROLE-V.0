@@ -7,10 +7,13 @@ import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
 import { db } from '../firebaseConfig'
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
+import TermsConditions from '../components/TermsConditions'
 
 const SignUp = () => {
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState('')
+    const [showTerms, setShowTerms] = useState(true) // State to manage Terms Modal visibility
+    const [canProceed, setCanProceed] = useState(false) // State to track "Magpatuloy" button
 
     useEffect(() => {
         document.title = 'MoTeRole - Sign Up'
@@ -42,6 +45,7 @@ const SignUp = () => {
                     : value,
         })
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -121,6 +125,19 @@ const SignUp = () => {
     return (
         <>
             <Background />
+            {showTerms && (
+                <TermsConditions
+                    isOpen={showTerms}
+                    onAccept={() => {
+                        setShowTerms(false) // Close the modal
+                        setCanProceed(true) // Allow form interactions
+                    }}
+                    onDecline={() => {
+                        // Navigate away or handle decline
+                        navigate('/signin')
+                    }}
+                />
+            )}
             <div className="flex h-screen justify-between p-5">
                 {/* left column */}
                 <div className="w-1/10 flex flex-col justify-end">

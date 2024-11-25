@@ -5,12 +5,13 @@ import Actionbtn from '../components/Actionbtn'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import TermsConditions from '../components/TermsConditions'
-import { MusicContext } from '../contexts/MusicContext'
+import TnC from "../components/TnC"
+import { MusicContext } from '../components/MusicContext'
 
 const Settings = () => {
     const [tunogVolume, setTunogVolume] = useState(30) // Sound effects volume
     const [showModal, setShowModal] = useState(false) // Toggle modal
+    const [isTermsAccepted, setIsTermsAccepted] = useState(true) // Checkbox is pre-checked and disabled
 
     // Use MusicContext to get music settings and functions
     const {
@@ -30,6 +31,11 @@ const Settings = () => {
     const handleTugtogVolumeChange = (e) => setTugtogVolume(e.target.value)
     const handleTunogVolumeChange = (e) => setTunogVolume(e.target.value)
     const handleSongChange = (e) => setSelectedSong(e.target.value)
+
+    // Modal close handler
+    const handleCloseModal = () => {
+        setShowModal(false) // Close the modal when the "Bumalik" button is clicked
+    }
 
     return (
         <>
@@ -119,7 +125,7 @@ const Settings = () => {
                                     Tungkol
                                 </button>
                                 <button
-                                    onClick={() => setShowModal(true)}
+                                    onClick={() => setShowModal(true)} // Open the modal
                                     className="text-shadow w-1/2 text-nowrap rounded-xl bg-white py-2 mobile:py-1"
                                 >
                                     Mga Tuntunin at Kundisyon
@@ -151,7 +157,12 @@ const Settings = () => {
             {/* Modal */}
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <TermsConditions onClose={() => setShowModal(false)} />
+                    <TnC
+                        isOpen={showModal} // Ensure modal is open
+                        isChecked={isTermsAccepted} // Checkbox is already checked and disabled
+                        onAccept={() => setShowModal(false)} // Close modal on accept
+                        onDecline={() => setShowModal(false)} // Close modal on decline
+                    />
                 </div>
             )}
         </>

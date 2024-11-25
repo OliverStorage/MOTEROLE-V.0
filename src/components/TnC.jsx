@@ -119,6 +119,8 @@ const TermsConditions = ({ isOpen, onAccept, onDecline }) => {
                         id="termsConditions"
                         className="size-5"
                         onChange={handleCheckboxChange} // Update checkbox state on change
+                        checked
+                        disabled
                     />
                     <label
                         htmlFor="termsConditions"

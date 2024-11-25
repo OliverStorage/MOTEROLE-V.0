@@ -5,7 +5,7 @@ const Background = () => {
     return (
         <div
             style={{ backgroundImage: `url(${Bg})` }}
-            className="from- absolute z-[-100] h-screen w-screen bg-gradient-to-b bg-cover bg-bottom"
+            className="absolute z-[-100] h-screen w-screen bg-cover bg-bottom"
         />
     )
 }
