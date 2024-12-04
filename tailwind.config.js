@@ -4,9 +4,15 @@ export default {
     safelist: ['border-lava', 'bg-lava'],
     theme: {
         extend: {
+            aspectRatio: {
+                '20/9': '20/9',
+            },
             screens: {
-                mobile: { max: '892px' },
-                ipad: { min: '893px', max: '1024px' },
+                mobile: { max: '1300px' },
+                //ipad: { min: '893px', max: '1024px' },
+
+                // 'phone-wide': { max: '1000px' }, // Wide smartphones up to 1000px
+                // tablet: { min: '641px', max: '1000px' }, // Tablets between 641px and 1000px
             },
             fontFamily: {
                 spraypaint: ['Rubik Spray Paint', 'system-ui'],
@@ -45,5 +51,5 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/aspect-ratio')],
 }

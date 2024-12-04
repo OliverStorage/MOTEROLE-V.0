@@ -46,23 +46,25 @@ const SignUp = () => {
         })
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            // Query Firestore to check for duplicates
+            // Query Firestore to check if there is already a user with the same username and email
             const duplicateQuery = query(
                 collection(db, 'Preschooler'),
-                where('username', '==', form.username),
-                where('password', '==', form.password),
-                where('firstname', '==', form.firstname),
-                where('lastname', '==', form.lastname),
+                where('email', '==', form.email), // Check for same email
+                where('username', '==', form.username), // Check for same username under the same email
             )
             const duplicateSnapshot = await getDocs(duplicateQuery)
 
+            // If there's an account with the same username and email, show an error
             if (!duplicateSnapshot.empty) {
-                setErrorMessage('An account with these details already exists.')
-                console.log('An account with these details already exists.')
+                setErrorMessage(
+                    'An account with this username already exists for this email.',
+                )
+                console.log(
+                    'An account with this username already exists for this email.',
+                )
                 return
             }
 
@@ -112,7 +114,7 @@ const SignUp = () => {
                 email: '',
                 password: '',
             })
-
+            setErrorMessage('Signup Successful')
             navigate('/signin')
         } catch (error) {
             console.error('Error adding document: ', error)
@@ -122,6 +124,7 @@ const SignUp = () => {
             console.log('An error occurred while signing up. Please try again.')
         }
     }
+
     return (
         <>
             <Background />

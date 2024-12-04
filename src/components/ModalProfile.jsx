@@ -44,18 +44,23 @@ const ModalProfile = ({ onClose }) => {
     useEffect(() => {
         document.title = 'MoteRole - Profile'
 
+        // Close edit mode when clicking outside the profile section
         const handler = (e) => {
-            if (!editProfileRef.current.contains(e.target)) {
+            if (
+                editProfileRef.current &&
+                !editProfileRef.current.contains(e.target)
+            ) {
                 setEditProfile(false)
             }
         }
         document.addEventListener('mousedown', handler)
 
-        // Fetch logged-in user from cookies instead of localStorage
+        // Fetch logged-in user from cookies
         const storedUser = Cookies.get('loggedInUser') // Retrieve user from cookies
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser)
             setLoggedInUser(parsedUser)
+
             if (parsedUser?.AccountHolderId && parsedUser?.username) {
                 fetchPreschooler(
                     parsedUser.AccountHolderId,
@@ -71,10 +76,24 @@ const ModalProfile = ({ onClose }) => {
             navigate('/signin') // Redirect to sign-in page if no user found
         }
 
+        // Initialize form fields only when entering edit mode
+        if (infoEdit) {
+            setUsername((prev) =>
+                prev !== '' ? prev : preschooler?.username || '',
+            )
+            setFirstname((prev) =>
+                prev !== '' ? prev : preschooler?.firstname || '',
+            )
+            setLastname((prev) =>
+                prev !== '' ? prev : preschooler?.lastname || '',
+            )
+        }
+
+        // Cleanup event listener
         return () => {
             document.removeEventListener('mousedown', handler)
         }
-    }, [navigate])
+    }, [navigate, infoEdit]) // Removed `preschooler` dependency
 
     const fetchPreschooler = async (accountHolderId, username) => {
         try {
@@ -146,6 +165,13 @@ const ModalProfile = ({ onClose }) => {
 
     const handleRemoveImage = async (imagePath) => {
         try {
+            if (!profileImage || profileImage.includes('default-profile.png')) {
+                // Check if the image is already removed or set to the default
+                console.log('Image is already removed.')
+                setErrorMessage('Image already removed')
+                return
+            }
+
             if (loggedInUser && preschooler) {
                 // Construct the image reference
                 const imageRef = ref(storage, imagePath)
@@ -172,7 +198,7 @@ const ModalProfile = ({ onClose }) => {
             }
         } catch (error) {
             if (error.code === 'storage/object-not-found') {
-                // Fallback for the case when the image is already removed
+                // Handle the case when the image is already removed
                 console.log(
                     'Image already removed or not found in Firebase Storage.',
                 )
@@ -185,42 +211,74 @@ const ModalProfile = ({ onClose }) => {
 
     const handleSave = async () => {
         try {
-            // Capitalize firstname and lastname
+            // Capitalize firstname and lastname for consistent formatting
             const capitalizedFirstname =
                 firstname.charAt(0).toUpperCase() +
                 firstname.slice(1).toLowerCase()
             const capitalizedLastname =
                 lastname.charAt(0).toUpperCase() +
                 lastname.slice(1).toLowerCase()
-            const fullName = `${capitalizedFirstname} ${capitalizedLastname}`
 
-            // Query to check for duplicates in the same AccountHolderId
-            const userQuery = query(
-                collection(db, 'Preschooler'),
-                where('username', '==', username),
-                where('firstname', '==', capitalizedFirstname),
-                where('lastname', '==', capitalizedLastname),
-                where('gender', '==', gender),
-            )
+            const normalizedEmail = preschooler.email // Email remains case-insensitive
 
-            const userSnapshot = await getDocs(userQuery)
+            console.log('Current Username: ', preschooler.username)
+            console.log('New Username: ', username)
 
-            if (!userSnapshot.empty) {
-                console.warn(
-                    `Duplicate entry found: Username: ${username}, Name: ${fullName}, Gender: ${gender}. Changes not saved.`,
-                )
-                setErrorMessage(
-                    `Duplicate entry found: Username: ${username}, Name: ${fullName}, Gender: ${gender}. Changes not saved.`,
-                )
+            // Check if any changes have been made
+            const isUsernameChanged = username !== preschooler.username // Compare original values
+            const isFirstnameChanged =
+                capitalizedFirstname !== preschooler.firstname
+            const isLastnameChanged =
+                capitalizedLastname !== preschooler.lastname
+            const isGenderChanged = gender !== preschooler.gender
+            const isProfileImageChanged =
+                profileImage !== preschooler.profileImage
+
+            const noChanges =
+                !isUsernameChanged &&
+                !isFirstnameChanged &&
+                !isLastnameChanged &&
+                !isGenderChanged &&
+                !isProfileImageChanged
+
+            if (noChanges) {
+                console.log('No changes detected.')
+                setErrorMessage('Nothing changed in the information.')
                 return // Exit the function without saving
             }
 
-            // Update Firestore with unique values
+            // Check for duplicate usernames for the same email
+            const duplicateQuery = query(
+                collection(db, 'Preschooler'),
+                where('email', '==', normalizedEmail),
+            )
+            const duplicateSnapshot = await getDocs(duplicateQuery)
+
+            const isDuplicateUsername = duplicateSnapshot.docs.some((doc) => {
+                const docData = doc.data()
+                return (
+                    doc.id !== preschooler.id && // Exclude the current user's document
+                    docData.username === username // Compare original values without altering case
+                )
+            })
+
+            if (isDuplicateUsername) {
+                console.warn(
+                    `Duplicate username detected: "${username}" already exists for email "${preschooler.email}". Changes not saved.`,
+                )
+                setErrorMessage(
+                    `Duplicate username detected: "${username}" already exists for email "${preschooler.email}". Please choose a unique username.`,
+                )
+                return // Exit the function if a duplicate username is found
+            }
+
+            // Update Firestore with the new values
             await updateDoc(doc(db, 'Preschooler', preschooler.id), {
                 username,
                 firstname: capitalizedFirstname,
                 lastname: capitalizedLastname,
                 gender,
+                profileImage, // Ensure the new profile image is saved
             })
 
             console.log('Profile updated successfully')
@@ -232,6 +290,7 @@ const ModalProfile = ({ onClose }) => {
                 firstname: capitalizedFirstname,
                 lastname: capitalizedLastname,
                 gender,
+                profileImage,
             })
 
             // Update the cookies
@@ -243,6 +302,9 @@ const ModalProfile = ({ onClose }) => {
                 gender,
             }
             Cookies.set('loggedInUser', JSON.stringify(updatedUser))
+
+            setErrorMessage('Profile updated successfully.')
+            setInfoEdit(false)
         } catch (error) {
             console.error('Error updating profile:', error)
         }
@@ -364,7 +426,7 @@ const ModalProfile = ({ onClose }) => {
                                 <span className="select-none">Username:</span>
                                 {infoEdit ? (
                                     <input
-                                        className="w-[240px] px-1 text-black focus:outline-none"
+                                        className="w-[240px] rounded-md border px-1 text-black focus:outline-none"
                                         type="text"
                                         value={username}
                                         onChange={(e) =>
@@ -372,7 +434,7 @@ const ModalProfile = ({ onClose }) => {
                                         }
                                     />
                                 ) : (
-                                    <span className="capitalize">
+                                    <span className="">
                                         {preschooler?.username || 'N/A'}
                                     </span>
                                 )}
@@ -382,7 +444,7 @@ const ModalProfile = ({ onClose }) => {
                                 {infoEdit ? (
                                     <div className="flex space-x-2">
                                         <input
-                                            className="w-[100px] px-1 capitalize text-black focus:outline-none"
+                                            className="w-[120px] rounded-md border px-1 capitalize text-black focus:outline-none"
                                             type="text"
                                             value={firstname}
                                             onChange={(e) =>
@@ -400,7 +462,7 @@ const ModalProfile = ({ onClose }) => {
                                             }
                                         />
                                         <input
-                                            className="w-[100px] px-1 capitalize text-black focus:outline-none"
+                                            className="w-[120px] rounded-md border px-1 capitalize text-black focus:outline-none"
                                             type="text"
                                             value={lastname}
                                             onChange={(e) =>
@@ -428,7 +490,7 @@ const ModalProfile = ({ onClose }) => {
                             </div>
                             <div className="flex gap-3 mobile:gap-1">
                                 <span className="select-none">Email:</span>
-                                <span className="capitalize">
+                                <span className="">
                                     {preschooler?.email || 'N/A'}
                                 </span>
                             </div>
@@ -472,7 +534,7 @@ const ModalProfile = ({ onClose }) => {
                                 Gender:
                                 {infoEdit ? (
                                     <select
-                                        className="capitalize text-black focus:outline-none"
+                                        className="rounded-md border capitalize text-black focus:outline-none"
                                         value={gender}
                                         onChange={(e) =>
                                             setGender(e.target.value)

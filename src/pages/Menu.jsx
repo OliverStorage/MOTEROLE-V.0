@@ -22,12 +22,13 @@ const Menu = () => {
     useEffect(() => {
         document.title = 'MoteRole - Menu'
 
-        const storedUser = Cookies.get('loggedInUser') // Retrieve user from cookies
-        if (storedUser) {
-            setLoggedInUser(JSON.parse(storedUser))
-        } else {
+        // Retrieve user from cookies
+        const storedUser = Cookies.get('loggedInUser')
+        if (!storedUser) {
             navigate('/signin') // Redirect to Sign In page if no user is found
+            return // Stop further execution if redirecting
         }
+        setLoggedInUser(JSON.parse(storedUser)) // Update loggedInUser only if the user exists
 
         const storage = getStorage()
 
@@ -51,12 +52,12 @@ const Menu = () => {
                     error,
                 )
             } finally {
-                setLoading(false)
+                setLoading(false) // Ensure loading is turned off after the fetch
             }
         }
 
         fetchImages()
-    }, [navigate])
+    }, [navigate]) // Keep dependency array minimal
 
     // MenuItem component to avoid code duplication
     const MenuItem = ({ to, imgSrc, label, onClick, bgColor }) => (

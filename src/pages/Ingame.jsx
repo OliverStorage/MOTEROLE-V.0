@@ -186,20 +186,20 @@ const Ingame = () => {
     //   }
 
     const submitCanvas = () => {
-        // const canvas = canvasRef.current
-        // const imageData = canvas.toDataURL('image/png') // Capture the canvas data as PNG
+        const canvas = canvasRef.current
+        const imageData = canvas.toDataURL('image/png') // Capture the canvas data as PNG
 
-        // // Create a link element to download the image
-        // const link = document.createElement('a')
-        // link.href = imageData
-        // link.download = `${gamesessionId}-${Date.now()}-${activeExercise}` // Set the download file name
-        // link.click()
+        // Create a link element to download the image
+        const link = document.createElement('a')
+        link.href = imageData
+        link.download = `${gamesessionId}-${Date.now()}-${activeExercise}` // Set the download file name
+        link.click()
         resetCanvas()
 
         //small letter
-        if (gameSession.ExerciseImage2) {
-            setActiveExercise(2)
-        }
+        // if (gameSession.ExerciseImage2) {
+        //     setActiveExercise(2)
+        // }
     }
 
     const handleTouchStart = (e) => {
@@ -220,14 +220,14 @@ const Ingame = () => {
         // Adjust line width if ExerciseImage2 (activeExercise 2) is active
         if (activeExercise === 2) {
             if (width >= 1500 && width <= 2000) return 50
-            if (width >= 1024 && width < 1500) return 35
+            if (width >= 1024 && width < 1500) return 20
             return 25 // Default width for other screen sizes
         }
 
         // Default line widths for other exercises
         if (width >= 1500 && width <= 2000) return 62
-        if (width >= 1024 && width < 1500) return 45
-        return 30
+        if (width >= 1024 && width < 1500) return 20
+        return 20
     }
 
     const startGameSession = async () => {
@@ -297,7 +297,7 @@ const Ingame = () => {
                                     className="bg-transparent"
                                     style={{
                                         cursor: 'crosshair',
-                                        width: '50%',
+                                        width: '80%',
                                         height: '100%',
                                     }}
                                 />

@@ -65,7 +65,7 @@ const Category = () => {
                         Mga Kategorya
                     </h1>
                     <div className="text-shadow flex h-[70%] w-[80%] rounded-3xl border-8 border-limblue bg-white p-8 mobile:border-4 mobile:p-4 ipad:h-[60%] ipad:p-6">
-                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-x-auto">
+                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-x-auto rounded-2xl bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-2xl ipad:overflow-x-auto">
                             {loading ? (
                                 <div>Loading categories...</div>
                             ) : (

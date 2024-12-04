@@ -63,9 +63,9 @@ const SignIn = () => {
 
                     // Store the logged-in user in cookies
                     Cookies.set('loggedInUser', JSON.stringify(user), {
-                        expires: 7, // Cookie expires in 7 days
+                        expires: 365, // Cookie expires in 7 days
                     })
-                    Cookies.set('userSession', 'active', { expires: 7 }) // Set a session cookie
+                    Cookies.set('userSession', 'active', { expires: 365 }) // Set a session cookie
 
                     console.log('Login successful')
                     navigate('/menu') // Redirect to menu after successful login

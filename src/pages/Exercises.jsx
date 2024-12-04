@@ -105,7 +105,7 @@ const Exercises = () => {
                             {category.CategoryName}
                         </span>
 
-                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
+                        <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 overflow-x-auto rounded-2xl border-[0.5px] border-softgray bg-cheese p-4 font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
                             {exercises.map((exercise) => (
                                 <Link
                                     key={exercise.id}
