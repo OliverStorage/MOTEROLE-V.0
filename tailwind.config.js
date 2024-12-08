@@ -9,7 +9,7 @@ export default {
             },
             screens: {
                 mobile: { max: '1300px' },
-                //ipad: { min: '893px', max: '1024px' },
+               // ipad: { min: '893px', max: '1024px' },
 
                 // 'phone-wide': { max: '1000px' }, // Wide smartphones up to 1000px
                 // tablet: { min: '641px', max: '1000px' }, // Tablets between 641px and 1000px

@@ -76,7 +76,7 @@ const GameExercise = () => {
     const GameExerciseCard = React.memo(({ gameExercise }) => (
         <div
             onClick={() => handleDifficultySelect(gameExercise.id)}
-            className="text-shadow h-[80%] w-72 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-2 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
+            className="text-shadow h-[80%] w-1/3 flex-shrink-0 cursor-pointer rounded-2xl border-8 border-softgray bg-butter p-2 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3"
         >
             <div className="flex h-full w-full flex-col items-center justify-between">
                 <img
@@ -113,7 +113,7 @@ const GameExercise = () => {
                         {loading ? (
                             <p className="text-2xl text-black">Loading...</p>
                         ) : (
-                            <div className="inner-shadow flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 text-center font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
+                            <div className="inner-shadow overflow-x-auto flex h-full w-full items-center justify-evenly space-x-4 rounded-2xl bg-cheese p-4 text-center font-nunito text-4xl font-black text-black mobile:overflow-x-auto mobile:rounded-xl mobile:text-xl ipad:overflow-x-auto ipad:text-3xl">
                                 {gameExercises.length > 0 ? (
                                     gameExercises.map((gameExercise) => (
                                         <GameExerciseCard

@@ -5,7 +5,7 @@ import Actionbtn from '../components/Actionbtn'
 import { LuArrowBigLeft } from 'react-icons/lu'
 import { PiGearSixBold } from 'react-icons/pi'
 import { IoBulbOutline } from 'react-icons/io5'
-import TnC from "../components/TnC"
+import TnC from '../components/TnC'
 import { MusicContext } from '../components/MusicContext'
 
 const Settings = () => {

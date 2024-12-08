@@ -114,7 +114,7 @@ const Exercises = () => {
                                     style={{
                                         backgroundImage: `url(${exercise.imageURL})`,
                                     }}
-                                    className={`text-shadow flex h-[80%] w-1/4 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 bg-contain bg-no-repeat p-2 mobile:px-2 mobile:py-1 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/3 mobile:border-4 ipad:w-1/3`}
+                                    className={`text-shadow flex h-[80%] w-1/3 flex-shrink-0 flex-col items-center justify-between rounded-2xl border-8 bg-contain bg-no-repeat p-2 mobile:px-2 mobile:py-1 border-${exercise.ExerciseColor} bg-butter bg-cover bg-center duration-100 active:scale-95 mobile:h-[90%] mobile:w-1/2 mobile:border-4 ipad:w-1/3`}
                                 >
                                     <div className="flex h-full w-full flex-col items-center justify-between">
                                         <span className="flex w-full justify-start text-5xl leading-none mobile:text-3xl">

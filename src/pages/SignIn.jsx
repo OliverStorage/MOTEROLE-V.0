@@ -8,6 +8,7 @@ import { IoBulbOutline } from 'react-icons/io5'
 import { db } from '../firebaseConfig'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 import Cookies from 'js-cookie'
+import { throttle, debounce } from '../utils' // Adjust the path if necessary
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -17,26 +18,43 @@ const SignIn = () => {
         password: '',
     })
     const [errorMessage, setErrorMessage] = useState('')
+    const [isNavigating, setIsNavigating] = useState(false)
 
     // Check for a logged-in user in cookies on component mount
     useEffect(() => {
         document.title = 'MoTeRole - Sign in'
-        const storedUser = Cookies.get('loggedInUser') // Get the cookie
-        if (storedUser) {
-            
+        const storedUser = Cookies.get('loggedInUser')
+        const userSession = Cookies.get('userSession') // Get the cookie
+        if (storedUser && userSession) {
             navigate('/menu') // Redirect to menu if logged in
         }
     }, [navigate])
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        setForm({ ...form, [name]: value })
-        setErrorMessage('') // Reset error message on input change
+        setForm((prevForm) => ({ ...prevForm, [name]: value })) // Update state immediately
+        setErrorMessage('') // Clear error messages
     }
 
     const handleLogin = async (e) => {
         e.preventDefault()
+        if (isNavigating) return // Prevent repeated navigation
+        setIsNavigating(true)
         setErrorMessage('') // Clear previous error messages
+
+        // Input validation
+        if (!form.email || !form.username || !form.password) {
+            setErrorMessage('All fields are required.')
+            setIsNavigating(false)
+            return
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(form.email)) {
+            setErrorMessage('Please enter a valid email address.')
+            setIsNavigating(false)
+            return
+        }
 
         try {
             // Query to find AccountHolder by email
@@ -45,7 +63,6 @@ const SignIn = () => {
                 where('Email', '==', form.email),
             )
             const accountHolderSnapshot = await getDocs(accountHolderQuery)
-
             if (!accountHolderSnapshot.empty) {
                 const accountHolderId = accountHolderSnapshot.docs[0].id
 
@@ -58,14 +75,20 @@ const SignIn = () => {
                 )
 
                 const userSnapshot = await getDocs(userQuery)
+
                 if (!userSnapshot.empty) {
                     const user = userSnapshot.docs[0].data()
-
                     // Store the logged-in user in cookies
                     Cookies.set('loggedInUser', JSON.stringify(user), {
-                        expires: 365, // Cookie expires in 7 days
+                        expires: 365, // Cookie expires in 365 days
+                        secure: true, // Ensure secure storage
+                        sameSite: 'Strict', // Prevent CSRF attacks
                     })
-                    Cookies.set('userSession', 'active', { expires: 365 }) // Set a session cookie
+                    Cookies.set('userSession', 'active', {
+                        expires: 365,
+                        secure: true,
+                        sameSite: 'Strict',
+                    })
 
                     console.log('Login successful')
                     navigate('/menu') // Redirect to menu after successful login
@@ -78,11 +101,23 @@ const SignIn = () => {
                 console.log('No account associated with this email.')
             }
         } catch (error) {
+            if (error.message.includes('network')) {
+                setErrorMessage('Network error. Please try again.')
+            } else {
+                setErrorMessage('An unexpected error occurred during login.')
+            }
             console.error('Error logging in: ', error)
-            setErrorMessage('An error occurred during login. Please try again.')
+        } finally {
+            setIsNavigating(false) // Reset navigation lock
         }
+        console.log('Login attempt finished')
     }
 
+    // Throttle function to limit the rate at which a function is invoked and clear cookies if throttled
+    const throttledLogin = throttle(handleLogin, 2000, 'userSession') // Limit to once every 2 seconds, 'userSession' is the cookie key to clear and refresh
+
+    // Debounced change handler to minimize the number of calls to handleChange
+    const debouncedChangeHandler = debounce(handleChange, 300)
     return (
         <>
             <Background />
@@ -91,7 +126,6 @@ const SignIn = () => {
                 <div className="w-1/10 flex flex-col justify-end">
                     <FullScreen />
                 </div>
-
                 {/* Center */}
                 <div className="relative -mt-12 flex w-full flex-col items-center justify-center space-y-4 font-bubbles text-white mobile:-mt-8 mobile:space-y-3">
                     <div className="text-shadow w-full text-center text-8xl mobile:text-5xl ipad:text-7xl">
@@ -99,7 +133,7 @@ const SignIn = () => {
                     </div>
                     <div className="relative flex h-[50%] w-[70%] flex-col items-center rounded-3xl border-8 border-grape bg-white bg-opacity-30 p-10 mobile:h-[60%] mobile:rounded-xl mobile:border-4 mobile:p-4 ipad:h-[40%] ipad:p-6">
                         <form
-                            onSubmit={handleLogin}
+                            onSubmit={throttledLogin}
                             className="flex h-full w-full flex-col items-center justify-evenly space-y-4 font-nunito text-3xl font-black text-black mobile:text-2xl"
                         >
                             <input
@@ -132,7 +166,6 @@ const SignIn = () => {
                                 autoComplete="current-password"
                                 required
                             />
-
                             <div className="absolute -bottom-20 flex h-14 w-[80%] justify-evenly space-x-4 text-4xl text-white mobile:-bottom-12 mobile:h-10 mobile:text-xl ipad:-bottom-20 ipad:text-3xl">
                                 <Link
                                     to="/signup"
@@ -155,7 +188,6 @@ const SignIn = () => {
                         )}
                     </div>
                 </div>
-
                 {/* Right Column */}
                 <div className="w-1/10 flex select-none flex-col space-y-4 opacity-0">
                     <Actionbtn

@@ -23,17 +23,17 @@ const Try2 = () => {
             </div>
 
             {/* Aspect ratio handling */}
-            <div className="aspect-[20/9] xl:aspect-[1/1] mb-4 rounded-lg bg-yellow-500">
+            <div className="mb-4 aspect-[20/9] rounded-lg bg-yellow-500 xl:aspect-[1/1]">
                 <div className="flex items-center justify-center text-white">
                     Aspect Ratio: 16:9
                 </div>
             </div>
-            <div className="aspect-w-16 aspect-h-9 mb-4 rounded-lg bg-yellow-500">
+            <div className="aspect-h-9 aspect-w-16 mb-4 rounded-lg bg-yellow-500">
                 <div className="flex items-center justify-center text-white">
                     Aspect Ratio: 16:9
                 </div>
             </div>
-            <div className="aspect-w-4 aspect-h-3 rounded-lg bg-purple-500">
+            <div className="aspect-h-3 aspect-w-4 rounded-lg bg-purple-500">
                 <div className="flex items-center justify-center text-white">
                     Aspect Ratio: 4:3
                 </div>

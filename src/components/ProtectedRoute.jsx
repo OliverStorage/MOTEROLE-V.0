@@ -4,10 +4,13 @@ import Cookies from 'js-cookie'
 
 const ProtectedRoute = ({ children }) => {
     const userSession = Cookies.get('userSession')
+    const storedUser = Cookies.get('loggedInUser')
     const location = useLocation()
 
     // Redirect logged-out users to /signin
-    if (!userSession) {
+    if (!userSession || !storedUser) {
+        Cookies.remove('userSession')
+        Cookies.remove('loggedInUser')
         return <Navigate to="/signin" replace />
     }
 

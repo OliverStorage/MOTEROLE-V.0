@@ -38,7 +38,6 @@ const App = () => {
                         }
                     />
                     <Route index element={<Navigate to="/signin" replace />} />
-
                     {/* Protected Routes */}
                     <Route
                         path="/menu"
