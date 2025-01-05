@@ -319,24 +319,24 @@ const ModalProfile = ({ onClose }) => {
 
     return (
         <div className="absolute inset-0 flex h-screen w-screen items-center justify-center bg-black bg-opacity-70 font-bubbles font-normal">
-            <div className="relative flex h-[80%] w-[60%] flex-col items-center gap-4 rounded-3xl border-8 border-modalbrowndark bg-cheese p-4 px-6 text-5xl text-white mobile:h-[80%] mobile:w-[60%] mobile:gap-0 mobile:border-[6px] mobile:p-2 mobile:text-xl ipad:w-[70%] ipad:text-3xl">
-                <div className="absolute -left-6 -top-6 z-50 mobile:-right-5 mobile:-top-5 ipad:-right-7">
+            <div className="ipad:w-[70%] ipad:text-3xl relative flex h-[80%] w-[60%] flex-col items-center gap-4 rounded-3xl border-8 border-modalbrowndark bg-cheese p-4 px-6 text-5xl text-white mobile:h-[80%] mobile:w-[60%] mobile:gap-0 mobile:border-[6px] mobile:p-2 mobile:text-xl">
+                <div className="ipad:-right-7 absolute -left-6 -top-6 z-50 mobile:-right-5 mobile:-top-5">
                     <button className="action-btn flex cursor-pointer items-center justify-center rounded-xl bg-[#F40000] text-center">
                         <LuArrowBigLeft
                             onClick={onClose}
-                            className="size-12 mobile:size-10 ipad:size-14"
+                            className="ipad:size-14 size-12 mobile:size-10"
                         />
                     </button>
                 </div>
                 {errorMessage && (
-                    <div className="absolute -top-0 z-[100] w-full text-center text-base font-normal text-white mobile:-top-6 ipad:-top-8">
+                    <div className="ipad:-top-8 absolute -top-0 z-[100] w-full text-center text-base font-normal text-white mobile:-top-6">
                         {errorMessage}
                     </div>
                 )}
                 <div className="text-outline tracking-wide">My Profile</div>
-                <div className="flex w-full items-center gap-1 text-3xl mobile:gap-1 mobile:text-sm ipad:gap-2 ipad:text-2xl">
-                    <div className="relative flex w-[19%] items-start ipad:w-[20%]">
-                        <div className="h-[100px] w-[100px] overflow-hidden rounded-full border-4 border-bluesky object-center text-base mobile:h-[60px] mobile:w-[60px] ipad:h-[85px] ipad:w-[85px]">
+                <div className="ipad:gap-2 ipad:text-2xl flex w-full items-center gap-1 text-3xl mobile:gap-1 mobile:text-sm">
+                    <div className="ipad:w-[20%] relative flex w-[19%] items-start">
+                        <div className="ipad:h-[85px] ipad:w-[85px] h-[100px] w-[100px] overflow-hidden rounded-full border-4 border-bluesky object-center text-base mobile:h-[60px] mobile:w-[60px]">
                             <img
                                 src={profileImage}
                                 alt="user"
@@ -356,7 +356,7 @@ const ModalProfile = ({ onClose }) => {
                                         />
                                     </span>
                                     {editProfile && (
-                                        <div className="absolute -bottom-[54px] -right-[94px] z-50 flex w-56 rounded-xl border-4 border-black bg-white text-base text-black mobile:-bottom-[45px] mobile:-right-[100px] mobile:border-2 ipad:-bottom-[55px] ipad:-right-[100px]">
+                                        <div className="ipad:-bottom-[55px] ipad:-right-[100px] absolute -bottom-[54px] -right-[94px] z-50 flex w-56 rounded-xl border-4 border-black bg-white text-base text-black mobile:-bottom-[45px] mobile:-right-[100px] mobile:border-2">
                                             <div className="relative flex w-full items-center justify-evenly">
                                                 <div className="absolute -top-5 h-0 w-0 border-b-[16px] border-l-[15px] border-r-[15px] border-solid border-b-[#000] border-l-transparent border-r-transparent mobile:-top-4" />
                                                 <label
@@ -509,7 +509,7 @@ const ModalProfile = ({ onClose }) => {
                                         onClick={() => setInfoEdit(!infoEdit)}
                                         className="inner-shadow-deactive flex items-center rounded-xl bg-applegreen px-3 py-1 duration-100 active:translate-y-1"
                                     >
-                                        <FaEdit className="mr-1 size-9 mobile:size-4 ipad:size-7" />
+                                        <FaEdit className="ipad:size-7 mr-1 size-9 mobile:size-4" />
                                         <span>Edit</span>
                                     </button>
                                 )}
